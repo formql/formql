@@ -1,0 +1,52 @@
+<!-- <mat-card class="example-card">
+  <mat-card-title>{{updatedComponent.label}} Component</mat-card-title>
+  <mat-card-content>
+    <mat-tab-group>
+      <mat-tab label="General">
+        <br>
+        <form-component-editor-misc *ngIf="!loading" 
+        
+        [data]="data" [liveEdit]="liveEdit"
+          (action)="actionTriggered($event)"></form-component-editor-misc>
+      </mat-tab>
+      <mat-tab label="Properties">
+        <br>
+        <form-component-editor-schema *ngIf="!loading"  [data]="data" [liveEdit]="liveEdit" (action)="actionTriggered($event)"></form-component-editor-schema>
+      </mat-tab>
+      <mat-tab label="Custom Config">
+        <br>
+        <form-editor-json-input [fieldLabel]="'Component Config'" [value]="updatedComponent.configuration" [lines]="50" (valueChange)="copyConfiguration($event)"></form-editor-json-input> 
+        <br>
+      </mat-tab>
+    </mat-tab-group>
+
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <div style="margin-right: 8px;">
+      <button mat-flat-button color="warm" style="margin-right: 8px;" (click)="cancel()">Cancel</button>
+      <button mat-flat-button  (click)="save()" [disabled]="disableSaveButton">Save</button>
+    </div>
+  </mat-card-actions>
+</mat-card>
+ -->
+
+<!-- 
+<div class="form-component-editor-table">
+  <div class="form-component-editor-left-div">
+    <form-component-editor-misc *ngIf="step==0 && !loading" [component]="updatedComponent" [data]="data" [liveEdit]="liveEdit" (action)="actionTriggered($event)"></form-component-editor-misc>
+    <form-component-editor-schema *ngIf="step==1 && !loading" [component]="updatedComponent" [data]="data" [liveEdit]="liveEdit" (action)="actionTriggered($event)"></form-component-editor-schema>
+  </div>
+  <div class="form-component-editor-right-div">
+    <mat-list>
+      <mat-list-item (click)="setStep(0)" style="cursor: pointer">
+        <mat-icon mat-list-icon svgIcon="label" class="forn-root-mat-list-item-icon"></mat-icon>
+      </mat-list-item>
+      <mat-list-item  (click)="setStep(1)" style="cursor: pointer">
+        <mat-icon mat-list-icon svgIcon="looks_one" class="forn-root-mat-list-item-icon"></mat-icon>
+      </mat-list-item>
+      <mat-list-item  (click)="setStep(2)" style="cursor: pointer">
+        <mat-icon mat-list-icon svgIcon="check_box" class="forn-root-mat-list-item-icon"></mat-icon>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div> -->

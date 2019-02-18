@@ -1,0 +1,49 @@
+.fql-editor-tooltip-center {
+    position: relative; 
+    left: -50%;
+}
+
+.fql-editor-tooltip-section-center {
+    position: relative; 
+}
+
+.fql-editor-tooltip-move {
+    //background: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"> <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"/> <path d="M0 0h24v24H0z" fill="none"/> </svg>');
+    background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E %3Cpath d='M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z'/%3E %3Cpath d='M0 0h24v24H0z' fill='none'/%3E %3C/svg%3E");
+    display: table-cell;
+    width: 24px;
+    height: 24px;
+    transform: scale(0.6);
+    cursor: grab;
+    cursor: move; /* fallback if grabbing cursor is unsupported */
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+    cursor: grabbing;
+}
+
+.fql-editor-tooltip-edit {
+    //background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"> <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/> <path d="M0 0h24v24H0z" fill="none"/> </svg>');
+    background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E %3Cpath d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z'/%3E %3Cpath d='M0 0h24v24H0z' fill='none'/%3E %3C/svg%3E");
+    display: table-cell;
+    width: 24px;
+    height: 24px;
+    transform: scale(0.6);
+    cursor: pointer;
+    cursor: hand;
+}
+
+.fql-editor-tooltip-close {
+    //background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"> <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/> <path d="M0 0h24v24H0z" fill="none"/> </svg>');
+    background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E %3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E %3Cpath d='M0 0h24v24H0z' fill='none'/%3E %3C/svg%3E");
+    display: table-cell;
+    width: 24px;
+    height: 24px;
+    transform: scale(0.6);
+    cursor: pointer;
+    cursor: hand;
+}
+
+
+
+
+

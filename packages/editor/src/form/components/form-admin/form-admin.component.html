@@ -1,0 +1,39 @@
+<div class="div-spinner">
+    <mat-spinner *ngIf="pageLoaded==false"></mat-spinner>
+  </div>
+  <mat-card>
+    <mat-card-content>
+      <h2 class="example-h2">Forms</h2>
+      
+      <mat-table #table [dataSource]="forms">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let form"> {{form.name}} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="code">
+          <mat-header-cell *matHeaderCellDef> Code </mat-header-cell>
+          <mat-cell *matCellDef="let form"> {{form.code}}</mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="createdOn">
+            <mat-header-cell *matHeaderCellDef> Created </mat-header-cell>
+            <mat-cell *matCellDef="let form">{{form.createdOn | date: 'dd/MM/yyyy'}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="editForm">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let form"><a href="#">Edit Form</a></mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </mat-card-content>
+  </mat-card>

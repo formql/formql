@@ -1,0 +1,11 @@
+.form-group.required .control-label:after {
+    content:"*";
+    color:red;
+  }
+
+  input[type="text"] {
+    width: 100%; 
+    box-sizing: border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing: border-box;
+}

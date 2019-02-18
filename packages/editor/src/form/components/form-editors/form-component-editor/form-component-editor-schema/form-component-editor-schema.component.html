@@ -1,0 +1,27 @@
+
+<h5 class="form-component-editor-section">Data Mapping</h5>
+<!-- <label for="query">Schema</label> -->
+<!-- <form-json-evaluator [(value)]="component.schema" [rows]="2"></form-json-evaluator> -->
+<!-- <form-editor-field-input [fieldLabel]="'Schema'" [(valid)]="valid" 
+      [(value)]="component.schema"
+      [mode]="'javascript'"
+      [data]="data"></form-editor-field-input>
+<br>
+
+<form-editor-json-input [fieldLabel]="'Text Mask'" [value]="component.textMask" [lines]="5" (valueChange)="copyTextMask($event)"></form-editor-json-input> 
+<br>
+
+<h5 class="form-component-editor-section">Validators</h5>
+<ng-container *ngIf="displayValidators">
+  <ng-container *ngFor="let item of validators; let i=index">
+    <form-editor-field-input [fieldLabel]="item.name" [(valid)]="valid" 
+      [(value)]="properties[i].condition"
+      [mode]="'javascript'"
+      [data]="data"></form-editor-field-input>
+      <mat-form-field *ngIf="properties[i].condition != null && properties[i].condition != '' && item.key != 'hidden' && item.key != 'readonly' && item.key != 'value'" style="width: 100%">
+        <input matInput [(ngModel)]="properties[i].errorMessage" [placeholder]="'Error Message'">
+      </mat-form-field>
+    <br>
+  </ng-container>
+  
+</ng-container> -->

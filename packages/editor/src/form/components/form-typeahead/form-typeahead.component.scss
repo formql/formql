@@ -1,0 +1,37 @@
+.div-list {
+    border: 1px solid black;
+    position: absolute;
+}
+
+.ul-list {
+    list-style-type: none;
+    margin:0px; 
+    padding:2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+    background: white;
+    z-index: 10;
+    overflow-y: auto;
+    position: absolute;
+    overflow: hidden;
+    font-size: 13px;
+    list-style: none;
+  }
+
+.li-list {
+    cursor: pointer;
+    padding: 2px 6px;
+    white-space: pre;
+}
+
+.selected {
+    background-color: #08f;
+    color: white;
+}
+
+.div-textbox {
+    height: auto;
+    border: 1px solid #ced4da;
+    width: 100%;
+    padding: 5px;
+
+}

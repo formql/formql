@@ -1,0 +1,10 @@
+<div #parentBox style="position: relative;">
+    <ul *ngIf="filteredList.length > 0 && listCoordinates != null" class="ul-list"
+        [ngStyle]="{'top.px': listCoordinates.y, 'left.px': listCoordinates.x}" >
+      <li (click)="select(item)" *ngFor="let item of filteredList; let idx=index" class="li-list" tabindex="-1" 
+          [class.selected]="idx == focusedIdx">{{item}}</li>
+    </ul>
+  <div #divBox [ngStyle]="{'min-height': rows*29 + 'px'}" class="div-textbox" 
+      [typeahead]="typeaheadText" (keyup)="filter($event)" ></div>
+</div>
+

@@ -1,0 +1,19 @@
+<!-- <mat-spinner *ngIf="loading||saving" id="loader"></mat-spinner>
+<mat-sidenav-container>
+    <mat-sidenav *ngIf="!loading && (editMode || liveEditMode)" #leftSidenav opened mode="side" position="start" class="mat-drawer-left-sidenav" >
+        <formQLLeftSideBar (rightSideNavBarAction)="rightSideNavBarActionClick($event)"></formQLLeftSideBar>
+    </mat-sidenav>
+    <mat-sidenav *ngIf="editMode || liveEditMode" #rightSidenav mode="over" position='end' class="mat-drawer-right-sidenav" [disableClose]="true">
+        <mat-icon (click)="rightSidenav.close(); " svgIcon="close" class="right-close-icon"></mat-icon>
+        <div class="editor">
+            <ng-container #editor></ng-container>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        
+        <ng-container #target></ng-container>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+ -->
+ <ng-container #target></ng-container>
+ <!-- <formql [mode]="mode" [formName]="formName"></formql> -->

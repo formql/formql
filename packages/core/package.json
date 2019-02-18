@@ -1,0 +1,31 @@
+{
+  "name": "@formql/core",
+  "version": "0.0.1",
+  "description": "FormQL library",
+  "license": "MIT",
+  "author": "Juan Stoppa",
+  "main": "index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/formql/formql"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "peerDependencies": {
+    "@angular/common": "^6.0.7",
+    "@angular/compiler": "^6.0.7",
+    "@angular/core": "^6.0.7",
+    "@angular/forms": "^6.0.7",
+    "@angular/http": "^6.0.7",
+    "@angular/platform-browser": "^6.0.7",
+    "@angular/platform-browser-dynamic": "^6.0.7",
+    "@ngrx/effects": "^6.0.1",
+    "@ngrx/store": "^6.0.1",
+    "@ngrx/store-devtools": "^6.0.1",
+    "rxjs": "^6.2.1",
+    "rxjs-compat": "^6.2.1",
+    "angular2-text-mask": "^9.0.0",
+    "angular2-uuid": "^1.1.1"
+  }
+}

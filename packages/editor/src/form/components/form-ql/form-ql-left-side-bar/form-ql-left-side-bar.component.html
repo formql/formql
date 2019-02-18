@@ -1,0 +1,65 @@
+<div style="margin: 10px; text-align:center">
+    <span style="color:white;"><b>FormQL Editor</b></span> 
+</div>
+<mat-divider class="form-root-mat-divider"></mat-divider>
+<div style="width:100%; height:60px;">
+    <mat-icon (click)="saveForm()" svgIcon="save" [matTooltip]="'Save'" style="float:left;margin-left: 40px;" class="form-root-icon-sidenav"></mat-icon>
+    <mat-icon (click)="saveForm()" svgIcon="backup" [matTooltip]="'Publish'" style="float:right; margin-right: 40px;" class="form-root-icon-sidenav"></mat-icon>
+</div>
+<mat-divider class="form-root-mat-divider"></mat-divider>
+<mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle class="form-root-expansion-panel not-selectable">
+    <mat-expansion-panel-header>
+        <mat-icon svgIcon="assignment" style="margin-right:5px"></mat-icon><b>Form</b>
+    </mat-expansion-panel-header>
+    <mat-list>
+        <mat-list-item class="form-root-mat-list-item not-selectable" style="cursor: pointer" (click)="rightSideNavBarActionClick('FormDatasourceComponent');">
+            <mat-icon mat-list-icon svgIcon="sd_storage" class="form-root-mat-list-item-icon"></mat-icon>
+            <h4 mat-line>Data Source</h4>
+        </mat-list-item>
+    </mat-list>
+</mat-expansion-panel>
+<mat-divider class="form-root-mat-divider"></mat-divider>
+<mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle class="form-root-expansion-panel not-selectable">
+    <mat-expansion-panel-header>
+        <mat-icon svgIcon="web_asset" style="margin-right:5px"></mat-icon><b>Page</b>
+    </mat-expansion-panel-header>
+    <mat-list>
+        <mat-list-item class="form-root-mat-list-item not-selectable" style="cursor: pointer">
+            <mat-icon mat-list-icon svgIcon="add-circle-outline" class="form-root-mat-list-item-icon"></mat-icon>
+            <h4 mat-line>Add Page</h4>
+        </mat-list-item>
+    </mat-list>
+</mat-expansion-panel>
+<mat-divider class="form-root-mat-divider"></mat-divider>
+<mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle class="form-root-expansion-panel not-selectable">
+    <mat-expansion-panel-header>
+        <mat-icon svgIcon="web" style="margin-right:5px"></mat-icon><b>Section</b>
+    </mat-expansion-panel-header>
+    <mat-list>
+        <mat-list-item class="form-root-mat-list-item not-selectable" style="cursor: pointer">
+            <mat-icon mat-list-icon svgIcon="add-circle-outline" class="form-root-mat-list-item-icon"></mat-icon>
+            <h4 mat-line>Add Section</h4>
+        </mat-list-item>
+    </mat-list>
+</mat-expansion-panel>
+<mat-divider class="form-root-mat-divider"></mat-divider>
+<mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle class="form-root-expansion-panel not-selectable">
+    <mat-expansion-panel-header>
+        <mat-icon svgIcon="input" style="margin-right:5px"></mat-icon><b>Component</b>
+    </mat-expansion-panel-header>
+    <mat-list>
+        <mat-list-item class="form-root-mat-list-item not-selectable" style="cursor: -webkit-grab;" >
+            <mat-icon mat-list-icon svgIcon="text_fields" class="form-root-mat-list-item-icon"></mat-icon>
+            <h4 mat-line>Text</h4>
+        </mat-list-item>
+        <mat-list-item class="form-root-mat-list-item not-selectable" style="cursor: -webkit-grab;" >
+                <mat-icon mat-list-icon  svgIcon="looks_one" class="form-root-mat-list-item-icon"></mat-icon>
+                <h4 mat-line>Number</h4>
+        </mat-list-item>
+        <mat-list-item class="form-root-mat-list-item not-selectable" style="cursor: -webkit-grab;" >
+                <mat-icon mat-list-icon  svgIcon="check_box" class="form-root-mat-list-item-icon"></mat-icon>
+                <h4 mat-line>Check Box</h4>
+        </mat-list-item>
+    </mat-list>
+</mat-expansion-panel>
+<mat-divider class="form-root-mat-divider"></mat-divider>

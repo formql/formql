@@ -1,0 +1,43 @@
+.fql-section-wrapper , .fql-section-wrapper-edit {
+    display: -ms-grid;
+    display: grid;
+    padding: 1px;
+    -ms-grid-columns: 100%;
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto;
+    position: relative;
+}
+
+.fql-section-wrapper-edit:hover .fql-section-tooltip {
+    opacity:1;
+}
+
+.fql-section-tooltip {
+    opacity:0;
+    display: block;
+    position: absolute; 
+    right: 0%;
+    z-index: 1;
+}
+
+
+.fql-section-wrapper-edit:hover {
+    background-color: rgb(220, 220, 220);
+}
+
+.fql-section-header {
+    display: -ms-grid;
+    display: grid;
+    min-height: 30px;
+    -ms-grid-row: 1;
+    -ms-grid-column: 1;
+}
+
+.fql-section-body {
+    display: -ms-grid;
+    display: grid;
+    min-height: 30px;
+    -ms-grid-row: 2;
+    -ms-grid-column: 1;
+
+}
