@@ -1,16 +1,14 @@
-# Articles to read
-https://stackoverflow.com/questions/41261676/typescript-call-function-in-dynamic-anonymous-function
-https://medium.com/@kubal5003/angular-4-hot-module-reload-explained-e832ea616304
-
-https://github.com/jogelin/build-angular-monorepo-and-app/tree/master/angular-monorepo
-
-
-
-
 # Introduction 
 TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
 
 # Getting Started
+
+1) git clone https://github.com/formql/formql.git
+2) cd formql
+3) npm install
+4) npm run package_all
+5) npm start
+
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
 1.	Installation process
 2.	Software dependencies

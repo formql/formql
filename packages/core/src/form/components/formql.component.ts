@@ -67,7 +67,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
                 this.formControls = Array<ComponentControl>();
                 this.form = form;
 
-                this.populateReactiveForm(form, false);
+                this.populateReactiveForm(false);
                     this.formStoreService.getComponents().subscribe(components => {
                         if (components) {
                             this.components = components;
@@ -165,7 +165,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
                     if (index >= 0)
                         this.form.pages[index] = res.event;
                     
-                    this.populateReactiveForm(this.form, true);
+                    this.populateReactiveForm(true);
                     //this.formStoreService.dispatchUpdateFormAction(this.form);
                     break;
 
