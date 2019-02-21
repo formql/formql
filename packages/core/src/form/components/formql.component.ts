@@ -1,4 +1,4 @@
-import { OnInit, OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Type, ViewEncapsulation, ElementRef, Input, ChangeDetectionStrategy, Output, EventEmitter } from "@angular/core";
+import { OnInit, OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Type, ViewEncapsulation, ElementRef, Input, ChangeDetectionStrategy, Output, EventEmitter, ChangeDetectorRef } from "@angular/core";
 import { FormWrapper } from "../models/form-wrapper.model";
 import { EventHandlerService } from "../services/event-handler.service";
 import { EventHandler, EventType } from "../models/event-handler.model";
@@ -13,7 +13,7 @@ import { Page } from "../models/page.model";
 
 @Component({
     selector: 'formql',
-    template: `<ng-container #target></ng-container>`,
+    template: `<span #target></span>`,
     styleUrls: ['./formql.component.scss']
 })
 export class FormQLComponent implements OnInit, OnDestroy {
@@ -23,6 +23,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
     @Input() ids: Array<string>;
     @Input() mode: FormQLMode = FormQLMode.View;
     @Input() validators: Array<Function>;
+    @Input() reactiveForm: FormGroup;
 
     @Output() editorEvent = new EventEmitter();
 
@@ -34,7 +35,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
     
     form: FormWrapper;
     data: any;
-    reactiveForm: FormGroup;
+    
     components: FormComponent<any>[];
     formControls: ComponentControl[];
 
@@ -43,12 +44,15 @@ export class FormQLComponent implements OnInit, OnDestroy {
         private vcRef: ViewContainerRef,
         private eventHandlerService: EventHandlerService,
         private formStoreService: FormStoreService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private cd: ChangeDetectorRef
     ) {
     }
 
     ngOnInit() {
-        this.reactiveForm = this.formBuilder.group([]);
+        if (!this.reactiveForm)
+            this.reactiveForm = this.formBuilder.group([]);
+
         this.loadEventHandlers();
 
         if (this.ids == null || (this.ids != null && this.ids.length == 0)) {
@@ -179,7 +183,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
 
     populateReactiveForm(update)  {
         if (this.form.pages != null) {
-            let pageGroup: any = {};
+            const pageGroup: any = {};
             this.form.pages.forEach(page => {
                 let sectionGroup: any = {};
                 if (page.sections != null) {
@@ -204,6 +208,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
             
             if (update)
             {
+                
                 this.form.pages.forEach(page => {
                     this.reactiveForm.setControl(page.pageId, pageGroup[page.pageId]);
                 });

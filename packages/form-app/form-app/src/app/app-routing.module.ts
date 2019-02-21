@@ -5,9 +5,10 @@ import { AppFormQLComponent } from './app-formql.component';
 import { AppFormQLEditorComponent } from './app-formql-editor.component';
 
 const appRoutes: Routes = [
-  //{ path: 'form/:name', component: AppFormQLComponent },
-  //{ path: 'form/:name/:id', component: AppFormQLComponent },
+  { path: 'form/:name', component: AppFormQLComponent },
+//   { path: 'form/:name/:id', component: AppFormQLComponent },
   { path: 'form/:name/edit', component: AppFormQLEditorComponent },
+
   { path: 'form/:name/:id/liveEdit', component: AppFormQLComponent }
   
 ];
@@ -16,7 +17,7 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true }
+      { enableTracing: true, useHash: true}
     )
   ],
   exports: [

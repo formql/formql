@@ -62,7 +62,8 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
         
         let comp = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, "FormQLComponent"));
 		(<any>comp).instance.mode = this.mode;
-		(<any>comp).instance.formName = this.formName;
+        (<any>comp).instance.formName = this.formName;
+        (<any>comp).instance.reactiveForm = this.reactiveForm;
 
 		this.target.insert(comp.hostView);
 

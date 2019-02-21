@@ -8,6 +8,8 @@ TODO: Give a short introduction of your project. Let this section explain the ob
 3) npm install
 4) npm run package_all
 5) npm start
+6) View mode: http://localhost:4200/form/contactInfo
+7) Edit mode: http://localhost:4200/form/contactInfo/edit
 
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
 1.	Installation process

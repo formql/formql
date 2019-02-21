@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormQLMode } from '../../../../core/src/form/models/formql-mode.model';
 //import { FormQLMode } from '@formql/core';
-import { FormQLComponent } from '@formql/core';
+//import { FormQLComponent } from '@formql/core';
 
 @Component({
     selector: 'app-formql',
