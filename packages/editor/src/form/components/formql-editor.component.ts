@@ -1,5 +1,5 @@
 import { OnInit, OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, 
-    Type, ViewEncapsulation, ElementRef, Input, ChangeDetectionStrategy } from "@angular/core";
+    Type, ViewEncapsulation, ElementRef, Input, ChangeDetectionStrategy, Renderer2 } from "@angular/core";
 
 //import { FormQLComponent, FormQLMode } from "@formql/core";
 import { ActivatedRoute } from "@angular/router";
@@ -21,10 +21,10 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
     @Input() validators: Array<Function>;
     
 	@ViewChild('target', { read: ViewContainerRef }) target: ViewContainerRef;
-	@ViewChild('editor', { read: ViewContainerRef }) editor: ViewContainerRef;
-
-	@ViewChild('leftSidenav') leftSidenav: MatSidenav;
-	@ViewChild('rightSidenav') rightSidenav: MatSidenav;
+	@ViewChild('rightSidenav', { read: ViewContainerRef }) rightSidenav: ViewContainerRef;
+    @ViewChild('editorWindow', { read: ViewContainerRef }) editorWindow: ViewContainerRef;
+    @ViewChild('pusher', { read: ViewContainerRef }) pusher: ViewContainerRef;
+    
 
 	loading: boolean = true;
 	saving: boolean = false;
@@ -41,7 +41,8 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 		private route: ActivatedRoute,
 		private iconRegistry: MatIconRegistry,
 		private sanitizer: DomSanitizer,
-		private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private renderer: Renderer2
 
 	) {
 		//this.structureService.loadIcons(this.iconRegistry, this.sanitizer);
@@ -67,7 +68,19 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
 		this.target.insert(comp.hostView);
 
-	}
+    }
+    
+    open() {
+        this.renderer.addClass(this.editorWindow.element.nativeElement, "fql-bar-effect");
+        this.renderer.addClass(this.editorWindow.element.nativeElement, "fql-slide-bar-open");
+        this.renderer.addClass(this.pusher.element.nativeElement, "fql-slide-pusher");
+    }
+
+    close() {
+        this.renderer.removeClass(this.editorWindow.element.nativeElement, "fql-bar-effect");
+        this.renderer.removeClass(this.editorWindow.element.nativeElement, "fql-slide-bar-open");
+        this.renderer.removeClass(this.pusher.element.nativeElement, "fql-slide-pusher");
+    }
 
 
 	ngOnDestroy() {
@@ -113,7 +126,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 	}
 
 	editorResponse(component) {
-		this.rightSidenav.close();
+		//this.rightSidenav.close();
 		// if (component)
 		// 	this.formStoreService.dispatchUpdateComponentAction(component);
 		this.editor.clear();
@@ -150,7 +163,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
             this.saveForm();
         else
         {
-            this.rightSidenav.open();
+            //this.rightSidenav.open();
             // this.loadDataSourceEditor(event, this.form.dataSource);
         }
     }
