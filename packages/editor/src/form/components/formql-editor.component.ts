@@ -129,7 +129,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 		//this.rightSidenav.close();
 		// if (component)
 		// 	this.formStoreService.dispatchUpdateComponentAction(component);
-		this.editor.clear();
+		//this.editor.clear();
 	}
 
 	saveForm() {
