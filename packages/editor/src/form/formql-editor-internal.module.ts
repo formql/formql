@@ -23,7 +23,7 @@ import { FormSectionValidatorComponent } from "./components/form-editors/form-se
 import { AceModule, ACE_CONFIG, AceConfigInterface } from 'ngx-ace-wrapper';
 import { FormAceEditorComponent } from "./components/form-ace-editor/form-ace-editor.component";
 
-import { FormQlLeftSideBar } from "./components/form-ql/form-ql-left-side-bar/form-ql-left-side-bar.component";
+import { FormQlLeftSideBar } from "./components/form-ql-left-side-bar.component";
 import { TextMaskModule } from 'angular2-text-mask';
 import { FormQLEditorComponent } from "./components/formql-editor.component";
 import { TooltipComponent } from "./components/tooltip.component";

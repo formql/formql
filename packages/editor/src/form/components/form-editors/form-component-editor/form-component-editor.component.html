@@ -1,4 +1,4 @@
-<!-- <mat-card class="example-card">
+<mat-card class="example-card">
   <mat-card-title>{{updatedComponent.label}} Component</mat-card-title>
   <mat-card-content>
     <mat-tab-group>
@@ -6,12 +6,12 @@
         <br>
         <form-component-editor-misc *ngIf="!loading" 
         
-        [data]="data" [liveEdit]="liveEdit"
+        [data]="data" [mode]="mode"
           (action)="actionTriggered($event)"></form-component-editor-misc>
       </mat-tab>
       <mat-tab label="Properties">
         <br>
-        <form-component-editor-schema *ngIf="!loading"  [data]="data" [liveEdit]="liveEdit" (action)="actionTriggered($event)"></form-component-editor-schema>
+        <form-component-editor-schema *ngIf="!loading"  [data]="data" [mode]="mode" (action)="actionTriggered($event)"></form-component-editor-schema>
       </mat-tab>
       <mat-tab label="Custom Config">
         <br>
@@ -28,13 +28,11 @@
     </div>
   </mat-card-actions>
 </mat-card>
- -->
 
-<!-- 
 <div class="form-component-editor-table">
   <div class="form-component-editor-left-div">
-    <form-component-editor-misc *ngIf="step==0 && !loading" [component]="updatedComponent" [data]="data" [liveEdit]="liveEdit" (action)="actionTriggered($event)"></form-component-editor-misc>
-    <form-component-editor-schema *ngIf="step==1 && !loading" [component]="updatedComponent" [data]="data" [liveEdit]="liveEdit" (action)="actionTriggered($event)"></form-component-editor-schema>
+    <form-component-editor-misc *ngIf="step==0 && !loading" [component]="updatedComponent" [data]="data" [mode]="mode" (action)="actionTriggered($event)"></form-component-editor-misc>
+    <form-component-editor-schema *ngIf="step==1 && !loading" [component]="updatedComponent" [data]="data" [mode]="mode" (action)="actionTriggered($event)"></form-component-editor-schema>
   </div>
   <div class="form-component-editor-right-div">
     <mat-list>
@@ -49,4 +47,4 @@
       </mat-list-item>
     </mat-list>
   </div>
-</div> -->
+</div>

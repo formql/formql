@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormComponent, FormQLMode } from '@formql/core';
 
 @Component({
   selector: 'form-component-editor-misc',
@@ -8,10 +9,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class FormComponentEditorMiscComponent implements OnInit {
   static componentName = "FormComponentEditorMiscComponent";
   
-  //@Input() component: FormComponent<any>;
+  @Input() component: FormComponent<any>;
   @Input() data: any;
   
-  @Input() liveEdit: boolean;
+  @Input() mode: FormQLMode;
   
   @Output() action = new EventEmitter<any>();
 

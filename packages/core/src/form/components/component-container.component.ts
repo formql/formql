@@ -67,8 +67,7 @@ export class ComponentContainerComponent implements OnInit, AfterViewInit {
         private componentFactoryResolver: ComponentFactoryResolver,
         private viewContainerRef: ViewContainerRef,
         private eventHandlerService: EventHandlerService,
-        private formStoreService: FormStoreService,
-        private renderer: Renderer2
+        private formStoreService: FormStoreService
     ) {}
 
     ngOnInit() {
@@ -91,6 +90,7 @@ export class ComponentContainerComponent implements OnInit, AfterViewInit {
             const tooltip = this.viewContainerRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, "TooltipComponent"));
             (<any>tooltip).instance.wrapper = this.wrapper;
             (<any>tooltip).instance.type = WrapperType.Component;
+            (<any>tooltip).instance.object = this.component;
             this.tooltip.insert(tooltip.hostView);
         }
     }

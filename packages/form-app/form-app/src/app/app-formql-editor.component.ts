@@ -1,16 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormQLMode } from '../../../../core/src/form/models/formql-mode.model';
-// import { FormQLMode } from '@formql/core';
-
-
-
-//import { FormQLEditorComponent } from '@formql/editor';
-
+import { FormQLMode } from '@formql/core';
 
 @Component({
     selector: 'app-formql-editor',
-    template: `<formql-editor [mode]="mode" [formName]="formName"></formql-editor>`,
+    styles: [`.mainDiv {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }`],
+    template: `<div class="mainDiv">
+                <formql-editor [mode]="mode" [formName]="formName"></formql-editor>
+                </div>`,
 })
 export class AppFormQLEditorComponent implements OnInit {
 

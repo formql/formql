@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
 
-import { IFormQLService } from "../../../../core/src/form/interfaces/formql-service";
-import { FormWrapper } from "../../../../core/src/form/models/form-wrapper.model";
-//import { IFormQLService, FormWrapper } from "@formql/core";
+import { IFormQLService, FormWrapper } from "@formql/core";
 import { of } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 

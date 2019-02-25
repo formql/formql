@@ -13,5 +13,5 @@ export enum EventType {
     
     
     // Save event
-    SaveData = 5
+    SubmitForm = 5
 }

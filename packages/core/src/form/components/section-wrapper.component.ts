@@ -84,6 +84,7 @@ export class SectionWrapperComponent implements OnInit {
             const tooltip = this.viewContainerRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, "TooltipComponent"));
             (<any>tooltip).instance.wrapper = this.wrapper;
             (<any>tooltip).instance.type = WrapperType.Section;
+            (<any>tooltip).instance.object = this.section;
             this.tooltip.insert(tooltip.hostView);
         }
     }

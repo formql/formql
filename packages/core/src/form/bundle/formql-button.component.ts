@@ -62,7 +62,7 @@ export class FormQLButtonComponent implements ControlValueAccessor {
     registerOnTouched(fn: any): void { }
 
     onClick() {
-        this.eventHandlerService.send(EventType.SaveData, null);
+        this.eventHandlerService.send(EventType.SubmitForm, null);
     }
 
 }

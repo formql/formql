@@ -1,12 +1,10 @@
-import { OnInit, OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, 
-    Type, ViewEncapsulation, ElementRef, Input, ChangeDetectionStrategy, Renderer2 } from "@angular/core";
+import { OnInit, OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, Renderer2 } from "@angular/core";
 
 //import { FormQLComponent, FormQLMode } from "@formql/core";
 import { ActivatedRoute } from "@angular/router";
-import { MatIconRegistry, MatSidenav } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
-import { FormQLMode, HelperService } from "@formql/core";
+import { FormQLMode, HelperService, EventHandlerService, EventHandler, EventType} from "@formql/core";
 
 
 @Component({
@@ -24,28 +22,24 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 	@ViewChild('rightSidenav', { read: ViewContainerRef }) rightSidenav: ViewContainerRef;
     @ViewChild('editorWindow', { read: ViewContainerRef }) editorWindow: ViewContainerRef;
     @ViewChild('pusher', { read: ViewContainerRef }) pusher: ViewContainerRef;
+    @ViewChild('editor', { read: ViewContainerRef }) editor: ViewContainerRef;
     
 
 	loading: boolean = true;
 	saving: boolean = false;
-	step: number;
-	editMode: boolean = false;
-	liveEditMode: boolean = false;
-
 	reactiveForm: FormGroup;
 	
 	constructor(
 		private componentFactoryResolver: ComponentFactoryResolver,
 		private vcRef: ViewContainerRef,
-		
+		private eventHandlerService: EventHandlerService,
 		private route: ActivatedRoute,
-		private iconRegistry: MatIconRegistry,
 		private sanitizer: DomSanitizer,
         private formBuilder: FormBuilder,
         private renderer: Renderer2
 
 	) {
-		//this.structureService.loadIcons(this.iconRegistry, this.sanitizer);
+		this.loadEventHandlers();
 	}
 
 	ngOnInit() {
@@ -70,13 +64,13 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
     }
     
-    open() {
+    openEditBar() {
         this.renderer.addClass(this.editorWindow.element.nativeElement, "fql-bar-effect");
         this.renderer.addClass(this.editorWindow.element.nativeElement, "fql-slide-bar-open");
         this.renderer.addClass(this.pusher.element.nativeElement, "fql-slide-pusher");
     }
 
-    close() {
+    closeEditBar() {
         this.renderer.removeClass(this.editorWindow.element.nativeElement, "fql-bar-effect");
         this.renderer.removeClass(this.editorWindow.element.nativeElement, "fql-slide-bar-open");
         this.renderer.removeClass(this.pusher.element.nativeElement, "fql-slide-pusher");
@@ -94,18 +88,20 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 	}
 
 	loadEditor(componentName, component) {
-		// this.editor.clear();
+		this.editor.clear();
 
-		// let comp = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, componentName));
-		// (<any>comp).instance.component = component;
-		// //(<any>comp).instance.data = this.data;
-		// (<any>comp).instance.liveEdit = this.liveEditMode;
+		let comp = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, componentName));
+		(<any>comp).instance.component = component;
+		//(<any>comp).instance.data = this.data;
+		(<any>comp).instance.mode = this.mode;
 
-		// (<any>comp).instance.action.subscribe(action => {
-		// 	this.editorResponse(action);
-		// });
+		(<any>comp).instance.action.subscribe(action => {
+			this.editorResponse(action);
+		});
 
-		// this.editor.insert(comp.hostView);
+        this.editor.insert(comp.hostView);
+        
+        this.openEditBar();
 	}
 
 
@@ -154,11 +150,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 		// }
 	}
 
-	setStep(index: number) {
-		this.step = index;
-    }
-    
-    rightSideNavBarActionClick(event) {
+	rightSideNavBarActionClick(event) {
         if (event === "saveForm")
             this.saveForm();
         else
@@ -169,46 +161,19 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
     }
 
 	loadEventHandlers() {
-		// this.eventHandlerService.event.subscribe(res => {
-		// 	let eventHandler = <EventHandler>res;
+		this.eventHandlerService.event.subscribe(res => {
+			let eventHandler = <EventHandler>res;
 
-		// 	switch (eventHandler.eventType) {
-		// 		case EventType.EditingComponent:
-		// 			this.loadEditor("FormComponentEditorComponent", eventHandler.event);
-		// 			this.rightSidenav.open();
-		// 			break;
+			switch (eventHandler.eventType) {
+				case EventType.EditingComponent:
+					this.loadEditor("FormComponentEditorComponent", eventHandler.event);
+					break;
 
-		// 		case EventType.EditingSection:
-		// 			this.loadEditor("FormSectionEditorComponent", eventHandler.event);
-		// 			this.rightSidenav.open();
-		// 			break;
-
-		// 		case EventType.DndFormChanged:
-		// 			this.formStoreService.dispatchUpdateFormAction(this.form);
-		// 			break;
-
-		// 		case EventType.SaveData:
-		// 			this.saveData();
-		// 			break;
-
-		// 	}
-		// });
-
-		// this.dragulaService.createGroup('sections', {
-		// 	revertOnSpill: true,
-		// 	copy: false,
-		// 	moves: function (el, container, sectionHandle) {
-		// 		return HelperService.dndContainsClass(sectionHandle, 'form-section-move-button');
-		// 	}
-		// });
-
-		// this.dragulaService.createGroup('components', {
-		// 	revertOnSpill: true,
-		// 	copy: false,
-		// 	moves: function (el, container, columnHandle) {
-		// 		return HelperService.dndContainsClass(columnHandle, 'form-component-move-button');
-		// 	}
-		// });
+				case EventType.EditingSection:
+					this.loadEditor("FormSectionEditorComponent", eventHandler.event);
+					break;
+			}
+		});
 	}
 
 	

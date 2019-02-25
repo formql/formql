@@ -7,13 +7,11 @@ import { HelperService } from "../services/helper.service";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { FormComponent, ComponentControl } from "../models/form-component.model";
 import { FormQLMode } from "../models/formql-mode.model";
-import { Observable } from "rxjs";
-import { Section } from "../models/section.model";
 import { Page } from "../models/page.model";
 
 @Component({
     selector: 'formql',
-    template: `<span #target></span>`,
+    template: `<ng-container #target></ng-container>`,
     styleUrls: ['./formql.component.scss']
 })
 export class FormQLComponent implements OnInit, OnDestroy {
@@ -44,8 +42,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
         private vcRef: ViewContainerRef,
         private eventHandlerService: EventHandlerService,
         private formStoreService: FormStoreService,
-        private formBuilder: FormBuilder,
-        private cd: ChangeDetectorRef
+        private formBuilder: FormBuilder
     ) {
     }
 
@@ -151,18 +148,6 @@ export class FormQLComponent implements OnInit, OnDestroy {
             let eventHandler = <EventHandler>res;
 
             switch (eventHandler.eventType) {
-                case EventType.EditingComponent:
-                    this.editorEvent.emit({ name: "FormComponentEditorComponent", event: eventHandler.event});
-                    //this.loadEditor("FormComponentEditorComponent", );
-                    //this.rightSidenav.open();
-                    break;
-
-                case EventType.EditingSection:
-                    this.editorEvent.emit({ name: "FormComponentEditorComponent", event: eventHandler.event});
-                    //this.loadEditor("FormSectionEditorComponent", eventHandler.event);
-                    //this.rightSidenav.open();
-                    break;
-
                 case EventType.DndFormChanged:
                     let index = this.form.pages.findIndex(p=>p.pageId === (<Page>res.event).pageId);
                     
@@ -170,10 +155,9 @@ export class FormQLComponent implements OnInit, OnDestroy {
                         this.form.pages[index] = res.event;
                     
                     this.populateReactiveForm(true);
-                    //this.formStoreService.dispatchUpdateFormAction(this.form);
                     break;
 
-                case EventType.SaveData:
+                case EventType.SubmitForm:
                     this.saveData();
                     break;
 
