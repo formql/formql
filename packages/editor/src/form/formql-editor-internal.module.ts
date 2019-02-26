@@ -23,10 +23,11 @@ import { FormSectionValidatorComponent } from "./components/form-editors/form-se
 import { AceModule, ACE_CONFIG, AceConfigInterface } from 'ngx-ace-wrapper';
 import { FormAceEditorComponent } from "./components/form-ace-editor/form-ace-editor.component";
 
-import { FormQlLeftSideBar } from "./components/form-ql-left-side-bar.component";
+import { LeftSideBarComponent } from "./components/left-side-bar.component";
 import { TextMaskModule } from 'angular2-text-mask';
 import { FormQLEditorComponent } from "./components/formql-editor.component";
 import { TooltipComponent } from "./components/tooltip.component";
+import { RightSideBarComponent } from "./components/right-side-bar.component";
 
 
 const DEFAULT_ACE_CONFIG: AceConfigInterface = {
@@ -57,7 +58,8 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     FormEditorJsonInputComponent,
     FormSectionValidatorComponent,
     FormAceEditorComponent,
-    FormQlLeftSideBar,
+    LeftSideBarComponent,
+    RightSideBarComponent,
     // fields
     // FormQLComponent,
 
@@ -69,6 +71,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     FormComponentEditorComponent, 
     FormSectionEditorComponent,
     TooltipComponent,
+    RightSideBarComponent,
     // fields 
     FormEditorJsonInputComponent
   ],

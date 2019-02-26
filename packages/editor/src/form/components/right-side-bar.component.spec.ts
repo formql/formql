@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormQlLeftSideBar } from './form-ql-left-side-bar.component';
+import { RightSideBarComponent } from './right-side-bar.component';
 
-describe('FormQlLeftSideBar', () => {
-  let component: FormQlLeftSideBar;
-  let fixture: ComponentFixture<FormQlLeftSideBar>;
+describe('RightSideBarComponent', () => {
+  let component: RightSideBarComponent;
+  let fixture: ComponentFixture<RightSideBarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormQlLeftSideBar ]
+      declarations: [ RightSideBarComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FormQlLeftSideBar);
+    fixture = TestBed.createComponent(RightSideBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

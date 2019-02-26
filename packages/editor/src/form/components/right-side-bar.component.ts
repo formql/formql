@@ -7,12 +7,12 @@ import { SafeHtml } from '@angular/platform-browser';
 
 
 @Component({
-    selector: '[form-component-editor]',
-    templateUrl: './form-component-editor.component.html',
-    styleUrls: ['./form-component-editor.component.scss']
+    selector: '[right-side-bar]',
+    templateUrl: './right-side-bar.component.html',
+    styleUrls: ['./right-side-bar.component.scss']
 })
-export class FormComponentEditorComponent implements OnInit {
-    static componentName = "FormComponentEditorComponent";
+export class RightSideBarComponent implements OnInit {
+    static componentName = "RightSideBarComponent";
 
     @Input() component: FormComponent<any>;
     @Input() data: any;

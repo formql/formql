@@ -1,0 +1,41 @@
+.flq-left-menu {
+    display: grid;
+    display: -ms-grid;
+    grid-template-rows: 55px 55px;
+    -ms-grid-rows: 55px 55px;
+}
+
+.flq-left-menu-section {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 1;
+    color: white;
+    margin: 10px;
+    margin-bottom: 20px;
+}
+
+.flq-left-menu-section svg {
+    fill: rgba(255, 255, 255, 0.9);
+    width: 40px;
+    height: 40px;
+    cursor: grab;
+}
+
+.flq-left-menu-component {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    -ms-grid-row: 2;
+    -ms-grid-row-span: 1;
+    color: white;
+    margin: 10px;
+}
+
+.flq-left-menu-component svg {
+    fill: rgba(255, 255, 255, 0.9);
+    width: 44px;
+    height: 40px;
+    cursor: grab;
+}
+
+

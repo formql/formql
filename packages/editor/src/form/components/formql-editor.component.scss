@@ -1,3 +1,5 @@
+@import "../../variables.scss";
+
 *,
 *::after,
 *::before {
@@ -81,6 +83,8 @@
     -ms-grid-column-span: 1;
     -ms-grid-row: 1;
     -ms-grid-row-span: 1;
+    font-family: $font-family;
+    font-size: $font-size-labels;
 }
 
 .fql-header-menu {
@@ -100,6 +104,7 @@
     padding-left: 5px;
     padding-right: 7px;
     border: 1px solid rgb(28, 32, 34);
+    font-family: $font-family;
 }
 
 .fql-header-menu:hover {
@@ -133,6 +138,7 @@
     -ms-grid-column-span: 1;
     -ms-grid-row: 1;
     -ms-grid-row-span: 1;
+    font-size: $font-size-labels;
 }
 
 .fql-slide-bar {

@@ -121,8 +121,9 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 		// this.editor.insert(comp.hostView);
 	}
 
-	editorResponse(component) {
-		//this.rightSidenav.close();
+	editorResponse($event) {
+        this.closeEditBar();
+        //this.rightSidenav.close();
 		// if (component)
 		// 	this.formStoreService.dispatchUpdateComponentAction(component);
 		//this.editor.clear();
@@ -166,11 +167,11 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
 			switch (eventHandler.eventType) {
 				case EventType.EditingComponent:
-					this.loadEditor("FormComponentEditorComponent", eventHandler.event);
+					this.loadEditor("RightSideBarComponent", eventHandler.event);
 					break;
 
 				case EventType.EditingSection:
-					this.loadEditor("FormSectionEditorComponent", eventHandler.event);
+					this.loadEditor("RightSideBarComponent", eventHandler.event);
 					break;
 			}
 		});

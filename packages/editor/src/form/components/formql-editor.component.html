@@ -1,7 +1,4 @@
-<!-- <mat-spinner *ngIf="loading||saving" id="loader"></mat-spinner> -->
-
 <div #editorWindow class="fql-editor-window">
-
     <header class="fql-editor-header">
         <div class="fql-header-line">
             <div class="fql-logo">
@@ -21,28 +18,11 @@
     </aside>
     <div class="fql-editor-main">
         <nav #rightSidenav class="fql-slide-bar fql-bar-effect">
-            <button (click)="closeEditBar()">Close</button>
             <ng-container #editor></ng-container>
         </nav>
         <div #pusher></div>
         <ng-container #target></ng-container>
-        
-        <!-- <mat-sidenav-container> -->
-        <!-- <mat-sidenav #leftSidenav opened mode="side" position="start" class="fql-left-sidenav"> -->
-
-        <!-- </mat-sidenav> -->
-        <!-- <mat-sidenav *ngIf="editMode || liveEditMode" #rightSidenav mode="over" position='end' class="mat-drawer-right-sidenav"
-            [disableClose]="true">
-            <mat-icon (click)="rightSidenav.close(); " svgIcon="close" class="right-close-icon"></mat-icon>
-            <div class="editor">
-                <ng-container #editor></ng-container>
-            </div>
-        </mat-sidenav> -->
-        <!-- <mat-sidenav-content> -->
-        
-        <!-- </mat-sidenav-content> -->
     </div>
-    <!-- </mat-sidenav-container> -->
 </div>
 
 <!-- <ng-container #target></ng-container> -->
