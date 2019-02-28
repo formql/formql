@@ -5,6 +5,7 @@
 export * from './form/components/formql.component';
 export * from './form/models/form-wrapper.model';
 export * from './form/models/form-component.model';
+export * from './form/models/section.model';
 export * from './form/services/form.service';
 export * from './form/models/wrapper-type.model';
 export * from './form/models/formql-mode.model';

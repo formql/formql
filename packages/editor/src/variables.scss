@@ -1,2 +1,21 @@
 $font-family: Segoe UI;
 $font-size-labels: 14px;
+
+input[type=text], select {
+  width: 100%;
+  padding: 8px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+input[type=text]:focus {
+    border: 1px solid #555;
+}
+
+.field-label {
+    font-size: 14px;
+}

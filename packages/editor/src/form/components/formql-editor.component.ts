@@ -4,7 +4,7 @@ import { OnInit, OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFac
 import { ActivatedRoute } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
-import { FormQLMode, HelperService, EventHandlerService, EventHandler, EventType} from "@formql/core";
+import { FormQLMode, HelperService, EventHandlerService, EventHandler, EventType, FormQLComponent} from "@formql/core";
 
 
 @Component({
@@ -24,6 +24,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
     @ViewChild('pusher', { read: ViewContainerRef }) pusher: ViewContainerRef;
     @ViewChild('editor', { read: ViewContainerRef }) editor: ViewContainerRef;
     
+    formql: any
 
 	loading: boolean = true;
 	saving: boolean = false;
@@ -55,12 +56,12 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 				this.ids[0] = "0";
         }
         
-        let comp = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, "FormQLComponent"));
-		(<any>comp).instance.mode = this.mode;
-        (<any>comp).instance.formName = this.formName;
-        (<any>comp).instance.reactiveForm = this.reactiveForm;
+        this.formql = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, "FormQLComponent"));
+        (<any>this.formql).instance.mode = this.mode;
+        (<any>this.formql).instance.formName = this.formName;
+        (<any>this.formql).instance.reactiveForm = this.reactiveForm;
 
-		this.target.insert(comp.hostView);
+		this.target.insert(this.formql.hostView);
 
     }
     
@@ -123,10 +124,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
 	editorResponse($event) {
         this.closeEditBar();
-        //this.rightSidenav.close();
-		// if (component)
-		// 	this.formStoreService.dispatchUpdateComponentAction(component);
-		//this.editor.clear();
+        this.editor.clear();
 	}
 
 	saveForm() {
@@ -167,11 +165,11 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
 			switch (eventHandler.eventType) {
 				case EventType.EditingComponent:
-					this.loadEditor("RightSideBarComponent", eventHandler.event);
+					this.loadEditor("ComponentEditorComponent", eventHandler.event);
 					break;
 
 				case EventType.EditingSection:
-					this.loadEditor("RightSideBarComponent", eventHandler.event);
+					this.loadEditor("SectionEditorComponent", eventHandler.event);
 					break;
 			}
 		});

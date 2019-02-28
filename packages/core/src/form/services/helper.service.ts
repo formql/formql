@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { ComponentValidator, FormComponent } from "../models/form-component.model";
 import { controlNameBinding } from "@angular/forms/src/directives/reactive_directives/form_control_name";
 import { ComponentFactory } from "@angular/core";
+import { TargetLocator } from "selenium-webdriver";
 
 @Injectable()
 export class HelperService {
@@ -191,15 +192,32 @@ export class HelperService {
         return value == null || value == "";
     }
 
-    public static deepCopy(oldObj: any) {
+    public static deepCopy(oldObj: any, ignoreProperty: Array<string> = null) {
         var newObj = oldObj;
         if (oldObj && typeof oldObj === "object") {
             newObj = Object.prototype.toString.call(oldObj) === "[object Array]" ? [] : {};
             for (var i in oldObj) {
-                newObj[i] = this.deepCopy(oldObj[i]);
+                if (!ignoreProperty || (ignoreProperty && !ignoreProperty.find(p=>p==i)))
+                    newObj[i] = this.deepCopy(oldObj[i]);
             }
         }
         return newObj;
+    }
+
+    public static propertyCopy(source: any, target: any,  ignoreProperty: Array<string> = null) {
+        if (source && typeof source === "object") {
+            for (var i in source) {
+                if (!ignoreProperty || (ignoreProperty && !ignoreProperty.find(p=>p==i)))
+                {
+                    if (source[i] && typeof source[i] === "object") 
+                        this.propertyCopy(source[i], target[i]);
+                    else
+                        target[i] = source[i];
+                }
+            }
+        }
+        else
+            console.log("propertyCopy doesn't support primitives");
     }
 
     public static formatForGraphQl(obj: any) {
