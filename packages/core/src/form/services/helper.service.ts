@@ -98,7 +98,7 @@ export class HelperService {
             if (value == undefined || value == null)
                 response.value == null;
             else
-                response.value = JSON.parse(JSON.stringify(value));
+                response.value = this.deepCopy(value);
         }
         catch (err) {
             return response.error = err;
@@ -210,7 +210,11 @@ export class HelperService {
                 if (!ignoreProperty || (ignoreProperty && !ignoreProperty.find(p=>p==i)))
                 {
                     if (source[i] && typeof source[i] === "object") 
+                    {
+                        if (!target[i])
+                            target[i] = {};
                         this.propertyCopy(source[i], target[i]);
+                    }
                     else
                         target[i] = source[i];
                 }

@@ -148,10 +148,11 @@
 	z-index: 100;
 	visibility: hidden;
 	width: 50%;
-	height: 100%;
+	height: 95%;
 	background: #fff;
 	-webkit-transition: all 0.5s;
     transition: all 0.5s;
+    overflow-y: auto;
 }
 
 .fql-slide-bar::after {

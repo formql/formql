@@ -22,13 +22,8 @@ import { FormComponent, ComponentValidator } from '../models/form-component.mode
 })
 export class FormQLLabelComponent implements ControlValueAccessor {
   static componentName = 'FormQLLabelComponent';
-  static validators = [
-    <ComponentValidator> {
-      name: "Required",
-      validator: Validators.required,
-      key: "required"
-    }
-  ];
+  static formQLComponent = true;
+  static validators = [];
 
   @Input() field: FormComponent<any>;
   @Input() reactiveFormGroup: FormGroup;

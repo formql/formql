@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormComponent, HelperService, ComponentProperties, FormQLMode } from '@formql/core';
+import { Component, OnInit, Input, Output, EventEmitter, ComponentFactoryResolver } from '@angular/core';
+import { FormComponent, HelperService, ComponentProperties, FormQLMode, ComponentProperty, ComponentValidator } from '@formql/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SafeHtml } from '@angular/platform-browser';
 
@@ -13,23 +13,31 @@ export class ComponentEditorComponent implements OnInit {
 
     @Input() component: FormComponent<any>;
     @Input() data: any;
-
     @Input() mode: FormQLMode;
-
     @Output() action = new EventEmitter<any>();
 
     updatedComponent: FormComponent<any>;
-
     disableSaveButton: boolean = false;
+    componentList: Array<any>;
+    validators: Array<ComponentValidator>;
+    properties: Array<ComponentProperty>;
 
     constructor(
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private componentFactoryResolver: ComponentFactoryResolver
     ) {
+        this.componentList = Array.from(this.componentFactoryResolver['_factories'].keys())
+                .filter((x:any)=>x.formQLComponent)
+                .map((x:any)=>x.componentName)
+                .filter((x, index, self) => index == self.indexOf(x))
+                .sort();
     }
 
     ngOnInit() {
         this.updatedComponent = <FormComponent<any>>{};
         this.updatedComponent = HelperService.deepCopy(this.component, ["value"]);
+
+        this.loadValidators();
     }
 
     save() {
@@ -37,19 +45,14 @@ export class ComponentEditorComponent implements OnInit {
         this.action.emit(this.component);
     }
 
-    getMessage(condition) {
-        let data = JSON.parse(JSON.stringify(this.data));
-        let response = HelperService.evaluateCondition(condition, data);
-        let html = "";
-
-        this.disableSaveButton = response.error ? true : false;
-
-        html = "<div>Result: " + response.value + "</div>";
-
-        if (response.error)
-            html += "<div style='color:red'>" + response.error + "</div>";
-
-        return this.sanitizer.bypassSecurityTrustHtml(html);
+    getResult(condition) {
+        let response = HelperService.evaluateCondition(condition, this.data);
+        return response.value;
+    }
+    
+    getError(condition) {
+        let response = HelperService.evaluateCondition(condition, this.data);
+        return response.error;
     }
 
     
@@ -64,8 +67,36 @@ export class ComponentEditorComponent implements OnInit {
         this.action.emit();
     }
 
-    copyConfiguration(value)
-    {
-        // this.updatedComponent.configuration = value;
+    loadValidators() {
+        this.validators = Array<ComponentValidator>();
+        this.validators.push(<ComponentValidator>{ name: "Calculated Field", key: "value", validator: null });
+        this.validators.push(<ComponentValidator>{ name: "Hidden Condition", key: "hidden", validator: null });
+        this.validators.push(<ComponentValidator>{ name: "Read Only Condition", key: "readonly", validator: null });
+        
+        let factories = Array.from(this.componentFactoryResolver['_factories'].keys());
+        let type = factories.find((x: any)=>x.componentName == this.component.componentName);
+
+        if (type != null && type["validators"] != null)
+        {
+          type["validators"].forEach(v=>{
+            this.validators.push(v);
+          });
+        }
+
+        this.properties = Array<ComponentProperty>();
+
+        this.validators.forEach(v => {
+          if (this.updatedComponent.properties == null)
+            this.updatedComponent.properties = <ComponentProperties>{};
+
+          let item = this.updatedComponent.properties[v.key];
+          if (item == undefined)
+          {
+            this.updatedComponent.properties[v.key] = <ComponentProperty>{ key: v.key, condition: ""};
+            this.properties.push(this.updatedComponent.properties[v.key]);
+          }
+          else
+            this.properties.push(item);
+        });
     }
 }

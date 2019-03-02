@@ -32,7 +32,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
     step: number;
     
     form: FormWrapper;
-    data: any;
+    public data: any;
     
     components: FormComponent<any>[];
     formControls: ComponentControl[];
@@ -81,21 +81,22 @@ export class FormQLComponent implements OnInit, OnDestroy {
                         }
                     });
 
-                    if (this.mode != FormQLMode.Edit) {
+                    //if (this.mode != FormQLMode.Edit) {
                         this.formStoreService.getData().subscribe(data => {
 
-                            if (data != null) {
+                            if (data != null) 
                                 this.data = data;
+                            else
+                                this.data = {};
 
-                                if (this.loading)
-                                    this.loadForm();
-                            }
+                            if (this.loading)                            
+                                this.loadForm();
                         });
-                    }
-                    else {
-                        if (this.loading)
-                            this.loadForm();
-                    }
+                    //}
+                    // else {
+                    //     if (this.loading)
+                    //         this.loadForm();
+                    // }
             }
         });
     }
@@ -105,8 +106,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
     }
 
     loadForm() {
-        this.loading = false;
-
+        this.loading = false;        
         let comp = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, this.form.layoutComponentName));
         (<any>comp).instance.form = this.form;
         (<any>comp).instance.reactiveForm = this.reactiveForm;
@@ -165,7 +165,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
         });
     }
 
-    populateReactiveForm(update)  {
+    populateReactiveForm(update:boolean, objectId:string = null)  {
         if (this.form.pages != null) {
             const pageGroup: any = {};
             this.form.pages.forEach(page => {
@@ -196,7 +196,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
                 this.form.pages.forEach(page => {
                     this.reactiveForm.setControl(page.pageId, pageGroup[page.pageId]);
                 });
-                this.updateTemplates();
+                this.updateTemplates(objectId);
             }
             else
                 this.reactiveForm = this.formBuilder.group(pageGroup);
@@ -204,16 +204,16 @@ export class FormQLComponent implements OnInit, OnDestroy {
         
     }
 
-    updateTemplates() {
+    updateTemplates(objectId:string = null) {
         this.form.pages.forEach(page => {
             page.sections.forEach(section => {
-                if (section.template.reRender)
+                if (section.template.reRender || (objectId && section.components.find(c=>c.componentId==objectId)))
                 {
                     section.template.reRender = false;
                     section.template = HelperService.deepCopy(section.template);
                 }
             });
-            if (page.template.reRender)
+            if (page.template.reRender || (objectId && page.sections.find(c=>c.sectionId==objectId)))
             {
                 page.template.reRender = false;
                 page.template = HelperService.deepCopy(page.template);

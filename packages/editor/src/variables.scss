@@ -1,7 +1,7 @@
 $font-family: Segoe UI;
 $font-size-labels: 14px;
 
-input[type=text], select {
+input[type=text], select, textarea {
   width: 100%;
   padding: 8px 10px;
   margin: 8px 0;
@@ -18,4 +18,5 @@ input[type=text]:focus {
 
 .field-label {
     font-size: 14px;
+    font-weight: bold;
 }

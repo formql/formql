@@ -6,12 +6,15 @@ import { FormComponent, ComponentValidator } from '../models/form-component.mode
 @Component({
   selector: 'formql-textbox',
   template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
-  <label [attr.for]="field.componentId">{{field.label}}</label>
+  <label [attr.for]="field.componentId" [ngClass]="{'label-required': field.properties?.required?.value}">{{field.label}}</label>
   <div>
-    <input [id]="field.componentId" [type]="field.type" formControlName="{{field.componentId}}" style="width:100%" [tabIndex]="tabIndex">
+    <input [id]="field.componentId" [type]="field.type" 
+        formControlName="{{field.componentId}}" style="width:100%" [tabIndex]="tabIndex"
+        [attr.disabled]="field.properties?.readonly?.value ? '' : null">
   </div>
 </div>`,
-  styleUrls: ['./formql-textbox.component.scss'],
+  styles: [`.label-required:after { content:" *"; color:red;}`,
+           `input[type="text"] { width: 100%; box-sizing: border-box; -webkit-box-sizing:border-box; -moz-box-sizing: border-box;}`],
   providers: [
   {
     provide: NG_VALUE_ACCESSOR,
@@ -26,6 +29,7 @@ import { FormComponent, ComponentValidator } from '../models/form-component.mode
 })
 export class FormQLTextBoxComponent implements ControlValueAccessor {
   static componentName = 'FormQLTextBoxComponent';
+  static formQLComponent = true;
   static validators = [
     <ComponentValidator> {
       name: "Required",

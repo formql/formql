@@ -12,7 +12,7 @@ export class DummyService implements IFormQLService {
 
     }
     getData(query: string, ids: string[]) {
-        return of(new FormWrapper());
+        return of({});
     }    
     getForm(name: string) {
         return this.http.get(`assets/api/${name}.json`);

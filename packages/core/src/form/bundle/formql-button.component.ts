@@ -26,6 +26,7 @@ import { EventType } from '../models/event-handler.model';
 
 export class FormQLButtonComponent implements ControlValueAccessor {
     static componentName = 'FormQLButtonComponent';
+    static formQLComponent = true;
     static validators = [];
 
     @Input() field: FormComponent<any>;

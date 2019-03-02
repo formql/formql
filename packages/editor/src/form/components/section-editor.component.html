@@ -1,105 +1,63 @@
 <div class="fql-editor-wrapper">
-    <div class="fql-editor-header">
-        <div class="fql-editor-title">
-            <h1>{{section?.sectionName}} Section</h1>
-        </div>
-        <div class="fql-editor-buttons">
-            <div class="fql-logo-save">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"> <path d="M0 0h24v24H0z" fill="none" /> <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" /></svg>
+        <div class="fql-editor-header">
+            <div class="fql-editor-title">
+                <h1>{{updatedSection?.sectionName}} Section</h1>
             </div>
-            <div (click)="cancel()" class="fql-logo-close">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            <div class="fql-editor-buttons">
+                <div (click)="save()" class="fql-logo-save">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"> <path d="M0 0h24v24H0z" fill="none" /> <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" /></svg>
+                </div>
+                <div (click)="cancel()" class="fql-logo-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="tab-wrap">
-        <input type="radio" name="tabs" id="tab1" checked>
-        <div class="tab-label-content" id="tab1-content">
-            <label for="tab1">General</label>
-            <div class="tab-content">
-                TAB 1 - as.</div>
-        </div>
+        <div class="tab-wrap">
+            <input type="radio" name="tabs" id="tab1" checked>
+            <div class="tab-label-content" id="tab1-content">
+                <label class="fql-tab-label" for="tab1">Properties</label>
+                <div class="tab-content">
+                    <div class="fql-properties-div">
+                        <label class="field-label" for="headerTemplate-gridTemplateColumns">Header Template - gridTemplateColumns</label>
+                        <input type="text" id="headerTemplate-gridTemplateColumns" [(ngModel)]="updatedSection.template.header.gridTemplateColumns" name="headerTemplate-gridTemplateColumns">
 
-        <input type="radio" name="tabs" id="tab2">
-        <div class="tab-label-content" id="tab2-content">
-            <label for="tab2">Properties</label>
-            <div class="tab-content">TAB 2 - Quisque egestas, purus in tempor vulputate, diam augue mollis quam, quis
-                elementum ipsum ex a risus. Quisque sed augue porta, facilisis felis vitae, cursus mi. Nullam mollis
-                magna eget tincidunt mollis. Sed suscipit placerat ultricies. Sed eget lorem et ipsum ultricies congue
-                eu a enim. Nam quis ex nec lorem dignissim suscipit eu ut felis. Vivamus molestie felis id purus
-                congue, vel ultrices sem molestie.</div>
-        </div>
-
-        <input type="radio" name="tabs" id="tab3">
-        <div class="tab-label-content" id="tab3-content">
-            <label for="tab3">Advanced</label>
-            <div class="tab-content">TAB 3 - Donec vulputate ante ac ligula vestibulum, id mollis diam commodo. Integer
-                at consequat magna. Sed elit sem, dictum nec porttitor ac, ultrices id enim. Morbi semper eros a enim
-                malesuada, eu finibus erat dictum. Ut vitae orci a odio sagittis malesuada. Cras volutpat vel lorem in
-                tempor. Duis ultricies lectus sit amet tellus vehicula faucibus. Etiam sed leo ac erat tempor feugiat
-                at quis ipsum. Mauris pellentesque nisl lorem, ac finibus sapien sagittis vel. Donec et lobortis est.
-                Vestibulum dignissim ligula nec erat interdum, quis sollicitudin metus pretium. Vestibulum quis dui
-                sapien. Proin commodo justo ac orci elementum molestie. Aliquam mattis orci vitae volutpat commodo.</div>
-        </div>
-        <div class="slide"></div>
-
-    </div>
-</div>
-
-
-
-
-
-
-
-
-<!-- <mat-card class="example-card">
-  <mat-card-title>{{updatedComponent.label}} Component</mat-card-title>
-  <mat-card-content>
-    <mat-tab-group>
-      <mat-tab label="General">
-        <br>
-        <form-component-editor-misc *ngIf="!loading" 
+                        <label class="field-label" for="headerTemplate-gridTemplateRows">Header Template - gridTemplateRows</label>
+                        <input type="text" id="headerTemplate-gridTemplateRows" [(ngModel)]="updatedSection.template.header.gridTemplateRows" name="headerTemplate-gridTemplateRows">
+                        
+                        <label class="field-label" for="headerTemplate-gridTemplateAreas">Header Template - gridTemplateAreas</label>
+                        <input type="text" id="headerTemplate-gridTemplateAreas" [(ngModel)]="updatedSection.template.header.gridTemplateAreas" name="headerTemplate-gridTemplateAreas">
+                    </div>
+                    <div class="fql-properties-div">
+                        <label class="field-label" for="bodyTemplate-gridTemplateColumns">Body Template - gridTemplateColumns</label>
+                        <input type="text" id="bodyTemplate-gridTemplateColumns" [(ngModel)]="updatedSection.template.body.gridTemplateColumns" name="bodyTemplate-gridTemplateColumns">
         
-        [data]="data" [mode]="mode"
-          (action)="actionTriggered($event)"></form-component-editor-misc>
-      </mat-tab>
-      <mat-tab label="Properties">
-        <br>
-        <form-component-editor-schema *ngIf="!loading"  [data]="data" [mode]="mode" (action)="actionTriggered($event)"></form-component-editor-schema>
-      </mat-tab>
-      <mat-tab label="Custom Config">
-        <br>
-        <form-editor-json-input [fieldLabel]="'Component Config'" [value]="updatedComponent.configuration" [lines]="50" (valueChange)="copyConfiguration($event)"></form-editor-json-input> 
-        <br>
-      </mat-tab>
-    </mat-tab-group>
-
-  </mat-card-content>
-  <mat-card-actions align="end">
-    <div style="margin-right: 8px;">
-      <button mat-flat-button color="warm" style="margin-right: 8px;" (click)="cancel()">Cancel</button>
-      <button mat-flat-button  (click)="save()" [disabled]="disableSaveButton">Save</button>
+                        <label class="field-label" for="bodyTemplate-gridTemplateRows">Body Template - gridTemplateRows</label>
+                        <input type="text" id="bodyTemplate-gridTemplateRows" [(ngModel)]="updatedSection.template.body.gridTemplateRows" name="bodyTemplate-gridTemplateRows">
+                        
+                        <label class="field-label" for="bodyTemplate-gridTemplateAreas">Body Template - gridTemplateAreas</label>
+                        <input type="text" id="bodyTemplate-gridTemplateAreas" [(ngModel)]="updatedSection.template.body.gridTemplateAreas" name="bodyTemplate-gridTemplateAreas">
+                    </div>
+                    
+                </div>
+            </div>
+    
+            <input type="radio" name="tabs" id="tab2">
+            <div class="tab-label-content" id="tab2-content">
+                <label class="fql-tab-label" for="tab2">Rules</label>
+                <div class="tab-content">
+                     
+                </div>
+            </div>
+    
+            <input type="radio" name="tabs" id="tab3">
+            <div class="tab-label-content" id="tab3-content">
+                <label class="fql-tab-label" for="tab3">Advanced</label>
+                <div class="tab-content">
+                    Comming soon... :-)
+                </div>
+            </div>
+            <div class="slide"></div>
+    
+        </div>
     </div>
-  </mat-card-actions>
-</mat-card>
-
-<div class="form-component-editor-table">
-  <div class="form-component-editor-left-div">
-    <form-component-editor-misc *ngIf="step==0 && !loading" [component]="updatedComponent" [data]="data" [mode]="mode" (action)="actionTriggered($event)"></form-component-editor-misc>
-    <form-component-editor-schema *ngIf="step==1 && !loading" [component]="updatedComponent" [data]="data" [mode]="mode" (action)="actionTriggered($event)"></form-component-editor-schema>
-  </div>
-  <div class="form-component-editor-right-div">
-    <mat-list>
-      <mat-list-item (click)="setStep(0)" style="cursor: pointer">
-        <mat-icon mat-list-icon svgIcon="label" class="forn-root-mat-list-item-icon"></mat-icon>
-      </mat-list-item>
-      <mat-list-item  (click)="setStep(1)" style="cursor: pointer">
-        <mat-icon mat-list-icon svgIcon="looks_one" class="forn-root-mat-list-item-icon"></mat-icon>
-      </mat-list-item>
-      <mat-list-item  (click)="setStep(2)" style="cursor: pointer">
-        <mat-icon mat-list-icon svgIcon="check_box" class="forn-root-mat-list-item-icon"></mat-icon>
-      </mat-list-item>
-    </mat-list>
-  </div>
-</div> -->
+    

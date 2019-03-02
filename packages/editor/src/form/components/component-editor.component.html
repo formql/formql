@@ -21,7 +21,9 @@
                 <input type="text" id="label" [(ngModel)]="updatedComponent.label" name="label">
                 
                 <label class="field-label" for="componentName">Component Name</label>
-                <input type="text" id="componentName" [(ngModel)]="updatedComponent.componentName" name="componentName">
+                <select [(ngModel)]="updatedComponent.componentName">
+                    <option *ngFor="let option of componentList" [ngValue]="option">{{option}}</option>
+                 </select>
 
                 <label class="field-label" for="type">Type</label>
                 <input type="text" id="type" [(ngModel)]="updatedComponent.type" name="type">
@@ -32,83 +34,33 @@
         <input type="radio" name="tabs" id="tab2">
         <div class="tab-label-content" id="tab2-content">
             <label class="fql-tab-label" for="tab2">Rules</label>
-            <div class="tab-content">TAB 2 - Quisque egestas, purus in tempor vulputate, diam augue mollis quam, quis
-                elementum ipsum ex a risus. Quisque sed augue porta, facilisis felis vitae, cursus mi. Nullam mollis
-                magna eget tincidunt mollis. Sed suscipit placerat ultricies. Sed eget lorem et ipsum ultricies congue
-                eu a enim. Nam quis ex nec lorem dignissim suscipit eu ut felis. Vivamus molestie felis id purus
-                congue, vel ultrices sem molestie.</div>
+            <div class="tab-content">
+                    <div>
+                <label class="field-label" for="schema">Schema</label>
+                <input type="text" id="schema" [(ngModel)]="updatedComponent.schema" name="schema">
+
+                <label class="field-label" for="textMask">Text Mask</label>
+                <input type="text" id="textMask" [(ngModel)]="updatedComponent.textMask" name="textMask">
+
+                <div *ngFor="let item of validators; let i=index" class="fql-properties-div">
+                    <label class="field-label" [for]="item.name">{{item.name}}</label>
+                    <textarea [name]="item.name" [id]="item.name" [(ngModel)]="properties[i].condition"></textarea>
+                    Result: {{getResult(properties[i].condition)}}
+                    <br>
+                    <span style="color:red">{{getError(properties[i].condition)}}</span>
+                </div>       
+                </div>
+            </div>
         </div>
 
         <input type="radio" name="tabs" id="tab3">
         <div class="tab-label-content" id="tab3-content">
             <label class="fql-tab-label" for="tab3">Advanced</label>
-            <div class="tab-content">TAB 3 - Donec vulputate ante ac ligula vestibulum, id mollis diam commodo. Integer
-                at consequat magna. Sed elit sem, dictum nec porttitor ac, ultrices id enim. Morbi semper eros a enim
-                malesuada, eu finibus erat dictum. Ut vitae orci a odio sagittis malesuada. Cras volutpat vel lorem in
-                tempor. Duis ultricies lectus sit amet tellus vehicula faucibus. Etiam sed leo ac erat tempor feugiat
-                at quis ipsum. Mauris pellentesque nisl lorem, ac finibus sapien sagittis vel. Donec et lobortis est.
-                Vestibulum dignissim ligula nec erat interdum, quis sollicitudin metus pretium. Vestibulum quis dui
-                sapien. Proin commodo justo ac orci elementum molestie. Aliquam mattis orci vitae volutpat commodo.</div>
+            <div class="tab-content">
+                Comming soon... :-)
+            </div>
         </div>
         <div class="slide"></div>
 
     </div>
 </div>
-
-
-
-
-
-
-
-
-<!-- <mat-card class="example-card">
-  <mat-card-title>{{updatedComponent.label}} Component</mat-card-title>
-  <mat-card-content>
-    <mat-tab-group>
-      <mat-tab label="General">
-        <br>
-        <form-component-editor-misc *ngIf="!loading" 
-        
-        [data]="data" [mode]="mode"
-          (action)="actionTriggered($event)"></form-component-editor-misc>
-      </mat-tab>
-      <mat-tab label="Properties">
-        <br>
-        <form-component-editor-schema *ngIf="!loading"  [data]="data" [mode]="mode" (action)="actionTriggered($event)"></form-component-editor-schema>
-      </mat-tab>
-      <mat-tab label="Custom Config">
-        <br>
-        <form-editor-json-input [fieldLabel]="'Component Config'" [value]="updatedComponent.configuration" [lines]="50" (valueChange)="copyConfiguration($event)"></form-editor-json-input> 
-        <br>
-      </mat-tab>
-    </mat-tab-group>
-
-  </mat-card-content>
-  <mat-card-actions align="end">
-    <div style="margin-right: 8px;">
-      <button mat-flat-button color="warm" style="margin-right: 8px;" (click)="cancel()">Cancel</button>
-      <button mat-flat-button  (click)="save()" [disabled]="disableSaveButton">Save</button>
-    </div>
-  </mat-card-actions>
-</mat-card>
-
-<div class="form-component-editor-table">
-  <div class="form-component-editor-left-div">
-    <form-component-editor-misc *ngIf="step==0 && !loading" [component]="updatedComponent" [data]="data" [mode]="mode" (action)="actionTriggered($event)"></form-component-editor-misc>
-    <form-component-editor-schema *ngIf="step==1 && !loading" [component]="updatedComponent" [data]="data" [mode]="mode" (action)="actionTriggered($event)"></form-component-editor-schema>
-  </div>
-  <div class="form-component-editor-right-div">
-    <mat-list>
-      <mat-list-item (click)="setStep(0)" style="cursor: pointer">
-        <mat-icon mat-list-icon svgIcon="label" class="forn-root-mat-list-item-icon"></mat-icon>
-      </mat-list-item>
-      <mat-list-item  (click)="setStep(1)" style="cursor: pointer">
-        <mat-icon mat-list-icon svgIcon="looks_one" class="forn-root-mat-list-item-icon"></mat-icon>
-      </mat-list-item>
-      <mat-list-item  (click)="setStep(2)" style="cursor: pointer">
-        <mat-icon mat-list-icon svgIcon="check_box" class="forn-root-mat-list-item-icon"></mat-icon>
-      </mat-list-item>
-    </mat-list>
-  </div>
-</div> -->

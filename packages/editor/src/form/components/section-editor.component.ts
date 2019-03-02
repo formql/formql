@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 // import { FormComponent, ComponentProperty, ComponentProperties } from '../../../models/model/form-component.model';
 // import { HelperService } from '../../../services/helper.service';
-import { FormComponent, HelperService, ComponentProperties, FormQLMode, Section } from '@formql/core';
+import { FormComponent, HelperService, ComponentProperties, FormQLMode, Section, ComponentValidator, ComponentProperty } from '@formql/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SafeHtml } from '@angular/platform-browser';
 
@@ -16,14 +16,13 @@ export class SectionEditorComponent implements OnInit {
 
     @Input() section: Section;
     @Input() data: any;
-
     @Input() mode: FormQLMode;
-
     @Output() action = new EventEmitter<any>();
 
     updatedSection: Section;
-
     disableSaveButton: boolean = false;
+    validators: Array<ComponentValidator>;
+    properties: Array<ComponentProperty>;
 
     constructor(
         private sanitizer: DomSanitizer
@@ -32,11 +31,11 @@ export class SectionEditorComponent implements OnInit {
 
     ngOnInit() {
         this.updatedSection = <Section>{};
-        this.updatedSection = HelperService.deepCopy(this.section);
+        this.updatedSection = HelperService.deepCopy(this.section, ["components"]);
     }
 
     save() {
-        //HelperService.propertyCopy(this.updatedSection, this.section);
+        HelperService.propertyCopy(this.updatedSection, this.section, ["components"]);
         this.action.emit(this.section);
     }
 

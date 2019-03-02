@@ -28,9 +28,9 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
 	loading: boolean = true;
 	saving: boolean = false;
-	reactiveForm: FormGroup;
-	
-	constructor(
+    reactiveForm: FormGroup;
+    
+    constructor(
 		private componentFactoryResolver: ComponentFactoryResolver,
 		private vcRef: ViewContainerRef,
 		private eventHandlerService: EventHandlerService,
@@ -60,7 +60,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
         (<any>this.formql).instance.mode = this.mode;
         (<any>this.formql).instance.formName = this.formName;
         (<any>this.formql).instance.reactiveForm = this.reactiveForm;
-
+        
 		this.target.insert(this.formql.hostView);
 
     }
@@ -88,12 +88,16 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 		
 	}
 
-	loadEditor(componentName, component) {
+	loadEditor(name:string, object:any, type:EventType) {
 		this.editor.clear();
 
-		let comp = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, componentName));
-		(<any>comp).instance.component = component;
-		//(<any>comp).instance.data = this.data;
+		let comp = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, name));
+        if (type == EventType.EditingComponent)
+            (<any>comp).instance.component = object;
+        else if (type == EventType.EditingSection)
+            (<any>comp).instance.section = object;
+
+		(<any>comp).instance.data = (<any>this.formql).instance.data;
 		(<any>comp).instance.mode = this.mode;
 
 		(<any>comp).instance.action.subscribe(action => {
@@ -124,6 +128,13 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
 	editorResponse($event) {
         this.closeEditBar();
+        if ($event) {
+            if ($event.componentId)
+                (<any>this.formql).instance.populateReactiveForm(true, $event.componentId);
+            else if ($event.sectionId)
+                (<any>this.formql).instance.populateReactiveForm(true, $event.sectionId);
+        }
+
         this.editor.clear();
 	}
 
@@ -165,11 +176,11 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
 			switch (eventHandler.eventType) {
 				case EventType.EditingComponent:
-					this.loadEditor("ComponentEditorComponent", eventHandler.event);
+					this.loadEditor("ComponentEditorComponent", eventHandler.event, eventHandler.eventType);
 					break;
 
 				case EventType.EditingSection:
-					this.loadEditor("SectionEditorComponent", eventHandler.event);
+					this.loadEditor("SectionEditorComponent", eventHandler.event, eventHandler.eventType);
 					break;
 			}
 		});
