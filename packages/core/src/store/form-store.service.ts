@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createFeatureSelector, createSelector, Store } from '@ngrx/store';
-import { AppState } from '../../store/app.reducer';
+import { AppState } from '../app.reducer';
 import * as Action from './form.actions';
 import * as State from './form.state';
 import { FormGroup } from '@angular/forms';

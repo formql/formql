@@ -3,5 +3,5 @@
  */
 
 
-export * from './modules/formql-editor.module';
-export * from './form/components/formql-editor.component';
+export * from './formql-editor.module';
+export * from './components/formql-editor.component';

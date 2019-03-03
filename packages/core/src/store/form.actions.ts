@@ -1,6 +1,5 @@
 import { Action } from '@ngrx/store';
 
-import { FormGroup } from '@angular/forms';
 import { FormWrapper } from '../models/form-wrapper.model';
 import { FormComponent } from '../models/form-component.model';
 
