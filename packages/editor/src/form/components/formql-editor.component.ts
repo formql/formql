@@ -96,6 +96,8 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
             (<any>comp).instance.component = object;
         else if (type == EventType.EditingSection)
             (<any>comp).instance.section = object;
+        else if (type == EventType.EditingPage)
+            (<any>comp).instance.page = (<any>this.formql).instance.form.pages[0];
 
 		(<any>comp).instance.data = (<any>this.formql).instance.data;
 		(<any>comp).instance.mode = this.mode;
@@ -133,6 +135,8 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
                 (<any>this.formql).instance.populateReactiveForm(true, $event.componentId);
             else if ($event.sectionId)
                 (<any>this.formql).instance.populateReactiveForm(true, $event.sectionId);
+            else if ($event.pageId)
+                (<any>this.formql).instance.populateReactiveForm(true, $event.pageId);
         }
 
         this.editor.clear();
@@ -160,7 +164,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 		// }
 	}
 
-	rightSideNavBarActionClick(event) {
+	leftSideNavBarActionClick(event) {
         if (event === "saveForm")
             this.saveForm();
         else
@@ -181,7 +185,10 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
 				case EventType.EditingSection:
 					this.loadEditor("SectionEditorComponent", eventHandler.event, eventHandler.eventType);
-					break;
+                    break;
+                case EventType.EditingPage:
+					this.loadEditor("PageEditorComponent", eventHandler.event, eventHandler.eventType);
+			    		break;
 			}
 		});
 	}

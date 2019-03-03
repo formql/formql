@@ -59,8 +59,8 @@
 .fql-header-line {
     display: grid;
     display: -ms-grid;
-    grid-template-columns: 30px auto auto;
-    -ms-grid-columns: 30px auto auto;
+    grid-template-columns: 30px auto auto min-content;
+    -ms-grid-columns: 30px auto auto auto;
 }
 
 .fql-logo {
@@ -140,6 +140,36 @@
     -ms-grid-row-span: 1;
     font-size: $font-size-labels;
 }
+
+.fql-header-setting {
+    font-family: $font-family;
+    flex-grow: 1;
+}
+
+
+
+
+
+.fql-logo-setting {
+    vertical-align: middle;
+    margin-left: auto;
+    line-height: 30px;
+    width: 23px;
+    height: 25px;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 1;
+}
+
+.fql-logo-setting svg {
+     fill: rgba(255, 255, 255, 0.7);
+}
+.fql-logo-setting:hover svg {
+    cursor: pointer;
+    fill: rgba(255, 255, 255, 0.9);
+}
+
 
 .fql-slide-bar {
     position: absolute;

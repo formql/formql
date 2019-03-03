@@ -1,0 +1,53 @@
+<div class="fql-editor-wrapper">
+        <div class="fql-editor-header">
+            <div class="fql-editor-title">
+                <h1>{{updatedPage?.pageId}} Page</h1>
+            </div>
+            <div class="fql-editor-buttons">
+                <div (click)="save()" class="fql-logo-save">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"> <path d="M0 0h24v24H0z" fill="none" /> <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" /></svg>
+                </div>
+                <div (click)="cancel()" class="fql-logo-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                </div>
+            </div>
+        </div>
+        <div class="tab-wrap">
+            <input type="radio" name="tabs" id="tab1" checked>
+            <div class="tab-label-content" id="tab1-content">
+                <label class="fql-tab-label" for="tab1">Properties</label>
+                <div class="tab-content">
+                    <div class="fql-properties-div">
+                        <label class="field-label" for="bodyTemplate-gridTemplateColumns">Body Template - gridTemplateColumns</label>
+                        <input type="text" id="bodyTemplate-gridTemplateColumns" [(ngModel)]="updatedPage.template.body.gridTemplateColumns" name="bodyTemplate-gridTemplateColumns">
+        
+                        <label class="field-label" for="bodyTemplate-gridTemplateRows">Body Template - gridTemplateRows</label>
+                        <input type="text" id="bodyTemplate-gridTemplateRows" [(ngModel)]="updatedPage.template.body.gridTemplateRows" name="bodyTemplate-gridTemplateRows">
+                        
+                        <label class="field-label" for="bodyTemplate-gridTemplateAreas">Body Template - gridTemplateAreas</label>
+                        <input type="text" id="bodyTemplate-gridTemplateAreas" [(ngModel)]="updatedPage.template.body.gridTemplateAreas" name="bodyTemplate-gridTemplateAreas">
+                    </div>
+                    
+                </div>
+            </div>
+    
+            <input type="radio" name="tabs" id="tab2">
+            <div class="tab-label-content" id="tab2-content">
+                <label class="fql-tab-label" for="tab2">Rules</label>
+                <div class="tab-content">
+                     
+                </div>
+            </div>
+    
+            <input type="radio" name="tabs" id="tab3">
+            <div class="tab-label-content" id="tab3-content">
+                <label class="fql-tab-label" for="tab3">Advanced</label>
+                <div class="tab-content">
+                    Comming soon... :-)
+                </div>
+            </div>
+            <div class="slide"></div>
+    
+        </div>
+    </div>
+    

@@ -7,11 +7,13 @@ export enum EventType {
     // Editing events
     EditingComponent = 1,
     EditingSection = 2,
+    EditingPage = 3,
+    EditingForm = 4,
     
     // Form changes
-    DndFormChanged = 4,
+    DndFormChanged = 5,
     
     
     // Save event
-    SubmitForm = 5
+    SubmitForm = 6
 }

@@ -207,13 +207,13 @@ export class FormQLComponent implements OnInit, OnDestroy {
     updateTemplates(objectId:string = null) {
         this.form.pages.forEach(page => {
             page.sections.forEach(section => {
-                if (section.template.reRender || (objectId && section.components.find(c=>c.componentId==objectId)))
+                if (section.template.reRender || (objectId && (section.sectionId == objectId || section.components.find(c=>c.componentId==objectId))))
                 {
                     section.template.reRender = false;
                     section.template = HelperService.deepCopy(section.template);
                 }
             });
-            if (page.template.reRender || (objectId && page.sections.find(c=>c.sectionId==objectId)))
+            if (page.template.reRender || (objectId && (page.pageId == objectId || page.sections.find(c=>c.sectionId==objectId))))
             {
                 page.template.reRender = false;
                 page.template = HelperService.deepCopy(page.template);

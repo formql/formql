@@ -29,6 +29,7 @@ import { FormQLEditorComponent } from "./components/formql-editor.component";
 import { TooltipComponent } from "./components/tooltip.component";
 import { ComponentEditorComponent } from "./components/component-editor.component";
 import { SectionEditorComponent } from "./components/section-editor.component";
+import { PageEditorComponent } from "./components/page-editor.component";
 
 
 const DEFAULT_ACE_CONFIG: AceConfigInterface = {
@@ -62,6 +63,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     LeftSideBarComponent,
     ComponentEditorComponent,
     SectionEditorComponent,
+    PageEditorComponent,
     // fields
     // FormQLComponent,
 
@@ -75,6 +77,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     TooltipComponent,
     ComponentEditorComponent,
     SectionEditorComponent,
+    PageEditorComponent,
     // fields 
     FormEditorJsonInputComponent
   ],

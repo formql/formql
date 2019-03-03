@@ -1,0 +1,142 @@
+@import "../../variables.scss";
+
+.fql-editor-wrapper {
+    position: relative;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: $font-family;
+}
+
+$num-of-tabs: 3;
+
+@mixin tabs {
+  @for $i from 1 through $num-of-tabs {
+    &:nth-of-type(#{$i}) {
+      &:checked {
+        ~ .slide {
+          left: calc((100% / #{$num-of-tabs}) * #{$i - 1});
+        }
+      }
+    }
+  }
+}
+
+.tab-wrap {
+  position: relative;
+  display: flex;
+}
+
+input[type="radio"][name="tabs"] {
+  position: absolute;
+  z-index: -1;
+  &:checked {
+    + .tab-label-content {
+      label {
+        color: #000;
+      }
+      .tab-content {
+        display: block;
+      }
+    }
+  }
+  @include tabs;
+  &:first-of-type {
+    &:checked {
+      ~ .slide {
+        left: 0;
+      }
+    }
+  }
+}
+
+.fql-tab-label {
+  cursor: pointer;
+  color: #000;
+  background-color: #fff;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 56px;
+  transition: color 0.2s ease;
+  width: 100%;
+}
+
+.slide {
+  background: #000;
+  width: calc(100% / #{$num-of-tabs});
+  height: 4px;
+  position: absolute;
+  left: 0;
+  top: calc(100% - 4px);
+  transition: left 0.3s ease-out;
+}
+
+.tab-label-content {
+  width: 100%;
+  .tab-content {
+    position: absolute;
+    top: 80px;
+    left: 0px;
+    line-height: 130%;
+    display: none;
+    width: 100%
+  }
+}
+
+.fql-editor-header {
+    display: grid;
+    display: -ms-grid;
+    grid-template-columns: 1fr 50px; 
+    -ms-grid-columns: 1fr 50px;
+}
+
+.fql-editor-title {
+    -ms-grid-column: 1;
+    -ms-grid-row: 1;
+}
+
+.fql-editor-buttons {
+    vertical-align: middle;
+    line-height: 90px;
+    display: grid;
+    display: -ms-grid;
+    grid-template-columns: 30px 30px; 
+    -ms-grid-columns: 30px 30px;
+    -ms-grid-column: 2;
+    -ms-grid-row: 1;
+}
+
+
+.fql-logo-save {
+    width: 23px;
+    height: 25px;
+    cursor: pointer;
+    -ms-grid-column: 1;
+    -ms-grid-row: 1;
+}
+
+.fql-logo-save  {
+    fill: rbga(0,0,0,0.9);
+}
+
+.fql-logo-close {
+    width: 23px;
+    height: 25px;
+    cursor: pointer;
+    -ms-grid-column: 2;
+    -ms-grid-row: 1;
+}
+
+.fql-logo-close svg {
+    fill: rbga(0,0,0,0.9);
+}
+
+.fql-properties-div {
+    border-top: 1px solid rgba(0,0,0,0.12);
+    padding-top: 5px;
+    margin-top: 10px;
+}
+
+
