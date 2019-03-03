@@ -10,11 +10,11 @@
 .fql-editor-window {
     display: grid;
     display: -ms-grid;
+    -ms-grid-columns: 60px 1fr;
+    -ms-grid-rows: 3rem 1fr;
     grid-template-areas: "header header" "sidebar main";
     grid-template-columns: 60px 1fr;
-    -ms-grid-columns: 60px 1fr;
     grid-template-rows: 3rem 1fr;
-    -ms-grid-columns: 3rem 1fr;
     position: relative;
     top: 0;
     left: 0;
