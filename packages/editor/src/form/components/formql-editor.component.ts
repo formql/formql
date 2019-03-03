@@ -1,9 +1,6 @@
 import { OnInit, OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, Renderer2 } from "@angular/core";
 
-//import { FormQLComponent, FormQLMode } from "@formql/core";
-import { ActivatedRoute } from "@angular/router";
-import { DomSanitizer } from "@angular/platform-browser";
-import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
+import { FormGroup, FormBuilder} from "@angular/forms";
 import { FormQLMode, HelperService, EventHandlerService, EventHandler, EventType, FormQLComponent} from "@formql/core";
 
 
@@ -34,9 +31,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 		private componentFactoryResolver: ComponentFactoryResolver,
 		private vcRef: ViewContainerRef,
 		private eventHandlerService: EventHandlerService,
-		private route: ActivatedRoute,
-		private sanitizer: DomSanitizer,
-        private formBuilder: FormBuilder,
+		private formBuilder: FormBuilder,
         private renderer: Renderer2
 
 	) {

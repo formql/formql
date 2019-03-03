@@ -1,9 +1,0 @@
-<ng-container *ngIf="show">
-    <form-ace-editor [label]="fieldLabel" [value]="value" [mode]="mode" [maxLines]="maxLines" (valueChanged)="valueChanged($event)"></form-ace-editor>
-    <span *ngIf="!valid" style="color:red">{{error}}</span>
-    <!-- <mat-form-field class="mat-form-field-style">
-      <input matInput name="fieldLabel" [(ngModel)]="_value" [placeholder]="fieldLabel" [formControl]="field">
-      <mat-error *ngIf="!valid">{{error}}</mat-error>
-    </mat-form-field> -->
-    <br>
-</ng-container>

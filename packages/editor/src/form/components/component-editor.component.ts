@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ComponentFactoryResolver } from '@angular/core';
 import { FormComponent, HelperService, ComponentProperties, FormQLMode, ComponentProperty, ComponentValidator } from '@formql/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
     selector: '[component-editor]',
@@ -23,7 +21,6 @@ export class ComponentEditorComponent implements OnInit {
     properties: Array<ComponentProperty>;
 
     constructor(
-        private sanitizer: DomSanitizer,
         private componentFactoryResolver: ComponentFactoryResolver
     ) {
         this.componentList = Array.from(this.componentFactoryResolver['_factories'].keys())
