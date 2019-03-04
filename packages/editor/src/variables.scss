@@ -26,11 +26,19 @@ input[type=text]:focus {
     display: -ms-grid;
     grid-template-columns: 1fr 50px; 
     -ms-grid-columns: 1fr 50px;
+    height: 80px;
 }
 
 .fql-editor-title {
     -ms-grid-column: 1;
     -ms-grid-row: 1;
+}
+.fql-editor-title-name {
+    margin-bottom: 0px;
+}
+.fql-editor-subtitle {
+    margin-top: 3px;
+    font-weight: 400;
 }
 
 .fql-editor-buttons {
