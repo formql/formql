@@ -10,8 +10,7 @@ import { TooltipComponent } from "./components/tooltip.component";
 import { ComponentEditorComponent } from "./components/component-editor.component";
 import { SectionEditorComponent } from "./components/section-editor.component";
 import { PageEditorComponent } from "./components/page-editor.component";
-
-
+import { FormEditorComponent } from "./components/form-editor.component";
 
 @NgModule({
     imports: [
@@ -27,7 +26,7 @@ import { PageEditorComponent } from "./components/page-editor.component";
         ComponentEditorComponent,
         SectionEditorComponent,
         PageEditorComponent,
-
+        FormEditorComponent,
         FormQLEditorComponent,
         TooltipComponent
     ],
@@ -35,8 +34,8 @@ import { PageEditorComponent } from "./components/page-editor.component";
         TooltipComponent,
         ComponentEditorComponent,
         SectionEditorComponent,
-        PageEditorComponent
-
+        PageEditorComponent,
+        FormEditorComponent
     ],
     exports: [
         FormQLEditorComponent

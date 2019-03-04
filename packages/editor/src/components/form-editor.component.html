@@ -1,0 +1,54 @@
+<div class="fql-editor-wrapper">
+        <div class="fql-editor-header">
+            <div class="fql-editor-title">
+                <h1>{{updatedForm?.formName}} Form</h1>
+            </div>
+            <div class="fql-editor-buttons">
+                <div (click)="save()" class="fql-logo-save"></div>
+                <div (click)="cancel()" class="fql-logo-close"></div>
+            </div>
+        </div>
+        <div class="tab-wrap">
+            <input type="radio" name="tabs" id="tab1" checked>
+            <div class="tab-label-content" id="tab1-content">
+                <label class="fql-tab-label" for="tab1">Properties</label>
+                <div class="tab-content">
+                    <label class="field-label" for="formName">Form Name</label>
+                    <input type="text" id="formName" [(ngModel)]="updatedForm.formName" name="formName">
+
+                    <label class="field-label" for="layoutComponentName">Form Layout Component</label>
+                    <input type="text" id="layoutComponentName" [(ngModel)]="updatedForm.layoutComponentName" name="layoutComponentName" disabled>
+                    
+                </div>
+            </div>
+    
+            <input type="radio" name="tabs" id="tab2">
+            <div class="tab-label-content" id="tab2-content">
+                <label class="fql-tab-label" for="tab2">Data Sources</label>
+                <div class="tab-content">
+                    <label class="field-label" for="type">Type</label>
+                    <input type="text" id="type" [(ngModel)]="form.dataSource.type" name="type" disabled>
+                        
+                    <div class="fql-properties-div">
+                        <label class="field-label" for="query">Query</label>
+                        <textarea name="query" id="query" [(ngModel)]="form.dataSource.query"></textarea>
+                    </div>
+                    <div class="fql-properties-div">
+                        <label class="field-label" for="mutation">Mutation</label>
+                        <textarea name="mutation" id="mutation" [(ngModel)]="form.dataSource.mutation"></textarea>
+                    </div>
+                </div>
+            </div>
+    
+            <input type="radio" name="tabs" id="tab3">
+            <div class="tab-label-content" id="tab3-content">
+                <label class="fql-tab-label" for="tab3">Advanced</label>
+                <div class="tab-content">
+                    Comming soon... :-)
+                </div>
+            </div>
+            <div class="slide"></div>
+    
+        </div>
+    </div>
+    

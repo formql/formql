@@ -1,8 +1,9 @@
 {
     "layoutComponentName": "PlainLayoutComponent",
+    "formName": "contactInfo",
     "class": "container",
     "dataSource": {
-        "type": "graphQl",
+        "type": "GraphQL",
         "query": "{ contact(id: $id) { id firstName lastName email mobile addressLine1 addressLine2 addressCity addressPostCode } } ",
         "mutation": "mutation { updateContact(contact: ${contact}) { id: id firstName: firstName lastName: lastName email: email mobile: mobile addressPostCode:addressPostCode addressLine1:addressLine1 addressLine2:addressLine2 addressCity:addressCity  } }"
     },

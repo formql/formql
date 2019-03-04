@@ -4,12 +4,8 @@
             <h1>{{updatedComponent?.componentName}} Component</h1>
         </div>
         <div class="fql-editor-buttons">
-            <div (click)="save()" class="fql-logo-save">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"> <path d="M0 0h24v24H0z" fill="none" /> <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" /></svg>
-            </div>
-            <div (click)="cancel()" class="fql-logo-close">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-            </div>
+            <div (click)="save()" class="fql-logo-save"></div>
+            <div (click)="cancel()" class="fql-logo-close"></div>
         </div>
     </div>
     <div class="tab-wrap">
@@ -17,17 +13,20 @@
         <div class="tab-label-content" id="tab1-content">
             <label class="fql-tab-label" for="tab1">Properties</label>
             <div class="tab-content">
+                <label class="field-label" for="componentId">Component Id</label>
+                <input type="text" id="componentId" [(ngModel)]="updatedComponent.componentId" name="componentId" disabled>
+
                 <label class="field-label" for="label">Label</label>
                 <input type="text" id="label" [(ngModel)]="updatedComponent.label" name="label">
-                
+
                 <label class="field-label" for="componentName">Component Name</label>
                 <select [(ngModel)]="updatedComponent.componentName">
                     <option *ngFor="let option of componentList" [ngValue]="option">{{option}}</option>
-                 </select>
+                </select>
 
                 <label class="field-label" for="type">Type</label>
                 <input type="text" id="type" [(ngModel)]="updatedComponent.type" name="type">
-                
+
             </div>
         </div>
 
@@ -35,20 +34,20 @@
         <div class="tab-label-content" id="tab2-content">
             <label class="fql-tab-label" for="tab2">Rules</label>
             <div class="tab-content">
-                    <div>
-                <label class="field-label" for="schema">Schema</label>
-                <input type="text" id="schema" [(ngModel)]="updatedComponent.schema" name="schema">
+                <div>
+                    <label class="field-label" for="schema">Schema</label>
+                    <input type="text" id="schema" [(ngModel)]="updatedComponent.schema" name="schema">
 
-                <label class="field-label" for="textMask">Text Mask</label>
-                <input type="text" id="textMask" [(ngModel)]="updatedComponent.textMask" name="textMask">
+                    <label class="field-label" for="textMask">Text Mask</label>
+                    <input type="text" id="textMask" [(ngModel)]="updatedComponent.textMask" name="textMask">
 
-                <div *ngFor="let item of validators; let i=index" class="fql-properties-div">
-                    <label class="field-label" [for]="item.name">{{item.name}}</label>
-                    <textarea [name]="item.name" [id]="item.name" [(ngModel)]="properties[i].condition"></textarea>
-                    Result: {{getResult(properties[i].condition)}}
-                    <br>
-                    <span style="color:red">{{getError(properties[i].condition)}}</span>
-                </div>       
+                    <div *ngFor="let item of validators; let i=index" class="fql-properties-div">
+                        <label class="field-label" [for]="item.name">{{item.name}}</label>
+                        <textarea [name]="item.name" [id]="item.name" [(ngModel)]="properties[i].condition"></textarea>
+                        Result: {{getResult(properties[i].condition)}}
+                        <br>
+                        <span style="color:red">{{getError(properties[i].condition)}}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,6 +60,5 @@
             </div>
         </div>
         <div class="slide"></div>
-
     </div>
 </div>

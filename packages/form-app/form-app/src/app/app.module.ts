@@ -4,9 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormQLModule } from '@formql/core';
-// import { FormQLModule } from '../../../../core/src/formql.module';
+//import { FormQLModule } from '../../../../core/src/formql.module';
 import { FormQLEditorModule } from '@formql/editor';
-// import { FormQLEditorModule } from '../../../../editor/src/modules/formql-editor.module';
+// import { FormQLEditorModule } from '../../../../editor/src/formql-editor.module';
 
 import { DummyService } from './app-service';
 

@@ -68,6 +68,7 @@
     -ms-grid-column-span: 1;
     -ms-grid-row: 1;
     -ms-grid-row-span: 1;
+    cursor: pointer;
 }
 .fql-logo svg {
     height: 30px;
@@ -112,12 +113,12 @@
     border: 1px solid;
 }
 
-.fql-header-menu:hover > .fql-logo-save svg {
+.fql-header-menu:hover > .fql-logo-save-header svg {
     fill: rgba(255, 255, 255, 0.9);
 }
 
 
-.fql-logo-save {
+.fql-logo-save-header {
     vertical-align: middle;
     line-height: 43px;
     width: 23px;
@@ -128,7 +129,7 @@
     -ms-grid-row-span: 1;
 }
 
-.fql-logo-save svg {
+.fql-logo-save-header svg {
      fill: rgba(255, 255, 255, 0.7);
 }
 

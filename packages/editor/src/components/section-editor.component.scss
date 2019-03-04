@@ -85,53 +85,6 @@ input[type="radio"][name="tabs"] {
   }
 }
 
-.fql-editor-header {
-    display: grid;
-    display: -ms-grid;
-    grid-template-columns: 1fr 50px; 
-    -ms-grid-columns: 1fr 50px;
-}
-
-.fql-editor-title {
-    -ms-grid-column: 1;
-    -ms-grid-row: 1;
-}
-
-.fql-editor-buttons {
-    vertical-align: middle;
-    line-height: 90px;
-    display: grid;
-    display: -ms-grid;
-    grid-template-columns: 30px 30px; 
-    -ms-grid-columns: 30px 30px;
-    -ms-grid-column: 2;
-    -ms-grid-row: 1;
-}
-
-
-.fql-logo-save {
-    width: 23px;
-    height: 25px;
-    cursor: pointer;
-    -ms-grid-column: 1;
-    -ms-grid-row: 1;
-}
-
-.fql-logo-save  {
-    fill: rbga(0,0,0,0.9);
-}
-
-.fql-logo-close {
-    width: 23px;
-    height: 25px;
-    cursor: pointer;
-    -ms-grid-column: 2;
-    -ms-grid-row: 1;
-}
-
-.fql-logo-close svg {
-    fill: rbga(0,0,0,0.9);
-}
 
 .fql-properties-div {
     border-top: 1px solid rgba(0,0,0,0.12);

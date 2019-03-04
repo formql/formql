@@ -22,9 +22,8 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
     @ViewChild('editor', { read: ViewContainerRef }) editor: ViewContainerRef;
     
     formql: any
-
-	loading: boolean = true;
-	saving: boolean = false;
+    
+    saving: boolean = false;
     reactiveForm: FormGroup;
     
     constructor(
@@ -75,25 +74,34 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 
-	}
+    }
 
-	loadForm() {
-		this.loading = false;
-
-		
-	}
+    editForm() {
+        this.loadEditor('FormEditorComponent', '', EventType.EditingForm);
+    }
 
 	loadEditor(name:string, object:any, type:EventType) {
 		this.editor.clear();
 
 		let comp = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, name));
-        if (type == EventType.EditingComponent)
-            (<any>comp).instance.component = object;
-        else if (type == EventType.EditingSection)
-            (<any>comp).instance.section = object;
-        else if (type == EventType.EditingPage)
-            (<any>comp).instance.page = (<any>this.formql).instance.form.pages[0];
+        
+        switch(type)
+        {
+            case EventType.EditingComponent:
+                (<any>comp).instance.component = object;
+            break;
+            case EventType.EditingSection:
+                (<any>comp).instance.section = object;
+            break;
+            case EventType.EditingPage:
+                (<any>comp).instance.page = (<any>this.formql).instance.form.pages[0];
+            break;
+            case EventType.EditingForm:
+                (<any>comp).instance.form = (<any>this.formql).instance.form;
+            break;
 
+        }
+        
 		(<any>comp).instance.data = (<any>this.formql).instance.data;
 		(<any>comp).instance.mode = this.mode;
 
@@ -104,25 +112,8 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
         this.editor.insert(comp.hostView);
         
         this.openEditBar();
-	}
-
-
-	loadDataSourceEditor(componentName, dataSource) {
-		// this.editor.clear();
-
-		// let comp = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, componentName));
-		// (<any>comp).instance.dataSource = dataSource;
-		// //(<any>comp).instance.data = this.data;
-		// //(<any>comp).instance.class = this.form.class;
-		// (<any>comp).instance.liveEdit = this.liveEditMode;
-
-		// (<any>comp).instance.action.subscribe(action => {
-		// 	this.editorResponse(action);
-		// });
-
-		// this.editor.insert(comp.hostView);
-	}
-
+    }
+  
 	editorResponse($event) {
         this.closeEditBar();
         if ($event) {
@@ -183,7 +174,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
                     break;
                 case EventType.EditingPage:
 					this.loadEditor("PageEditorComponent", eventHandler.event, eventHandler.eventType);
-			    		break;
+                        break;
 			}
 		});
 	}
