@@ -8,6 +8,7 @@ import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { FormComponent, ComponentControl } from "../models/form-component.model";
 import { FormQLMode } from "../models/formql-mode.model";
 import { Page } from "../models/page.model";
+import { Section } from "../models/section.model";
 
 @Component({
     selector: 'formql',
@@ -102,7 +103,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-
+        this.eventHandlerService.event.unsubscribe();
     }
 
     loadForm() {
@@ -156,6 +157,35 @@ export class FormQLComponent implements OnInit, OnDestroy {
                     
                     this.populateReactiveForm(true);
                     break;
+
+                case EventType.RemoveComponent:
+                    let componentId = (<FormComponent<any>>res.event).componentId;
+                    let updateSectionId = "";
+                    this.form.pages.forEach(page => {
+                        page.sections.forEach(section => {
+                            let index = section.components.findIndex(c=>c.componentId == componentId);
+                            if (index >= 0)
+                            {
+                                section.components.splice(index, 1);
+                                updateSectionId = section.sectionId; 
+                            }
+                        });
+                    });
+                    this.populateReactiveForm(true, updateSectionId);
+
+                case EventType.RemoveSection:
+                    let sectionId = (<Section>res.event).sectionId;
+                    let updatePageId = "";
+                    this.form.pages.forEach(page => {
+                        let index = page.sections.findIndex(c=>c.sectionId == sectionId);
+                        if (index >= 0)
+                        {
+                            page.sections.splice(index, 1);
+                            updatePageId = page.pageId; 
+                        }
+                    });
+                    this.populateReactiveForm(true, updatePageId);
+                break;
 
                 case EventType.SubmitForm:
                     this.saveData();

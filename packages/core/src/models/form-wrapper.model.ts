@@ -13,3 +13,9 @@ export class FormDataSource {
     public query: string;
     public mutation: string;
 }
+
+export enum FormAction {
+    Update = 0,
+    Remove = 1,
+    Create = 2
+}
