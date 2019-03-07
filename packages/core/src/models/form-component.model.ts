@@ -8,7 +8,6 @@ export interface FormComponent<T>  {
     schema: string;
     label: string;
     type: string; 
-    order: number;
     tabIndex: string;
     
     properties: ComponentProperties;

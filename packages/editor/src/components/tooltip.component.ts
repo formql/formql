@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewContainerRef, Renderer2 } from '@angular/core';
+import { Component, Input, ViewContainerRef, Renderer2 } from '@angular/core';
 import { WrapperType, EventHandlerService, EventType } from "@formql/core";
 
 @Component({
@@ -13,7 +13,7 @@ import { WrapperType, EventHandlerService, EventType } from "@formql/core";
     styleUrls: ['./tooltip.component.scss']
 
 })
-export class TooltipComponent implements OnInit {
+export class TooltipComponent {
     static componentName = "TooltipComponent";
 
     @Input() wrapper: ViewContainerRef;
@@ -26,10 +26,6 @@ export class TooltipComponent implements OnInit {
         private eventHandlerService: EventHandlerService,
         private renderer: Renderer2
     ) {}
-
-    ngOnInit() {
-        
-    }
 
     onMouseDown($event) {
         this.renderer.setAttribute(this.wrapper.element.nativeElement, "draggable", "true");

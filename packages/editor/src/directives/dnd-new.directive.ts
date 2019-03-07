@@ -1,11 +1,10 @@
 import { Directive, HostListener, ViewContainerRef, Input, Output, EventEmitter, Renderer2 } from '@angular/core';
-import { FormQLMode } from '../models/formql-mode.model';
-import { WrapperType } from '../models/wrapper-type.model';
+import { FormQLMode, WrapperType } from '@formql/core';
 
 @Directive({
-    selector: '[dnd]'
+    selector: '[dnd-new]'
 })
-export class DndDirective {
+export class DndNewDirective {
     constructor(
         private view: ViewContainerRef,
         private renderer: Renderer2
@@ -22,13 +21,13 @@ export class DndDirective {
         if (this.mode != FormQLMode.View)
         {
             const draggabble = this.view.element.nativeElement.getAttribute("draggable");
-            if (draggabble == "true" && $event && $event.dataTransfer && this.sourceObjectId)
+            if (draggabble == "true" && $event && $event.dataTransfer)
             {
                 $event.dataTransfer.effectAllowed = "move";
-                const sourceIds = this.sourceObjectId + "#" + this.sourceWrapperId;
+                const sourceIds = "new#" + this.type;
                 $event.dataTransfer.setData("Text", sourceIds);
                 
-                // only way I found to support drag and drop in IE (try and if it fails, do the IE way)
+                // only way I found to support drag and drop in IE
                 try { 
                     $event.dataTransfer.setData(this.type.toString(), ""); 
                 } catch {
@@ -37,10 +36,5 @@ export class DndDirective {
                 
             }
         }
-    }
-
-    @HostListener('dragend', ['$event']) public onDragEnd($event) {
-        if (this.mode != FormQLMode.View)
-            this.renderer.setAttribute(this.view.element.nativeElement, "draggable", "false");
     }
 }

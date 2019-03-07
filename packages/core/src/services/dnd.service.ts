@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { FormComponent } from '../models/form-component.model';
-import { Section, SectionTemplate } from '../models/section.model';
+import { FormComponent, ComponentPosition } from '../models/form-component.model';
+import { Section, SectionTemplate, SectionPosition } from '../models/section.model';
 import { EventHandlerService } from './event-handler.service';
 import { Page } from '../models/page.model';
 import { componentFactoryName } from '@angular/compiler';
+import { UUID } from 'angular2-uuid';
 import { DndEvent } from '../models/dnd-event.model';
 import { EventType } from '../models/event-handler.model';
+import { GridStyle } from '../models/grid-style.model';
 
 @Injectable()
 export class DndService {
@@ -18,7 +20,20 @@ export class DndService {
 
     synchroniseSectionModel(page: Page, event: DndEvent) {
         let sourceSection = page.sections.find(s=>s.sectionId == event.sourceWrapperId);
-        let sourceComponent = sourceSection.components.find(c=>c.componentId===event.sourceObjectId);
+        let sourceComponent = null;
+        if (event.sourceObjectId === "new")
+        {
+            sourceComponent = this.newComponent();
+            event.sourceObjectId = sourceComponent.componentId;
+            sourceSection = page.sections.find(s=>s.sectionId == event.targetWrapperId);
+            if (sourceSection)
+                sourceSection.components.push(sourceComponent);
+            else
+                return; // this should never happen
+        }
+        else
+            sourceComponent = sourceSection.components.find(c=>c.componentId===event.sourceObjectId);
+        
         if (!sourceComponent)
             return;
 
@@ -45,7 +60,16 @@ export class DndService {
     }
 
     synchronisePageModel(page: Page, event: DndEvent) {
-        let sourceSection  =  page.sections.find(s=>s.sectionId == event.sourceObjectId);
+        let sourceSection = null;
+        
+        if (event.sourceObjectId === "new")
+        {
+            sourceSection = this.newSection();
+            page.sections.push(sourceSection);
+        }
+        else
+            sourceSection = page.sections.find(s=>s.sectionId == event.sourceObjectId);
+
         if (sourceSection != null) // can't find the source section, model must be in different page
         {
             if (sourceSection.position.id !== event.targetPositionId)
@@ -115,5 +139,43 @@ export class DndService {
         sourceSection.components.splice(index,1);
         
         return targetSection;
+    }
+
+    private newSection() : Section
+    {
+        return <Section>{
+            sectionId: UUID.UUID(),
+            sectionName: "New section",
+            components: [],
+            template: <SectionTemplate>{
+                header: <GridStyle> {
+                    gridTemplateColumns: "1fr",
+                    gridTemplateRows: "1fr",
+                    gridTemplateAreas: '"ID1_1"'
+                },
+                body: <GridStyle>{
+                    gridTemplateColumns: "1fr",
+                    gridTemplateRows: "1fr",
+                    gridTemplateAreas: '"ID1_1"'
+                }
+            },
+            position: <SectionPosition> {
+                id: "-1",
+                index: 0
+            }
+        }
+    }
+
+    private newComponent() : FormComponent<any>
+    {
+        return <FormComponent<any>>{
+            componentId: UUID.UUID(), 
+            label: "New Component",
+            componentName: "FormQLLabelComponent",
+            position: <ComponentPosition> {
+                id: "-1",
+                index: 0
+            }
+        }
     }
 }

@@ -150,12 +150,13 @@ export class FormQLComponent implements OnInit, OnDestroy {
 
             switch (eventHandler.eventType) {
                 case EventType.DndFormChanged:
-                    let index = this.form.pages.findIndex(p=>p.pageId === (<Page>res.event).pageId);
+                    let pageId = (<Page>res.event).pageId;
+                    let index = this.form.pages.findIndex(p=>p.pageId === pageId);
                     
                     if (index >= 0)
                         this.form.pages[index] = res.event;
                     
-                    this.populateReactiveForm(true);
+                    this.populateReactiveForm(true, pageId);
                     break;
 
                 case EventType.RemoveComponent:
@@ -222,7 +223,6 @@ export class FormQLComponent implements OnInit, OnDestroy {
             
             if (update)
             {
-                
                 this.form.pages.forEach(page => {
                     this.reactiveForm.setControl(page.pageId, pageGroup[page.pageId]);
                 });
@@ -236,6 +236,11 @@ export class FormQLComponent implements OnInit, OnDestroy {
 
     updateTemplates(objectId:string = null) {
         this.form.pages.forEach(page => {
+            if (page.template.reRender || (objectId && (page.pageId == objectId || page.sections.find(c=>c.sectionId==objectId))))
+            {
+                page.template.reRender = false;
+                page.template = HelperService.deepCopy(page.template);
+            }
             page.sections.forEach(section => {
                 if (section.template.reRender || (objectId && (section.sectionId == objectId || section.components.find(c=>c.componentId==objectId))))
                 {
@@ -243,11 +248,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
                     section.template = HelperService.deepCopy(section.template);
                 }
             });
-            if (page.template.reRender || (objectId && (page.pageId == objectId || page.sections.find(c=>c.sectionId==objectId))))
-            {
-                page.template.reRender = false;
-                page.template = HelperService.deepCopy(page.template);
-            }
+            
         });
     }
 }

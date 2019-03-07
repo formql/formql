@@ -19,7 +19,7 @@
         </div>
     </header>
     <aside class="fql-left-sidenav">
-        <formQLLeftSideBar (leftSideNavBarAction)="leftSideNavBarActionClick($event)"></formQLLeftSideBar>
+        <formQLLeftSideBar (leftSideNavBarAction)="leftSideNavBarActionClick($event)" [mode]="mode"></formQLLeftSideBar>
     </aside>
     <div class="fql-editor-main">
         <nav #rightSidenav class="fql-slide-bar fql-bar-effect">

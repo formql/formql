@@ -11,6 +11,7 @@ import { ComponentEditorComponent } from "./components/component-editor.componen
 import { SectionEditorComponent } from "./components/section-editor.component";
 import { PageEditorComponent } from "./components/page-editor.component";
 import { FormEditorComponent } from "./components/form-editor.component";
+import { DndNewDirective } from "./directives/dnd-new.directive";
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import { FormEditorComponent } from "./components/form-editor.component";
         PageEditorComponent,
         FormEditorComponent,
         FormQLEditorComponent,
-        TooltipComponent
+        TooltipComponent,
+        DndNewDirective
     ],
     entryComponents: [
         TooltipComponent,

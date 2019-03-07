@@ -5,7 +5,6 @@ export class Section {
     public sectionId: string;
     public sectionName: string;
     public components: FormComponent<any>[];
-    public structure: string;
     public template: SectionTemplate;
     public position: SectionPosition;
     public headerStyle: string; 
