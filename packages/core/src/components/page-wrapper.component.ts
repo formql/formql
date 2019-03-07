@@ -18,7 +18,8 @@ import { FormQLMode } from '../models/formql-mode.model';
                 </ng-template>
             </div>`,
   styleUrls: ['./page-wrapper.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  providers: [DndService]
+  //encapsulation: ViewEncapsulation.None
 })
 export class PageWrapperComponent {
 

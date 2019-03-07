@@ -30,7 +30,8 @@ import { DndTransfer } from '../models/dnd-transfer.model';
             </div>
         </ng-container>
     </div>`,
-    styleUrls: ['page-container.component.scss']
+    styleUrls: ['page-container.component.scss'],
+    providers: [DndService]
 })
 export class PageContainerComponent implements OnInit {
 

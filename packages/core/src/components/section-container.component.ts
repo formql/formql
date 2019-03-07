@@ -39,7 +39,8 @@ import { EventType, EventHandler } from '../models/event-handler.model';
                 [mode]="mode"></div>
         </ng-container>
     </div>`,
-	styleUrls: ['./section-container.component.scss']
+    styleUrls: ['./section-container.component.scss'],
+    providers: [DndService]
 })
 export class SectionContainerComponent {
 

@@ -53,7 +53,7 @@ import { WrapperType } from '../models/wrapper-type.model';
             </div>
         </div>`,
     styleUrls: ['./section-wrapper.component.scss'],
-    encapsulation: ViewEncapsulation.None,
+    //encapsulation: ViewEncapsulation.None,
 })
 export class SectionWrapperComponent implements OnInit {
 

@@ -1,7 +1,9 @@
 import { Injectable, Output, EventEmitter } from "@angular/core";
 import { EventHandler, EventType } from "../models/event-handler.model";
 
-@Injectable()
+@Injectable({
+        providedIn: 'root'
+})
 export class EventHandlerService {
 
   @Output() event: EventEmitter<any> = new EventEmitter();

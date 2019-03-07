@@ -37,7 +37,8 @@ import { DndDropDirective } from "./directives/dnd-drop.directive";
     CommonModule,
     ComponentsStoreModule,
     ReactiveFormsModule, 
-    AppStoreModule
+    AppStoreModule,
+    TextMaskModule
   ],
   declarations: [
     
@@ -72,7 +73,7 @@ import { DndDropDirective } from "./directives/dnd-drop.directive";
     FormQLTextBoxComponent,
     FormQLLabelComponent
   ],
-  providers: [FormService, EventHandlerService, HelperService, DndService],
+  providers: [FormService],
   exports: [
       FormQLComponent
   ]

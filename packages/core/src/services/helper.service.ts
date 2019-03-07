@@ -5,7 +5,9 @@ import { controlNameBinding } from "@angular/forms/src/directives/reactive_direc
 import { ComponentFactory } from "@angular/core";
 import { TargetLocator } from "selenium-webdriver";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class HelperService {
 
     public static dndContainsClass(handle, className) {
