@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, ComponentFactoryResolver, ViewContainerRef, ViewChild, Renderer2, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, ComponentFactoryResolver, ViewContainerRef, ViewChild, Renderer2, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormComponent } from '../models/form-component.model';
 import { EventHandlerService } from '../services/event-handler.service';
 import { EventType } from '../models/event-handler.model';
-import { FormStoreService } from '../store/form-store.service';
 import { HelperService } from '../services/helper.service';
 import { FormGroup } from '@angular/forms';
 import { FormQLMode } from '../models/formql-mode.model';
 import { WrapperType } from '../models/wrapper-type.model';
+import { StoreService } from '../services/store.service';
 
 
 @Component({
@@ -29,7 +29,7 @@ import { WrapperType } from '../models/wrapper-type.model';
     styleUrls: ['./component-container.component.scss']
 
 })
-export class ComponentContainerComponent implements OnInit, AfterViewInit {
+export class ComponentContainerComponent implements OnInit {
 
     @ViewChild('content', { read: ViewContainerRef }) content: ViewContainerRef;
     @ViewChild('wrapper', { read: ViewContainerRef }) wrapper: ViewContainerRef;
@@ -67,7 +67,7 @@ export class ComponentContainerComponent implements OnInit, AfterViewInit {
         private componentFactoryResolver: ComponentFactoryResolver,
         private viewContainerRef: ViewContainerRef,
         private eventHandlerService: EventHandlerService,
-        private formStoreService: FormStoreService
+        private storeService: StoreService
     ) {}
 
     ngOnInit() {
@@ -81,7 +81,7 @@ export class ComponentContainerComponent implements OnInit, AfterViewInit {
         this.reactiveSection.controls[this.component.componentId].valueChanges.subscribe((change) => {
             if (this.component.value != change[this.component.componentId]) {
                 this.component.value = change[this.component.componentId];
-                this.formStoreService.dispatchUpdateComponentAction(this.component);
+                this.storeService.setComponet(this.component);
             }
         });
 
@@ -94,11 +94,6 @@ export class ComponentContainerComponent implements OnInit, AfterViewInit {
             this.tooltip.insert(tooltip.hostView);
         }
     }
-
-    ngAfterViewInit() {
-        
-    }
-
 
     editField() {
         if (this.mode == FormQLMode.Edit || this.mode == FormQLMode.LiveEdit)

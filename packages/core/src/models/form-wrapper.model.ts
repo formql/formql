@@ -1,4 +1,5 @@
 import { Page } from "./page.model";
+import { FormComponent } from "./form-component.model";
 
 export class FormWrapper {
     public pages: Page[];
@@ -18,4 +19,12 @@ export enum FormAction {
     Update = 0,
     Remove = 1,
     Create = 2
+}
+
+export interface FormState {
+    data: any;
+    form: FormWrapper;
+    components: FormComponent<any>[];
+    isLoading: boolean;
+    error: any;
 }

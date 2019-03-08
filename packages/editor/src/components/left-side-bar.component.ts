@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { EventHandlerService, EventType, WrapperType, FormQLMode } from '@formql/core';
 
 @Component({
@@ -41,7 +41,6 @@ export class LeftSideBarComponent {
     saveForm() {
         this.leftSideNavBarAction.emit("saveForm");
     }
-
 
 
 }

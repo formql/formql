@@ -2,10 +2,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-import { ComponentsStoreModule } from './store/form-store.module';
 import { FormService } from './services/form.service';
-import { AppStoreModule } from './app-store.module';
-
 import { PlainLayoutComponent } from './components/layouts/plain-layout.component';
 import { PageWrapperComponent } from './components/page-wrapper.component';
 import { PageContainerComponent } from "./components/page-container.component";
@@ -35,9 +32,7 @@ import { DndDropDirective } from "./directives/dnd-drop.directive";
 @NgModule({
   imports: [
     CommonModule,
-    ComponentsStoreModule,
     ReactiveFormsModule, 
-    AppStoreModule,
     TextMaskModule
   ],
   declarations: [

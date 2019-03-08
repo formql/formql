@@ -2,13 +2,14 @@ import { OnInit, OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFac
 import { FormWrapper } from "../models/form-wrapper.model";
 import { EventHandlerService } from "../services/event-handler.service";
 import { EventHandler, EventType } from "../models/event-handler.model";
-import { FormStoreService } from "../store/form-store.service";
 import { HelperService } from "../services/helper.service";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { FormComponent, ComponentControl } from "../models/form-component.model";
 import { FormQLMode } from "../models/formql-mode.model";
 import { Page } from "../models/page.model";
 import { Section } from "../models/section.model";
+import { StoreService } from "../services/store.service";
+import { skip } from "rxjs/operators";
 
 @Component({
     selector: 'formql',
@@ -29,6 +30,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
 	@ViewChild('target', { read: ViewContainerRef }) target: ViewContainerRef;
 
     loading: boolean = true;
+    componentsLoaded: boolean = false;
     saving: boolean = false;
     step: number;
     
@@ -42,8 +44,8 @@ export class FormQLComponent implements OnInit, OnDestroy {
         private componentFactoryResolver: ComponentFactoryResolver,
         private vcRef: ViewContainerRef,
         private eventHandlerService: EventHandlerService,
-        private formStoreService: FormStoreService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private storeService: StoreService
     ) {
     }
 
@@ -62,16 +64,32 @@ export class FormQLComponent implements OnInit, OnDestroy {
                 this.ids[0] = "0";
         }
 
-        this.formStoreService.dispatchLoadAction(this.formName, this.ids);
+        this.storeService.getAll(this.formName, this.ids);
 
-        this.formStoreService.getForm().subscribe(form => {
+        // this.formStoreService.dispatchLoadAction(this.formName, this.ids);
+
+        // this.storeService.getForm().subscribe(res => {
+        //     debugger;
+        // });
+
+        // this.storeService.getComponents().subscribe(res => {
+        //     debugger;
+        // });
+
+        // this.storeService.getData().subscribe(res => {
+        //     debugger;
+        // });
+
+        // this.formStoreService.getForm().subscribe(form => {
+        this.storeService.getForm().subscribe(form => {
             if (form != null) {
                 this.formControls = Array<ComponentControl>();
                 this.form = form;
 
                 this.populateReactiveForm(false);
-                    this.formStoreService.getComponents().subscribe(components => {
-                        if (components) {
+                    this.storeService.getComponents().subscribe(components => {
+                    //this.formStoreService.getComponents().subscribe(components => {
+                        if (components && components.length > 0) {
                             this.components = components;
                             this.components.forEach(component => {
                                 if (component != null) {
@@ -79,19 +97,24 @@ export class FormQLComponent implements OnInit, OnDestroy {
                                     HelperService.setValidators(this.componentFactoryResolver, component, componentControl.control);
                                 }
                             });
+                            this.componentsLoaded = true;
                         }
                     });
 
                     //if (this.mode != FormQLMode.Edit) {
-                        this.formStoreService.getData().subscribe(data => {
 
-                            if (data != null) 
-                                this.data = data;
-                            else
-                                this.data = {};
+                    //this.formStoreService.getData().subscribe(data => {
+                        this.storeService.getData().subscribe(data => {
+                            if (this.componentsLoaded)
+                            {
+                                if (data != null) 
+                                    this.data = data;
+                                else
+                                    this.data = {};
 
-                            if (this.loading)                            
-                                this.loadForm();
+                                if (this.loading)                            
+                                    this.loadForm();
+                            }
                         });
                     //}
                     // else {
@@ -103,7 +126,8 @@ export class FormQLComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.eventHandlerService.event.unsubscribe();
+        if (!this.eventHandlerService.event) 
+            this.eventHandlerService.event.unsubscribe();
     }
 
     loadForm() {
@@ -119,7 +143,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
     }
 
     saveForm() {
-        this.formStoreService.dispatchSaveFormAction(this.formName, this.form);
+        //this.formStoreService.dispatchSaveFormAction(this.formName, this.form);
     }
 
     saveData() {
@@ -134,7 +158,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
             });
 
             //if (this.reactiveForm.valid)
-            this.formStoreService.dispatchSaveDataAction(this.form.dataSource.mutation, this.ids, this.data);
+            //this.formStoreService.dispatchSaveDataAction(this.form.dataSource.mutation, this.ids, this.data);
             //else
             //	alert('form not valid');
         }

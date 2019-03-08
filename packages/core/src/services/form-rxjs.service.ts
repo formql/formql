@@ -1,17 +1,18 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Injector, InjectionToken, ReflectiveInjector, Inject } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, tap, switchMap, flatMap } from 'rxjs/operators'
+import { map, tap, concatMap } from 'rxjs/operators'
 import { of } from 'rxjs/observable/of';
-
 import { FormWrapper, FormState } from '../models/form-wrapper.model';
 import { FormComponent } from '../models/form-component.model';
 import { UUID } from 'angular2-uuid';
 import { HelperService } from './helper.service';
 import { IFormQLService } from '../interfaces/formql-service';
 
-@Injectable()
-export class FormService {
+@Injectable({
+    providedIn: 'root'
+})
+export class FormRxjxService {
 
     private form: FormWrapper;
     private components: Array<FormComponent<any>>;
@@ -34,7 +35,7 @@ export class FormService {
         {   
             return this.service.getForm(formName).pipe(
                 map(res => <FormWrapper>res),
-                switchMap(model =>
+                concatMap(model =>
                     this.service.getData(model.dataSource.query, ids).pipe(
                         tap(data => this.populateComponents(model, data)),
                         map(result => <FormState>{ components: this.components, form: this.form, data: this.data })
