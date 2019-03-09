@@ -1,33 +1,17 @@
 import { Injectable, Component, Type, ComponentFactoryResolver } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormControl } from "@angular/forms";
 import { ComponentValidator, FormComponent } from "../models/form-component.model";
-import { controlNameBinding } from "@angular/forms/src/directives/reactive_directives/form_control_name";
+import { FormError } from "../models/form-wrapper.model";
 import { ComponentFactory } from "@angular/core";
-import { TargetLocator } from "selenium-webdriver";
 
 @Injectable({
     providedIn: 'root'
 })
 export class HelperService {
 
-    public static dndContainsClass(handle, className) {
-        if (handle != null) {
-            let i = 0;
-            while (i < 3) {
-                if (handle != null && handle.className != null && handle.className.indexOf != null && handle.className.indexOf(className) != -1)
-                    return true;
-
-                handle = handle.parentElement;
-                i++;
-            }
-            return false;
-        }
-        return false;
-    }
-
     public static evaluateCondition(condition, data) {
         'use strict';
-        let response = { value: false, error: null };
+        const response = { value: false, error: null };
 
         if (condition && data && condition != "false") {
 
@@ -36,13 +20,7 @@ export class HelperService {
                 return response;
             }
 
-            // let regex = new RegExp("(?<!=)=(?!=)");
-            // if (regex.test(condition)) {
-            //     response.error = "Assign sign not allowed";
-            //     return response;
-            // }
-
-            let props = Object.keys(JSON.parse(JSON.stringify(data)));
+            let props = Object.keys(data);
             let params = [];
 
             for (let i = 0; i < props.length; i++)
@@ -58,7 +36,7 @@ export class HelperService {
 
             try {
 
-                let evalFunc = new Function(...props);
+                const evalFunc = new Function(...props);
                 let value = evalFunc(...params);
 
                 if (value == undefined)
@@ -76,10 +54,10 @@ export class HelperService {
     public static evaluateValue(path, data) {
         'use strict';
 
-        let response = { value: null, error: null };
+        const response = { value: null, error: null };
 
-        let props = Object.keys(data);
-        let params = [];
+        const props = Object.keys(data);
+        const params = [];
 
         for (let i = 0; i < props.length; i++)
             params.push(data[props[i]]);
@@ -88,14 +66,14 @@ export class HelperService {
 
         props.push("path");
 
-        let expression = "'use strict';  let window = undefined; let document = undefined; let alert = undefined; let a = undefined; return " + path + ";";
+        const expression = "'use strict';  let window = undefined; let document = undefined; let alert = undefined; let a = undefined; return " + path + ";";
 
         props.push(expression);
 
         try {
 
-            let evalFunc = new Function(...props);
-            let value = evalFunc(...params);
+            const evalFunc = new Function(...props);
+            const value = evalFunc(...params);
 
             if (value == undefined || value == null)
                 response.value == null;
@@ -126,33 +104,33 @@ export class HelperService {
     }
 
 
-    setPath(value, schema, data) {
-        if (value == undefined || value == '')
-            value = null;
-        if (data && schema) {
-            let key = schema;
-            if (schema.indexOf('.') != -1) {
-                let arr = schema.split('.');
-                let item = data;
-                for (let i = 0; i <= arr.length - 1; i++) {
-                    key = arr[i];
-                    if (!item[key])
-                        item[key] = {};
+    // setPath(value, schema, data) {
+    //     if (value == undefined || value == '')
+    //         value = null;
+    //     if (data && schema) {
+    //         let key = schema;
+    //         if (schema.indexOf('.') != -1) {
+    //             let arr = schema.split('.');
+    //             let item = data;
+    //             for (let i = 0; i <= arr.length - 1; i++) {
+    //                 key = arr[i];
+    //                 if (!item[key])
+    //                     item[key] = {};
 
-                    if (i != arr.length - 1)
-                        item = item[key];
-                }
-                item[key] = value;
-            }
-            else
-                data[key] = value;
-        }
-        return data;
-    }
+    //                 if (i != arr.length - 1)
+    //                     item = item[key];
+    //             }
+    //             item[key] = value;
+    //         }
+    //         else
+    //             data[key] = value;
+    //     }
+    //     return data;
+    // }
 
     
 
-    public static getFactory(componentFactoryResolver: ComponentFactoryResolver, componentName: string) {
+    public static getFactory(componentFactoryResolver: ComponentFactoryResolver, componentName: string): ComponentFactory<Component> {
         let factories = Array.from(componentFactoryResolver['_factories'].keys());
         let type = <Type<Component>>factories.find((x: any) => x.componentName === componentName);
 
@@ -206,10 +184,10 @@ export class HelperService {
         return newObj;
     }
 
-    public static propertyCopy(source: any, target: any,  ignoreProperty: Array<string> = null) {
+    public static propertyCopy(source: any, target: any,  ignoreProperties: Array<string> = null) {
         if (source && typeof source === "object") {
             for (var i in source) {
-                if (!ignoreProperty || (ignoreProperty && !ignoreProperty.find(p=>p==i)))
+                if (!ignoreProperties || (ignoreProperties && !ignoreProperties.find(p=>p==i)))
                 {
                     if (source[i] && typeof source[i] === "object") 
                     {
@@ -227,7 +205,7 @@ export class HelperService {
     }
 
     public static formatForGraphQl(obj: any) {
-        let updatedData = JSON.parse(JSON.stringify(obj));
+        let updatedData = this.deepCopy(obj);
 
         if (updatedData["__typename"])
             delete updatedData["__typename"];
@@ -247,6 +225,16 @@ export class HelperService {
         dataForQuery = "{" + dataForQuery.slice(0, -1) + "}";
         return dataForQuery;
 
+    }
+
+    public static formatError(error: FormError) {
+        if (!error)
+            return;
+
+        if (!this.isNullOrEmpty(error.error) && !this.isNullOrEmpty(error.error.message))
+            error.message = error.error.message;
+        
+        return error;
     }
 
 }

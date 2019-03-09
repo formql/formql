@@ -1,5 +1,5 @@
-import { OnInit, OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Type, ViewEncapsulation, ElementRef, Input, ChangeDetectionStrategy, Output, EventEmitter, ChangeDetectorRef } from "@angular/core";
-import { FormWrapper } from "../models/form-wrapper.model";
+import { OnInit, OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, Output, EventEmitter, AfterViewInit } from "@angular/core";
+import { FormWrapper, FormError } from "../models/form-wrapper.model";
 import { EventHandlerService } from "../services/event-handler.service";
 import { EventHandler, EventType } from "../models/event-handler.model";
 import { HelperService } from "../services/helper.service";
@@ -9,14 +9,18 @@ import { FormQLMode } from "../models/formql-mode.model";
 import { Page } from "../models/page.model";
 import { Section } from "../models/section.model";
 import { StoreService } from "../services/store.service";
-import { skip } from "rxjs/operators";
 
 @Component({
     selector: 'formql',
-    template: `<ng-container #target></ng-container>`,
-    styleUrls: ['./formql.component.scss']
+    styles: [`.error-message {text-align: center; padding: 20px; }`],
+    template: `<div *ngIf="error" class="error-message">
+                    <h4>{{error?.title}}</h4>
+                    <span>{{error?.message}}</span>
+               </div>
+               <ng-container #target></ng-container>`
 })
-export class FormQLComponent implements OnInit, OnDestroy {
+export class FormQLComponent implements OnDestroy, AfterViewInit {
+    
     static componentName = "FormQLComponent";
 
     @Input() formName: string;
@@ -24,21 +28,21 @@ export class FormQLComponent implements OnInit, OnDestroy {
     @Input() mode: FormQLMode = FormQLMode.View;
     @Input() validators: Array<Function>;
     @Input() reactiveForm: FormGroup;
-
-    @Output() editorEvent = new EventEmitter();
+    
+    @Input() customMetadata: any;
 
 	@ViewChild('target', { read: ViewContainerRef }) target: ViewContainerRef;
 
     loading: boolean = true;
-    componentsLoaded: boolean = false;
     saving: boolean = false;
-    step: number;
     
     form: FormWrapper;
-    public data: any;
+    data: any;
+    error: FormError;
     
     components: FormComponent<any>[];
     formControls: ComponentControl[];
+   
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -49,7 +53,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
     ) {
     }
 
-    ngOnInit() {
+    ngAfterViewInit() {
         if (!this.reactiveForm)
             this.reactiveForm = this.formBuilder.group([]);
 
@@ -66,62 +70,37 @@ export class FormQLComponent implements OnInit, OnDestroy {
 
         this.storeService.getAll(this.formName, this.ids);
 
-        // this.formStoreService.dispatchLoadAction(this.formName, this.ids);
-
-        // this.storeService.getForm().subscribe(res => {
-        //     debugger;
-        // });
-
-        // this.storeService.getComponents().subscribe(res => {
-        //     debugger;
-        // });
-
-        // this.storeService.getData().subscribe(res => {
-        //     debugger;
-        // });
-
-        // this.formStoreService.getForm().subscribe(form => {
         this.storeService.getForm().subscribe(form => {
-            if (form != null) {
+            if (form != null && !form.error) {
                 this.formControls = Array<ComponentControl>();
                 this.form = form;
 
                 this.populateReactiveForm(false);
-                    this.storeService.getComponents().subscribe(components => {
-                    //this.formStoreService.getComponents().subscribe(components => {
-                        if (components && components.length > 0) {
-                            this.components = components;
-                            this.components.forEach(component => {
-                                if (component != null) {
-                                    let componentControl = this.formControls.find(fc => fc.key == component.componentId);
-                                    HelperService.setValidators(this.componentFactoryResolver, component, componentControl.control);
-                                }
-                            });
-                            this.componentsLoaded = true;
-                        }
-                    });
-
-                    //if (this.mode != FormQLMode.Edit) {
-
-                    //this.formStoreService.getData().subscribe(data => {
-                        this.storeService.getData().subscribe(data => {
-                            if (this.componentsLoaded)
-                            {
-                                if (data != null) 
-                                    this.data = data;
-                                else
-                                    this.data = {};
-
-                                if (this.loading)                            
-                                    this.loadForm();
+                this.storeService.getComponents().subscribe(components => {
+                    if (components && components.length > 0) {
+                        this.components = components;
+                        this.components.forEach(component => {
+                            if (component != null) {
+                                const componentControl = this.formControls.find(fc => fc.key == component.componentId);
+                                HelperService.setValidators(this.componentFactoryResolver, component, componentControl.control);
                             }
                         });
-                    //}
-                    // else {
-                    //     if (this.loading)
-                    //         this.loadForm();
-                    // }
+                    }
+                    
+                });
+
+                this.storeService.getData().subscribe(data => {
+                    if (data != null) 
+                        this.data = data;
+                    else
+                        this.data = {};
+
+                    if (this.loading)                            
+                        this.loadForm();
+                });
             }
+            else
+                this.error = {...form.error};
         });
     }
 
@@ -162,10 +141,6 @@ export class FormQLComponent implements OnInit, OnDestroy {
             //else
             //	alert('form not valid');
         }
-    }
-
-    setStep(index: number) {
-        this.step = index;
     }
 
     loadEventHandlers() {
@@ -218,6 +193,10 @@ export class FormQLComponent implements OnInit, OnDestroy {
 
             }
         });
+    }
+
+    refreshComponent(component: FormComponent<any>) {
+        this.storeService.setComponet(component);
     }
 
     populateReactiveForm(update:boolean, objectId:string = null)  {

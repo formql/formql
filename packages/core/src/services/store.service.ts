@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs'
-import { FormWrapper } from '../models/form-wrapper.model';
-import { FormRxjxService } from './form-rxjs.service';
+import { FormWrapper, FormError } from '../models/form-wrapper.model';
+import { FormService } from './form.service';
 import { FormComponent } from '../models/form-component.model';
+import { HelperService } from './helper.service';
 
 @Injectable({ providedIn: 'root' })
 export class StoreService {
-    constructor(private apiService: FormRxjxService) {
-
-    }
+    constructor(
+        private apiService: FormService
+    ) {}
 
     private readonly _form = new Subject<FormWrapper>();
 
@@ -40,28 +41,14 @@ export class StoreService {
             this._form.next(res.form);
             this._components.next(res.components);
             this._data.next(res.data);
+        },
+        error => {
+            this._form.next(<FormWrapper>{
+                error: HelperService.formatError(<FormError>{
+                    title: "Error loading form or data",
+                    error: error
+                })
+            })
         });
     }
-
-    
-
-    // async getForm(id: string) {
-    //     this.form
-
-    //     let todo = this.todos.find(todo => todo.id === id);
-    // }
-
-    // async getComponents(id: string) {
-    //     let todo = this.todos.find(todo => todo.id === id);
-    // }
-
-    // async getData(id: string) {
-    //     let todo = this.todos.find(todo => todo.id === id);
-    // }
-
-    // readonly getForm$ = this.todos$.pipe(
-    //     map(todos => this.todos.filter(todo => todo.isCompleted))
-    //   )
-
-
 }

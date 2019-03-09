@@ -2,6 +2,7 @@ import { Page } from "./page.model";
 import { FormComponent } from "./form-component.model";
 
 export class FormWrapper {
+    public error: FormError;
     public pages: Page[];
     public layoutComponentName: string;
     public formName: string;
@@ -26,5 +27,11 @@ export interface FormState {
     form: FormWrapper;
     components: FormComponent<any>[];
     isLoading: boolean;
+    error: any;
+}
+
+export interface FormError {
+    title: string;
+    message: string;
     error: any;
 }

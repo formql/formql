@@ -22,6 +22,7 @@ import { EventType, EventHandler } from '../models/event-handler.model';
         (synchronise)="synchroniseModel($event)"> 
         <ng-container *ngFor="let component of components">
             <div componentContainer
+                [ngClass]="{'fql-component-container-hidden': component.properties?.hidden?.value}"
                 [component]="component"
                 [sectionId]="section.sectionId"
                 [value]="component.value"

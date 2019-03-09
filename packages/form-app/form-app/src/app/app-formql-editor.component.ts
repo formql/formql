@@ -4,13 +4,7 @@ import { FormQLMode } from '@formql/core';
 
 @Component({
     selector: 'app-formql-editor',
-    styles: [`.mainDiv {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }`],
+    styles: [`.mainDiv { position: absolute; top: 0; left: 0; right: 0;bottom: 0;}`],
     template: `<div class="mainDiv">
                 <formql-editor [mode]="mode" [formName]="formName"></formql-editor>
                 </div>`,

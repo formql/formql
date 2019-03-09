@@ -19,6 +19,7 @@ import { StoreService } from '../services/store.service';
         [type]="WrapperType.Component" 
         [mode]="mode"
         [ngClass]="{'fql-component-container-wrapper': (mode == FormQLMode.Edit || mode == FormQLMode.LiveEdit)}">
+        <div class="fql-component-vilibility-off"></div>
         <div class="fql-component-tooltip">
             <ng-container #tooltip></ng-container>
         </div>

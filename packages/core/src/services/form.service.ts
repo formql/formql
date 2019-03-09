@@ -1,30 +1,26 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, Injector, InjectionToken, ReflectiveInjector, Inject } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, tap, switchMap, flatMap } from 'rxjs/operators'
+import { map, tap, concatMap } from 'rxjs/operators'
 import { of } from 'rxjs/observable/of';
-
 import { FormWrapper, FormState } from '../models/form-wrapper.model';
 import { FormComponent } from '../models/form-component.model';
 import { UUID } from 'angular2-uuid';
 import { HelperService } from './helper.service';
 import { IFormQLService } from '../interfaces/formql-service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class FormService {
 
     private form: FormWrapper;
     private components: Array<FormComponent<any>>;
     private data: any;
 
-    // in case you have an API
-    private COUNT = 3;
     private service: IFormQLService;
 
-
-
-    constructor(@Inject("FormQLService") srv,
-        private http: HttpClient, 
+    constructor(
+        @Inject("FormQLService") srv
         ) {
         this.service = srv;
     }
@@ -33,8 +29,9 @@ export class FormService {
         if (ids)
         {   
             return this.service.getForm(formName).pipe(
+
                 map(res => <FormWrapper>res),
-                switchMap(model =>
+                concatMap(model =>
                     this.service.getData(model.dataSource.query, ids).pipe(
                         tap(data => this.populateComponents(model, data)),
                         map(result => <FormState>{ components: this.components, form: this.form, data: this.data })
@@ -52,7 +49,7 @@ export class FormService {
         this.components = new Array<FormComponent<any>>();
         this.form = form;
         if (data)
-            this.data = JSON.parse(JSON.stringify(data));
+            this.data = { ...data};
 
         form.pages.forEach(page => {
 
@@ -87,7 +84,7 @@ export class FormService {
             this.components = new Array<FormComponent<any>>();
             this.form = form;
             if (data)
-                this.data = JSON.parse(JSON.stringify(data));
+                this.data = HelperService.deepCopy(data);
 
             form.pages.forEach(page => {
 
@@ -124,21 +121,29 @@ export class FormService {
     getValue(schema) {
         if (schema && this.data) {
             if (schema.indexOf('.') != -1) {
-                let arr = schema.split('.');
-                if (this.data[arr[0]]) {
-                    let value = this.data[arr[0]];
-                    for (let i = 1; i < arr.length; i++) {
-                        if (value[arr[i]])
-                            value = value[arr[i]];
-                        else
-                            return;
+                const arr = schema.split('.');
+                if (!this.data[arr[0]] && arr.length > 1) 
+                    this.data[arr[0]] = {};
+                
+                let value = this.data[arr[0]];
+                for (let i = 1; i < arr.length; i++) {
+                    if (value[arr[i]])
+                        value = value[arr[i]];
+                    else
+                    {
+                        value[arr[i]] = null;
+                        return;
                     }
-                    return value;
                 }
+                return value;
             }
             else
+            {
                 if (this.data[schema])
                     return this.data[schema];
+                else
+                    this.data[schema] = null;
+            }
         }
         return;
     }
@@ -149,7 +154,7 @@ export class FormService {
         if (this.data && schema) {
             let key = schema;
             if (schema.indexOf('.') != -1) {
-                let arr = schema.split('.');
+                const arr = schema.split('.');
                 let item = this.data;
                 for (let i = 0; i <= arr.length - 1; i++) 
                 {
@@ -207,7 +212,7 @@ export class FormService {
      */
     saveForm(name: string, form: FormWrapper) {
         // remove all transactional data 
-        let updateForm = JSON.parse(JSON.stringify(form));
+        let updateForm = HelperService.deepCopy(form);
         updateForm.pages.forEach(page => {
             page.sections.forEach(section => {
                 section.components.forEach(component => {
@@ -267,7 +272,7 @@ export class FormService {
                         if (!HelperService.isNullOrEmpty(p.condition)) {
                             let obj = HelperService.evaluateValue(p.condition, this.data);
                             if (!obj.error) {
-                                let value = HelperService.resolveType(obj.value, c.type);
+                                const value = HelperService.resolveType(obj.value, c.type);
                                 this.setValue(value,c.schema);
                                 c.value = value;
                                 p.value = true;

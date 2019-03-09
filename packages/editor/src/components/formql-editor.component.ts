@@ -118,7 +118,10 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
         this.closeEditBar();
         if ($event) {
             if ($event.componentId)
+            {
+                (<any>this.formql).instance.refreshComponent($event);
                 (<any>this.formql).instance.populateReactiveForm(true, $event.componentId);
+            }
             else if ($event.sectionId)
                 (<any>this.formql).instance.populateReactiveForm(true, $event.sectionId);
             else if ($event.pageId)
