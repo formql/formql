@@ -10,41 +10,44 @@
         </div>
     </div>
     <div class="tab-wrap">
-        <input type="radio" name="tabs" id="tab1" checked>
+        <input class="fql-field-input" type="radio" name="tabs" id="tab1" checked>
         <div class="tab-label-content" id="tab1-content">
             <label class="fql-tab-label" for="tab1">Properties</label>
             <div class="tab-content">
-                <label class="field-label" for="componentId">Component Id</label>
-                <input type="text" id="componentId" [(ngModel)]="updatedComponent.componentId" name="componentId" disabled>
+                <label class="fql-field-label" for="componentId">Component Id</label>
+                <input class="fql-field-input" type="text" id="componentId" [(ngModel)]="updatedComponent.componentId" name="componentId" disabled>
 
-                <label class="field-label" for="label">Label</label>
-                <input type="text" id="label" [(ngModel)]="updatedComponent.label" name="label">
+                <label class="fql-field-label" for="label">Label</label>
+                <input class="fql-field-input" type="text" id="label" [(ngModel)]="updatedComponent.label" name="label">
 
-                <label class="field-label" for="componentName">Component Name</label>
-                <select [(ngModel)]="updatedComponent.componentName">
+                <label class="fql-field-label" for="componentName">Component Name</label>
+                <select class="fql-field-select" [(ngModel)]="updatedComponent.componentName">
                     <option *ngFor="let option of componentList" [ngValue]="option">{{option}}</option>
                 </select>
 
-                <label class="field-label" for="type">Type</label>
-                <input type="text" id="type" [(ngModel)]="updatedComponent.type" name="type">
+                <label class="fql-field-label" for="type">Type</label>
+                <input class="fql-field-input" type="text" id="type" [(ngModel)]="updatedComponent.type" name="type">
 
+                <label class="fql-field-label" [for]="configuration">Configuration</label>
+                <textarea class="fql-field-textarea"  class="fql-field-input"  class="fql-field-textarea" name="comfiguration" id="" [(ngModel)]="updatedComponent.configuration"></textarea>
+                
             </div>
         </div>
 
-        <input type="radio" name="tabs" id="tab2">
+        <input class="fql-field-input" type="radio" name="tabs" id="tab2">
         <div class="tab-label-content" id="tab2-content">
             <label class="fql-tab-label" for="tab2">Rules</label>
             <div class="tab-content">
                 <div>
-                    <label class="field-label" for="schema">Schema</label>
-                    <input type="text" id="schema" [(ngModel)]="updatedComponent.schema" name="schema">
+                    <label class="fql-field-label" for="schema">Schema</label>
+                    <input class="fql-field-input" type="text" id="schema" [(ngModel)]="updatedComponent.schema" name="schema">
 
-                    <label class="field-label" for="textMask">Text Mask</label>
-                    <input type="text" id="textMask" [(ngModel)]="updatedComponent.textMask" name="textMask">
+                    <label class="fql-field-label" for="textMask">Text Mask</label>
+                    <input class="fql-field-input" type="text" id="textMask" [(ngModel)]="updatedComponent.textMask" name="textMask">
 
                     <div *ngFor="let item of validators; let i=index" class="fql-properties-div">
-                        <label class="field-label" [for]="item.name">{{item.name}}</label>
-                        <textarea [name]="item.name" [id]="item.name" [(ngModel)]="properties[i].condition"></textarea>
+                        <label class="fql-field-label" [for]="item.name">{{item.name}}</label>
+                        <textarea class="fql-field-textarea"  [name]="item.name" [id]="item.name" [(ngModel)]="properties[i].condition"></textarea>
                         Result: {{getResult(properties[i].condition)}}
                         <br>
                         <span style="color:red">{{getError(properties[i].condition)}}</span>
@@ -53,7 +56,7 @@
             </div>
         </div>
 
-        <input type="radio" name="tabs" id="tab3">
+        <input class="fql-field-input" type="radio" name="tabs" id="tab3">
         <div class="tab-label-content" id="tab3-content">
             <label class="fql-tab-label" for="tab3">Advanced</label>
             <div class="tab-content">

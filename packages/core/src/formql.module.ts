@@ -13,18 +13,14 @@ import { ComponentContainerComponent } from './components/component-container.co
 import { LayoutDirective } from './directives/layout.directive';
 import { DndDirective } from "./directives/dnd.directive";
 
-import { EventHandlerService } from "./services/event-handler.service";
-
-import { HelperService } from "./services/helper.service";
 import { FormQLComponent } from "./components/formql.component";
 import { FormQLButtonComponent } from "./bundle/formql-button.component";
-import { DndService } from "./services/dnd.service";
 import { TextMaskModule } from 'angular2-text-mask';
-
 
 import { FormQLLabelComponent } from "./bundle/formql-label.component";
 import { FormQLTextBoxComponent } from "./bundle/formql-textbox.component";
 import { DndDropDirective } from "./directives/dnd-drop.directive";
+import { FormQLTextareaComponent } from './bundle/formql-textarea.component';
 
 
 
@@ -54,7 +50,8 @@ import { DndDropDirective } from "./directives/dnd-drop.directive";
     // bundle
     FormQLButtonComponent,
     FormQLTextBoxComponent,
-    FormQLLabelComponent
+    FormQLLabelComponent,
+    FormQLTextareaComponent
   ],
   entryComponents: [
     // formql
@@ -66,7 +63,8 @@ import { DndDropDirective } from "./directives/dnd-drop.directive";
     // fields 
     FormQLButtonComponent,
     FormQLTextBoxComponent,
-    FormQLLabelComponent
+    FormQLLabelComponent,
+    FormQLTextareaComponent
   ],
   providers: [FormService],
   exports: [

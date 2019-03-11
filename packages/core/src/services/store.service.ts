@@ -8,7 +8,7 @@ import { HelperService } from './helper.service';
 @Injectable({ providedIn: 'root' })
 export class StoreService {
     constructor(
-        private apiService: FormService
+        private formService: FormService
     ) {}
 
     private readonly _form = new Subject<FormWrapper>();
@@ -30,14 +30,14 @@ export class StoreService {
     }
 
     setComponet(component: FormComponent<any>) {
-        this.apiService.updateComponent(component).subscribe(res => {
+        this.formService.updateComponent(component).subscribe(res => {
             this._components.next(res.components);
             this._data.next(res.data);
         });
     }
     
     getAll(formName:string, ids: Array<string>) {
-        this.apiService.getFormAndData(formName, ids).subscribe(res => {
+        this.formService.getFormAndData(formName, ids).subscribe(res => {
             this._form.next(res.form);
             this._components.next(res.components);
             this._data.next(res.data);
