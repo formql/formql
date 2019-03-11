@@ -29,12 +29,4 @@ export class PageWrapperComponent {
 
   error: string;
   row: any;
-
-  constructor(
-    private dndService: DndService
-  ) { 
-    
-  }
-
-  
 }

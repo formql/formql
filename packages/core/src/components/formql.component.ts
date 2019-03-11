@@ -1,4 +1,4 @@
-import { OnInit, OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, Output, EventEmitter, AfterViewInit } from "@angular/core";
+import { OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, AfterViewInit } from "@angular/core";
 import { FormWrapper, FormError } from "../models/form-wrapper.model";
 import { EventHandlerService } from "../services/event-handler.service";
 import { EventHandler, EventType } from "../models/event-handler.model";
@@ -37,10 +37,8 @@ export class FormQLComponent implements OnDestroy, AfterViewInit {
     saving: boolean = false;
     
     form: FormWrapper;
-    data: any;
     error: FormError;
     
-    components: FormComponent<any>[];
     formControls: ComponentControl[];
    
 
@@ -71,15 +69,18 @@ export class FormQLComponent implements OnDestroy, AfterViewInit {
         this.storeService.getAll(this.formName, this.ids);
 
         this.storeService.getForm().subscribe(form => {
-            if (form != null && !form.error) {
+            console.log("get form triggered");
+            if (form && !form.error) {
                 this.formControls = Array<ComponentControl>();
                 this.form = form;
 
-                this.populateReactiveForm(false);
                 this.storeService.getComponents().subscribe(components => {
+                    console.log("get component triggered");
+                    if (this.loading)
+                        this.populateReactiveForm(false);
+                    
                     if (components && components.length > 0) {
-                        this.components = components;
-                        this.components.forEach(component => {
+                        components.forEach(component => {
                             if (component != null) {
                                 const componentControl = this.formControls.find(fc => fc.key == component.componentId);
                                 HelperService.setValidators(this.componentFactoryResolver, component, componentControl.control);
@@ -87,15 +88,7 @@ export class FormQLComponent implements OnDestroy, AfterViewInit {
                         });
                     }
                     
-                });
-
-                this.storeService.getData().subscribe(data => {
-                    if (data != null) 
-                        this.data = data;
-                    else
-                        this.data = {};
-
-                    if (this.loading)                            
+                    if (this.loading)                       
                         this.loadForm();
                 });
             }
@@ -115,26 +108,26 @@ export class FormQLComponent implements OnDestroy, AfterViewInit {
         (<any>comp).instance.form = this.form;
         (<any>comp).instance.reactiveForm = this.reactiveForm;
         (<any>comp).instance.mode = this.mode;
-        
-
+    
         this.target.insert(comp.hostView);
-
     }
 
     saveForm() {
+        this.storeService.saveForm();
         //this.formStoreService.dispatchSaveFormAction(this.formName, this.form);
     }
 
     saveData() {
         if (this.mode != FormQLMode.Edit) {
-            this.components.forEach(component => {
-                if (component != null) {
-                    if (component.properties == null || (component.properties != null && !component.properties.hidden)) {
-                        let componentControl = this.formControls.find(fc => fc.key == component.componentId);
-                        componentControl.control.markAsTouched({ onlySelf: true });
-                    }
-                }
-            });
+            this.storeService.saveData();
+            // this.components.forEach(component => {
+            //     if (component != null) {
+            //         if (component.properties == null || (component.properties != null && !component.properties.hidden)) {
+            //             let componentControl = this.formControls.find(fc => fc.key == component.componentId);
+            //             componentControl.control.markAsTouched({ onlySelf: true });
+            //         }
+            //     }
+            // });
 
             //if (this.reactiveForm.valid)
             //this.formStoreService.dispatchSaveDataAction(this.form.dataSource.mutation, this.ids, this.data);

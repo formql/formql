@@ -45,15 +45,8 @@ export class ComponentContainerComponent implements OnInit {
     set value(value: any) {
         this._value = value;
         if (this.reactiveSection && this.component) {
-            try
-            {
-                let control = this.reactiveSection.controls[this.component.componentId].get(this.component.componentId);
-                control.setValue(this.component.value);
-            }
-            catch
-            {
-                debugger;
-            }
+            let control = this.reactiveSection.controls[this.component.componentId].get(this.component.componentId);
+            control.setValue(this.component.value);
         }
     }
     get value() {

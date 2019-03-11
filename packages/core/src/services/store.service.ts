@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs'
+import { Observable, Subject } from 'rxjs';
 import { FormWrapper, FormError } from '../models/form-wrapper.model';
 import { FormService } from './form.service';
 import { FormComponent } from '../models/form-component.model';
 import { HelperService } from './helper.service';
+import { SelectMultipleControlValueAccessor } from '@angular/forms';
 
 @Injectable({ providedIn: 'root' })
 export class StoreService {
@@ -15,14 +16,8 @@ export class StoreService {
 
     private readonly _components = new Subject<FormComponent<any>[]>();
 
-    private readonly _data = new Subject<any>();
-
     getForm(): Observable<FormWrapper> {
         return this._form.asObservable();
-    }
-
-    getData(): Observable<any> {
-        return this._data.asObservable();
     }
 
     getComponents(): Observable<FormComponent<any>[]> {
@@ -32,7 +27,6 @@ export class StoreService {
     setComponet(component: FormComponent<any>) {
         this.formService.updateComponent(component).subscribe(res => {
             this._components.next(res.components);
-            this._data.next(res.data);
         });
     }
     
@@ -40,7 +34,6 @@ export class StoreService {
         this.formService.getFormAndData(formName, ids).subscribe(res => {
             this._form.next(res.form);
             this._components.next(res.components);
-            this._data.next(res.data);
         },
         error => {
             this._form.next(<FormWrapper>{
@@ -50,5 +43,13 @@ export class StoreService {
                 })
             })
         });
+    }
+
+    saveForm() {
+
+    }
+
+    saveData() {
+
     }
 }
