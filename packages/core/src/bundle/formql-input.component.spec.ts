@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormQLTextBoxComponent } from './formql-textbox.component';
+import { FormQLInputComponent } from './formql-input.component';
 
-describe('FormQLTextBoxComponent', () => {
-  let component: FormQLTextBoxComponent;
-  let fixture: ComponentFixture<FormQLTextBoxComponent>;
+describe('FormQLInputComponent', () => {
+  let component: FormQLInputComponent;
+  let fixture: ComponentFixture<FormQLInputComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormQLTextBoxComponent ]
+      declarations: [ FormQLInputComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FormQLTextBoxComponent);
+    fixture = TestBed.createComponent(FormQLInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

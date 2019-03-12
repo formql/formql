@@ -20,6 +20,7 @@
     "rxjs": "^6.2.1",
     "rxjs-compat": "^6.2.1",
     "angular2-text-mask": "^9.0.0",
+    "text-mask-addons": "^3.8.0",
     "angular2-uuid": "^1.1.1"
   }
 }

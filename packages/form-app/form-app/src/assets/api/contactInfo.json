@@ -39,8 +39,9 @@
                         {
                             "schema": "contact.firstName",
                             "label": "First name",
-                            "componentName": "FormQLTextBoxComponent",
+                            "componentName": "FormQLInputComponent",
                             "type": "text",
+                            "textMask": "['(', /[1-9]/, /\\d/, /\\d/, ')', ' ', /\\d/, /\\d/, /\\d/, '-', /\\d/, /\\d/, /\\d/, /\\d/]",
                             "order": 1,
                             "position": {
                                 "id": "ID1_2",
@@ -66,7 +67,7 @@
                         {
                             "schema": "contact.lastName",
                             "label": "Last Name",
-                            "componentName": "FormQLTextBoxComponent",
+                            "componentName": "FormQLInputComponent",
                             "type": "text",
                             "order": 1,
                             "position": {
@@ -81,7 +82,7 @@
                         {
                             "schema": "contact.mobile",
                             "label": "Mobile",
-                            "componentName": "FormQLTextBoxComponent",
+                            "componentName": "FormQLInputComponent",
                             "type": "text",
                             "order": 1,
                             "position": {
@@ -103,7 +104,7 @@
                         {
                             "schema": "contact.email",
                             "label": "Email",
-                            "componentName": "FormQLTextBoxComponent",
+                            "componentName": "FormQLInputComponent",
                             "type": "text",
                             "order": 1,
                             "position": {
@@ -161,7 +162,7 @@
                         {
                             "schema": "contact.addressLine1",
                             "label": "Line 1",
-                            "componentName": "FormQLTextBoxComponent",
+                            "componentName": "FormQLInputComponent",
                             "type": "text",
                             "order": 1,
                             "position": {
@@ -196,7 +197,7 @@
                         {
                             "schema": "contact.addressLine2",
                             "label": "Line 2",
-                            "componentName": "FormQLTextBoxComponent",
+                            "componentName": "FormQLInputComponent",
                             "type": "text",
                             "order": 1,
                             "position": {
@@ -211,7 +212,7 @@
                         {
                             "schema": "contact.addressCity",
                             "label": "City",
-                            "componentName": "FormQLTextBoxComponent",
+                            "componentName": "FormQLInputComponent",
                             "type": "text",
                             "order": 1,
                             "position": {
@@ -227,7 +228,7 @@
                         {
                             "schema": "contact.addressPostCode",
                             "label": "Postcode",
-                            "componentName": "FormQLTextBoxComponent",
+                            "componentName": "FormQLInputComponent",
                             "type": "text",
                             "order": 1,
                             "position": {

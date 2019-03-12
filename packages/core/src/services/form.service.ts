@@ -7,6 +7,7 @@ import { FormComponent } from '../models/form-component.model';
 import { UUID } from 'angular2-uuid';
 import { HelperService } from './helper.service';
 import { IFormQLService } from '../interfaces/formql-service';
+import { elementStart } from '@angular/core/src/render3/instructions';
 
 @Injectable({
     providedIn: 'root'
@@ -263,47 +264,35 @@ export class FormService {
 
 
     resolveConditions() {
-        this.components.forEach(c => {
-            if (c.properties) {
-                Object.keys(c.properties).forEach(key => {
-                    if (key=="value")
-                    {
-                        let p = c.properties[key];
-                        if (!HelperService.isNullOrEmpty(p.condition)) {
-                            let obj = HelperService.evaluateValue(p.condition, this.data);
-                            if (!obj.error) {
-                                const value = HelperService.resolveType(obj.value, c.type);
-                                this.setValue(value,c.schema);
-                                c.value = value;
-                                p.value = true;
+        this.components.forEach(component => {
+            if (component.properties) {
+                Object.keys(component.properties).forEach(key => {
+                    const property = component.properties[key];
+                    if (!HelperService.isNullOrEmpty(property.condition)) {
+                        const evaluatedValue = HelperService.evaluateValue(property.condition, this.data);
+                        if (!evaluatedValue.error)
+                        {
+                            if (key === "value")
+                            {
+                                const value = HelperService.resolveType(evaluatedValue.value, component.type);
+                                this.setValue(value,component.schema);
+                                component.value = value;
+                                property.value = true;
                                 return;
                             }
-                            else
-                                p.value = false;
-                        }
-                        else
-                            p.value = false;
-                    }
-                    else
-                    {
-                        let p = c.properties[key];
-                        if (!HelperService.isNullOrEmpty(p.condition)) {
-                            let obj = HelperService.evaluateCondition(p.condition, this.data);
-                            if (!obj.error && obj.value) {
-                                p.value = true;
+                            else if (evaluatedValue.value)
+                            {
+                                property.value = true;
                                 return;
                             }
-                            else
-                                p.value = false;
                         }
-                        else
-                            p.value = false;
                     }
+                    property.value = false;
                 });
                 return;
             }
-            if (c.properties)
-                c.properties = null;
+            if (component.properties)
+                component.properties = null;
         });
     }
 

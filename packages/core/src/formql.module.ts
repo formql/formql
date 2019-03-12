@@ -18,7 +18,7 @@ import { FormQLButtonComponent } from "./bundle/formql-button.component";
 import { TextMaskModule } from 'angular2-text-mask';
 
 import { FormQLLabelComponent } from "./bundle/formql-label.component";
-import { FormQLTextBoxComponent } from "./bundle/formql-textbox.component";
+import { FormQLInputComponent } from "./bundle/formql-input.component";
 import { DndDropDirective } from "./directives/dnd-drop.directive";
 import { FormQLTextareaComponent } from './bundle/formql-textarea.component';
 
@@ -49,7 +49,7 @@ import { FormQLTextareaComponent } from './bundle/formql-textarea.component';
     
     // bundle
     FormQLButtonComponent,
-    FormQLTextBoxComponent,
+    FormQLInputComponent,
     FormQLLabelComponent,
     FormQLTextareaComponent
   ],
@@ -62,7 +62,7 @@ import { FormQLTextareaComponent } from './bundle/formql-textarea.component';
     
     // fields 
     FormQLButtonComponent,
-    FormQLTextBoxComponent,
+    FormQLInputComponent,
     FormQLLabelComponent,
     FormQLTextareaComponent
   ],

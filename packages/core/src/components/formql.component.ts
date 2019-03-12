@@ -69,13 +69,11 @@ export class FormQLComponent implements OnDestroy, AfterViewInit {
         this.storeService.getAll(this.formName, this.ids);
 
         this.storeService.getForm().subscribe(form => {
-            console.log("get form triggered");
             if (form && !form.error) {
                 this.formControls = Array<ComponentControl>();
                 this.form = form;
 
                 this.storeService.getComponents().subscribe(components => {
-                    console.log("get component triggered");
                     if (this.loading)
                         this.populateReactiveForm(false);
                     

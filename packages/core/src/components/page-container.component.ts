@@ -68,16 +68,19 @@ export class PageContainerComponent implements OnInit {
 
     private findSections(): Section[] {
         let sections: Section[] = [];
-        for (let section of this.page.sections) {
-            if (section.position.id === this.positionId) {
-                sections.push(section);
-            }
+        if (this.page.sections)
+        {
+            this.page.sections.forEach(section => {
+                if (section.position.id === this.positionId) {
+                    sections.push(section);
+                }
+            });
+            
+            sections.sort((left: Section, right: Section) => {
+                return left.position.index - right.position.index;
+            });
         }
-
-        // column widgets
-        return sections.sort((left: Section, right: Section) => {
-            return left.position.index - right.position.index;
-        });
+        return sections;
     }
 
 }

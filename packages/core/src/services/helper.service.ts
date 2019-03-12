@@ -39,9 +39,9 @@ export class HelperService {
                 const evalFunc = new Function(...props);
                 let value = evalFunc(...params);
 
-                if (value == undefined)
+                if (value === undefined)
                     response.error = "Property is undefined";
-                else if (value == true)
+                else if (value === true)
                     response.value = true;
             }
             catch (err) {
@@ -235,6 +235,19 @@ export class HelperService {
             error.message = error.error.message;
         
         return error;
+    }
+
+    public static maskToArray(mask: string) {
+        const result = [];
+        if (mask)
+        {
+            const maskTrimmed = mask.trim().substring(1).slice(0,-1).replace("\\\\", "\\");
+            const arry = maskTrimmed.split(",");
+            arry.forEach(item => {
+                result.push(item.trim().replace(/\"/g, '').replace(/\'/g,''));
+            });
+        }
+        return result;
     }
 
 }

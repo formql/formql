@@ -80,15 +80,19 @@ export class SectionContainerComponent {
 
     private findColumnComponents(): FormComponent<any>[] {
 		let columnComponents: FormComponent<any>[] = [];
-		for (let field of this.section.components) {
-			if (field.position.id === this.positionId && field.position.type == this.positionType) {
-				columnComponents.push(field);
-			}
-		}
-
-		// column widgets
-		return columnComponents.sort((left: FormComponent<any>, right: FormComponent<any>) => {
+        if (this.section.components)
+        {
+            this.section.components.forEach(field => {
+                if (field.position.id === this.positionId && field.position.type == this.positionType) {
+                    columnComponents.push(field);
+                }
+            });
+        }
+        
+		columnComponents.sort((left: FormComponent<any>, right: FormComponent<any>) => {
 			return left.position.index - right.position.index;
-		});
+        });
+        
+        return columnComponents;
 	}
 }

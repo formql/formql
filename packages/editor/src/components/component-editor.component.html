@@ -28,8 +28,8 @@
                 <label class="fql-field-label" for="type">Type</label>
                 <input class="fql-field-input" type="text" id="type" [(ngModel)]="updatedComponent.type" name="type">
 
-                <label class="fql-field-label" [for]="configuration">Configuration</label>
-                <textarea class="fql-field-textarea"  class="fql-field-input"  class="fql-field-textarea" name="comfiguration" id="" [(ngModel)]="updatedComponent.configuration"></textarea>
+                <label class="fql-field-label" for="configuration">Configuration</label>
+                <textarea class="fql-field-textarea"  name="comfiguration" id="configuration" [(ngModel)]="updatedComponent.configuration"></textarea>
                 
             </div>
         </div>
@@ -43,7 +43,7 @@
                     <input class="fql-field-input" type="text" id="schema" [(ngModel)]="updatedComponent.schema" name="schema">
 
                     <label class="fql-field-label" for="textMask">Text Mask</label>
-                    <input class="fql-field-input" type="text" id="textMask" [(ngModel)]="updatedComponent.textMask" name="textMask">
+                    <textarea class="fql-field-textarea"  name="textMask" id="textMask" [(ngModel)]="updatedComponent.textMask"></textarea>
 
                     <div *ngFor="let item of validators; let i=index" class="fql-properties-div">
                         <label class="fql-field-label" [for]="item.name">{{item.name}}</label>

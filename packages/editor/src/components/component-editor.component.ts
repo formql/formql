@@ -33,12 +33,17 @@ export class ComponentEditorComponent implements OnInit {
     ngOnInit() {
         this.updatedComponent = <FormComponent<any>>{};
         this.updatedComponent = HelperService.deepCopy(this.component, ["value"]);
+        if (this.updatedComponent.textMask)
+            this.updatedComponent.textMask.replace('\\\\', '\\');
 
         this.loadValidators();
     }
 
     save() {
         HelperService.propertyCopy(this.updatedComponent, this.component, ["value"]);
+        if (this.updatedComponent.textMask)
+            this.updatedComponent.textMask.replace('\\', '\\\\');
+            
         this.action.emit(this.component);
     }
 
