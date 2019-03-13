@@ -4,7 +4,9 @@ import { WrapperType } from '../models/wrapper-type.model';
 import { ComponentPositionType } from '../models/form-component.model';
 import { DndTransfer } from '../models/dnd-transfer.model';
 
-
+/*
+    Directive to handle the drop and receive the information from the dnd directive
+*/
 @Directive({
     selector: '[dnd-drop]'
 })

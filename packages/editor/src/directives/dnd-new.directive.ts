@@ -1,6 +1,9 @@
 import { Directive, HostListener, ViewContainerRef, Input, Output, EventEmitter, Renderer2 } from '@angular/core';
 import { FormQLMode, WrapperType } from '@formql/core';
 
+/*
+    Directive used for dragging new items into the editor
+*/
 @Directive({
     selector: '[dnd-new]'
 })

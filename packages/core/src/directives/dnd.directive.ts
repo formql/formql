@@ -2,6 +2,9 @@ import { Directive, HostListener, ViewContainerRef, Input, Output, EventEmitter,
 import { FormQLMode } from '../models/formql-mode.model';
 import { WrapperType } from '../models/wrapper-type.model';
 
+/*
+    Directive to handle the start drag start and pass the information to the dnd-drop directive
+*/
 @Directive({
     selector: '[dnd]'
 })

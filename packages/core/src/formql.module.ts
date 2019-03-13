@@ -21,6 +21,8 @@ import { FormQLLabelComponent } from "./bundle/formql-label.component";
 import { FormQLInputComponent } from "./bundle/formql-input.component";
 import { DndDropDirective } from "./directives/dnd-drop.directive";
 import { FormQLTextareaComponent } from './bundle/formql-textarea.component';
+import { FormQLSelectComponent } from './bundle/formql-select.component';
+import { FormQLRadioComponent } from './bundle/formql-radio.component';
 
 
 
@@ -51,7 +53,9 @@ import { FormQLTextareaComponent } from './bundle/formql-textarea.component';
     FormQLButtonComponent,
     FormQLInputComponent,
     FormQLLabelComponent,
-    FormQLTextareaComponent
+    FormQLTextareaComponent,
+    FormQLSelectComponent,
+    FormQLRadioComponent
   ],
   entryComponents: [
     // formql
@@ -64,7 +68,9 @@ import { FormQLTextareaComponent } from './bundle/formql-textarea.component';
     FormQLButtonComponent,
     FormQLInputComponent,
     FormQLLabelComponent,
-    FormQLTextareaComponent
+    FormQLTextareaComponent,
+    FormQLSelectComponent,
+    FormQLRadioComponent
   ],
   providers: [FormService],
   exports: [
