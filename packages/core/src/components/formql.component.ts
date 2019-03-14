@@ -98,6 +98,12 @@ export class FormQLComponent implements OnDestroy, AfterViewInit {
     ngOnDestroy() {
         if (!this.eventHandlerService.event) 
             this.eventHandlerService.event.unsubscribe();
+        
+        if (this.storeService.getForm().subscribe)
+            this.storeService.getForm().subscribe().unsubscribe();
+
+        if (this.storeService.getComponents().subscribe)
+            this.storeService.getComponents().subscribe().unsubscribe();
     }
 
     loadForm() {

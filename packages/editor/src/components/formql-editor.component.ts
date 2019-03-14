@@ -9,7 +9,7 @@ import { FormQLMode, HelperService, EventHandlerService, EventHandler, EventType
 	templateUrl: './formql-editor.component.html',
 	styleUrls: ['./formql-editor.component.scss']
 })
-export class FormQLEditorComponent implements OnInit, OnDestroy {
+export class FormQLEditorComponent implements OnInit {
     @Input() formName: string;
     @Input() ids: Array<string>;
     @Input() mode: FormQLMode = FormQLMode.Edit;
@@ -71,11 +71,6 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
         this.renderer.removeClass(this.pusher.element.nativeElement, "fql-slide-pusher");
     }
 
-
-	ngOnDestroy() {
-
-    }
-
     editForm() {
         this.loadEditor('FormEditorComponent', '', EventType.EditingForm);
     }
@@ -107,7 +102,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
 		(<any>comp).instance.action.subscribe(action => {
 			this.editorResponse(action);
-		});
+		})
 
         this.editor.insert(comp.hostView);
         

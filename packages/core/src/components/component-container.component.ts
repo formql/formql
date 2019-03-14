@@ -30,7 +30,7 @@ import { StoreService } from '../services/store.service';
     styleUrls: ['./component-container.component.scss']
 
 })
-export class ComponentContainerComponent implements OnInit {
+export class ComponentContainerComponent implements OnInit, OnDestroy {
 
     @ViewChild('content', { read: ViewContainerRef }) content: ViewContainerRef;
     @ViewChild('wrapper', { read: ViewContainerRef }) wrapper: ViewContainerRef;
@@ -92,5 +92,10 @@ export class ComponentContainerComponent implements OnInit {
     editField() {
         if (this.mode == FormQLMode.Edit || this.mode == FormQLMode.LiveEdit)
             this.eventHandlerService.send(EventType.EditingComponent, this.component);
+    }
+
+    ngOnDestroy(): void {
+        if (this.reactiveSection.controls[this.component.componentId].valueChanges.subscribe)
+            this.reactiveSection.controls[this.component.componentId].valueChanges.subscribe().unsubscribe();
     }
 }
