@@ -1,18 +1,33 @@
 {
     "name": "@formql/editor",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "description": "FormQL - A framework for building dynamic forms",
     "license": "MIT",
     "author": "Juan Stoppa",
     "main": "index.ts",
     "repository": {
         "type": "git",
-        "url": "https://github.com/formql/formql"
+        "url": "git+https://github.com/formql/formql.git"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "peerDependencies": {
         "@formql/core": "^0.2.1"
-    }
+    },
+    "bugs": {
+        "url": "https://github.com/formql/formql/issues"
+    },
+    "homepage": "https://github.com/formql/formql#readme",
+    "keywords": [
+        "formql",
+        "angular",
+        "reactive-forms",
+        "typescript",
+        "javascript",
+        "framework",
+        "typescript-framework",
+        "javascript-framework",
+        "graphql"
+    ]
 }

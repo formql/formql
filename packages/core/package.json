@@ -1,26 +1,41 @@
 {
-  "name": "@formql/core",
-  "version": "0.2.1",
-  "description": "FormQL - A framework for building dynamic forms",
-  "license": "MIT",
-  "author": "Juan Stoppa",
-  "main": "index.ts",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/formql/formql"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "peerDependencies": {
-    "@angular/common": "^6.0.7",
-    "@angular/compiler": "^6.0.7",
-    "@angular/core": "^6.0.7",
-    "@angular/forms": "^6.0.7",
-    "rxjs": "^6.2.1",
-    "rxjs-compat": "^6.2.1",
-    "angular2-text-mask": "^9.0.0",
-    "text-mask-addons": "^3.8.0",
-    "angular2-uuid": "^1.1.1"
-  }
+    "name": "@formql/core",
+    "version": "0.2.2",
+    "description": "FormQL - A framework for building dynamic forms",
+    "license": "MIT",
+    "author": "Juan Stoppa",
+    "main": "index.ts",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/formql/formql.git"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "peerDependencies": {
+        "@angular/common": "^6.0.7",
+        "@angular/compiler": "^6.0.7",
+        "@angular/core": "^6.0.7",
+        "@angular/forms": "^6.0.7",
+        "rxjs": "^6.2.1",
+        "rxjs-compat": "^6.2.1",
+        "angular2-text-mask": "^9.0.0",
+        "text-mask-addons": "^3.8.0",
+        "angular2-uuid": "^1.1.1"
+    },
+    "bugs": {
+        "url": "https://github.com/formql/formql/issues"
+    },
+    "homepage": "https://github.com/formql/formql#readme",
+    "keywords": [
+        "formql",
+        "angular",
+        "reactive-forms",
+        "typescript",
+        "javascript",
+        "framework",
+        "typescript-framework",
+        "javascript-framework",
+        "graphql"
+    ]
 }
