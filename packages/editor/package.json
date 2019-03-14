@@ -1,7 +1,7 @@
 {
     "name": "@formql/editor",
-    "version": "0.0.1",
-    "description": "FormQL Editor library",
+    "version": "0.2.1",
+    "description": "FormQL - A framework for building dynamic forms",
     "license": "MIT",
     "author": "Juan Stoppa",
     "main": "index.ts",
@@ -13,6 +13,6 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "peerDependencies": {
-        "@formql/core": "^0.1.1"
+        "@formql/core": "^0.2.1"
     }
 }

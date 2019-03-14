@@ -1,7 +1,7 @@
 {
   "name": "@formql/core",
-  "version": "0.0.1",
-  "description": "FormQL library",
+  "version": "0.2.1",
+  "description": "FormQL - A framework for building dynamic forms",
   "license": "MIT",
   "author": "Juan Stoppa",
   "main": "index.ts",
