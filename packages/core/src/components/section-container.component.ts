@@ -6,11 +6,8 @@ import { DndService } from '../services/dnd.service';
 import { Page } from '../models/page.model';
 import { FormQLMode } from '../models/formql-mode.model';
 import { WrapperType } from '../models/wrapper-type.model';
-import { DndEvent } from '../models/dnd-event.model';
-import { DndTransfer } from '../models/dnd-transfer.model';
-import { EventHandlerService } from '../services/event-handler.service';
-import { EventType, EventHandler } from '../models/event-handler.model';
-
+import { DndEvent } from '../models/dnd.model';
+import { DndTransfer } from '../models/dnd.model';
 
 @Component({
     selector: '[sectionContainer]',
@@ -57,9 +54,7 @@ export class SectionContainerComponent {
 
     components: FormComponent<any>[] = [];
 	constructor(
-        private dndService: DndService,
-        private eventHandlerService: EventHandlerService
-        
+        private dndService: DndService
 	) {}
     
     ngOnInit() {

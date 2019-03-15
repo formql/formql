@@ -8,21 +8,20 @@ import { OptionValue, SelectList } from '../models/types.model';
 
 @Component({
     selector: 'formql-select',
+    styleUrls: ["./formql-select.component.scss"],
     template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
-  <label [attr.for]="field.componentId" [ngClass]="{'label-required': field.properties?.required?.value}">{{field.label}}</label>
-  <div>
-    <select formControlName="{{field.componentId}}" [id]="field.componentId" 
-        class="fql-field-input" [tabIndex]="tabIndex" 
-        [attr.disabled]="field.properties?.readonly?.value ? '' : null"
-        [attr.multiple]="field.type === 'multiple'">
-        <ng-container *ngIf="list">
-            <option *ngFor="let item of list" [value]="item.value">{{item.name}}</option>
-        </ng-container>
-    </select>
-  </div>
-</div>`,
-    styles: [`.label-required:after { content:" *"; color:red;}`,
-        `.fql-field-input { width: 100%; box-sizing: border-box; -webkit-box-sizing:border-box; -moz-box-sizing: border-box;}`],
+        <label [attr.for]="field.componentId" [ngClass]="{'fql-bundle-label-required': field.properties?.required?.value}">{{field.label}}</label>
+        <div>
+            <select formControlName="{{field.componentId}}" [id]="field.componentId" 
+                class="fql-bundle-field-input" [tabIndex]="tabIndex" 
+                [attr.disabled]="field.properties?.readonly?.value ? '' : null"
+                [attr.multiple]="field.type === 'multiple'">
+                <ng-container *ngIf="list">
+                    <option *ngFor="let item of list" [value]="item.value">{{item.name}}</option>
+                </ng-container>
+            </select>
+        </div>
+        </div>`,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,

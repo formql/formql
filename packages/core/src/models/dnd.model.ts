@@ -8,3 +8,9 @@ export interface DndEvent {
     targetIndexId: string;
     positionType: ComponentPositionType
 }
+
+export interface DndTransfer {
+    sourceObjectId: string;
+    sourceWrapperId: string;
+    targetIndexId: string;
+}

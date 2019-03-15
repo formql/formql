@@ -1,6 +1,6 @@
 {
   "name": "formql",
-  "verion": "0.0.0",
+  "verion": "0.2.5",
   "description": "The form framework to rule them all",
   "private": true,
   "scripts": {
@@ -12,9 +12,12 @@
     "e2e": "ng e2e",
     "npm_build_library": "ng build formql --prod",
     "npm_pack_library": "cd dist/formql && npm pack",
-    "npm_prepare_library_formql": "ng build formql --prod && cd dist/formql && npm pack",
-    "npm_prepare_library_formql_editor": "ng build formql-editor --prod && cd dist/formql-editor && npm pack",
-    "package_all": "npm run npm_prepare_library_formql && npm run npm_prepare_library_formql_editor && npm install @formql/core && npm install @formql/editor"
+    "npm_prepare_library_formql_pack": "ng build formql --prod && cd dist/formql && npm pack",
+    "npm_prepare_library_formql_editor_pack": "ng build formql-editor --prod && cd dist/formql-editor && npm pack",
+    "npm_prepare_library_formql": "ng build formql --prod && cd dist/formql && npm publish",
+    "npm_prepare_library_formql_editor": "ng build formql-editor --prod && cd dist/formql-editor && npm publish",
+    "package_all": "npm run npm_prepare_library_formql_pack && npm run npm_prepare_library_formql_editor_pack && npm install @formql/core && npm install @formql/editor",
+    "package_and_publish_all": "npm run npm_prepare_library_formql && npm run npm_prepare_library_formql_editor"
   },
   "dependencies": {
     "@angular/animations": "^6.0.7",
@@ -26,8 +29,8 @@
     "@angular/platform-browser": "^6.0.7",
     "@angular/platform-browser-dynamic": "^6.0.7",
     "@angular/router": "^6.0.7",
-    "@formql/core": "file:dist/formql/formql-core-0.0.1.tgz",
-    "@formql/editor": "file:dist/formql-editor/formql-editor-0.0.1.tgz",
+    "@formql/core": "file:dist/formql/formql-core-0.2.4.tgz",
+    "@formql/editor": "file:dist/formql-editor/formql-editor-0.2.4.tgz",
     "angular2-text-mask": "^9.0.0",
     "angular2-uuid": "^1.1.1",
     "classlist.js": "^1.1.20150312",

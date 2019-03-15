@@ -14,14 +14,20 @@ export class DummyService implements IFormQLService {
     getData(query: string, ids: string[]) {
         return of({});
     }    
+
     getForm(name: string) {
-        return this.http.get(`assets/api/${name}.json`);
+        let item = localStorage.getItem(name);
+        if (item)
+            return of(JSON.parse(item));
+        else
+            return this.http.get(`assets/api/${name}.json`);
     }
     getForms() {
         return of(new Array<FormWrapper>());
     }
     saveForm(name: string, form: FormWrapper) {
-        return of({a:1});
+        localStorage.setItem(name, JSON.stringify(form));
+        return of(form);
     }
     saveData(mutation: string, ids: string[], data: any) {
         return of({a:1});

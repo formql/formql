@@ -7,7 +7,6 @@ import { FormComponent } from '../models/form-component.model';
 import { UUID } from 'angular2-uuid';
 import { HelperService } from './helper.service';
 import { IFormQLService } from '../interfaces/formql-service';
-import { elementStart } from '@angular/core/src/render3/instructions';
 
 @Injectable({
     providedIn: 'root'
@@ -30,18 +29,17 @@ export class FormService {
         if (ids)
         {   
             return this.service.getForm(formName).pipe(
-
-                map(res => <FormWrapper>res),
-                concatMap(model =>
-                    this.service.getData(model.dataSource.query, ids).pipe(
-                        tap(data => this.populateComponents(model, data)),
-                        map(result => <FormState>{ components: this.components, form: this.form, data: this.data })
+                    map(res => <FormWrapper>res),
+                    concatMap(model =>
+                        this.service.getData(model.dataSource.query, ids).pipe(
+                            tap(data => this.populateComponents(model, data)),
+                            map(result => <FormState>{ components: this.components, form: this.form, data: this.data })
                     )));
         }
         else
         {
             return this.service.getForm(formName).pipe(
-                tap(model => this.populateComponents(model, new Object())),
+                tap(model => this.populateComponents(model, {})),
                 map(result => <FormState>{ components: this.components, form: this.form, data: new Object() }));
         }
     }
@@ -77,7 +75,6 @@ export class FormService {
             }
         });
         this.resolveConditions();
-
     }
 
     populateComponentsAsync(form: FormWrapper, data: any) {

@@ -2,7 +2,7 @@ import { Directive, HostListener, ViewContainerRef, Input, Output, EventEmitter,
 import { FormQLMode } from '../models/formql-mode.model';
 import { WrapperType } from '../models/wrapper-type.model';
 import { ComponentPositionType } from '../models/form-component.model';
-import { DndTransfer } from '../models/dnd-transfer.model';
+import { DndTransfer } from '../models/dnd.model';
 
 /*
     Directive to handle the drop and receive the information from the dnd directive

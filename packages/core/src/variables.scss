@@ -1,0 +1,20 @@
+.fql-bundle-field-input { 
+    width: 100%; 
+    box-sizing: border-box; 
+    -webkit-box-sizing:border-box; 
+    -moz-box-sizing: border-box;
+}
+
+.fql-bundle-label-required:after { 
+    content:" *"; 
+    color:red;
+}
+
+.fql-bundle-field-radio { 
+    cursor: pointer 
+}
+
+.fql-error-message {
+    text-align: center; 
+    padding: 20px; 
+}

@@ -7,20 +7,19 @@ import { HelperService } from '../services/helper.service';
 
 @Component({
     selector: 'formql-input',
+    styleUrls: ["./formql-input.component.scss"],
     template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
-  <label [attr.for]="field.componentId" [ngClass]="{'label-required': field.properties?.required?.value}">{{field.label}}</label>
-  <div>
-    <input *ngIf="!mask" [id]="field.componentId" [type]="field.type" 
-        formControlName="{{field.componentId}}" class="fql-field-input" [tabIndex]="tabIndex"
-        [attr.disabled]="field.properties?.readonly?.value ? '' : null">
-    <input *ngIf="mask" [textMask]="{ mask: mask, guide: false}" [id]="field.componentId" type="text" 
-        formControlName="{{field.componentId}}" 
-        class="fql-field-input" [tabIndex]="tabIndex"
-        [attr.disabled]="field.properties?.readonly?.value ? '' : null">
-  </div>
-</div>`,
-    styles: [`.label-required:after { content:" *"; color:red;}`,
-        `.fql-field-input { width: 100%; box-sizing: border-box; -webkit-box-sizing:border-box; -moz-box-sizing: border-box;}`],
+        <label [attr.for]="field.componentId" [ngClass]="{'fql-bundle-label-required': field.properties?.required?.value}">{{field.label}}</label>
+        <div>
+            <input *ngIf="!mask" [id]="field.componentId" [type]="field.type" 
+                formControlName="{{field.componentId}}" class="fql-bundle-field-input" [tabIndex]="tabIndex"
+                [attr.disabled]="field.properties?.readonly?.value ? '' : null">
+            <input *ngIf="mask" [textMask]="{ mask: mask, guide: false}" [id]="field.componentId" type="text" 
+                formControlName="{{field.componentId}}" 
+                class="fql-bundle-field-input" [tabIndex]="tabIndex"
+                [attr.disabled]="field.properties?.readonly?.value ? '' : null">
+        </div>
+        </div>`,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,

@@ -6,8 +6,8 @@ import { FormQLMode } from '../models/formql-mode.model';
 import { DndService } from '../services/dnd.service';
 import { WrapperType } from '../models/wrapper-type.model';
 import { ComponentPositionType } from '../models/form-component.model';
-import { DndEvent } from '../models/dnd-event.model';
-import { DndTransfer } from '../models/dnd-transfer.model';
+import { DndEvent } from '../models/dnd.model';
+import { DndTransfer } from '../models/dnd.model';
 
 
 @Component({

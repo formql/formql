@@ -144,12 +144,17 @@
 
 .fql-header-setting {
     font-family: $font-family;
+}
+
+.fql-header-blank-space {
+    font-family: $font-family;
     flex-grow: 1;
 }
 
-
-
-
+.fql-header-open-view-mode {
+    width: 150px;
+    margin-right: 5px;
+}
 
 .fql-logo-setting {
     vertical-align: middle;

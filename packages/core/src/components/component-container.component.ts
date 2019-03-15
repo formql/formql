@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ComponentFactoryResolver, ViewContainerRef, ViewChild, Renderer2, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormComponent } from '../models/form-component.model';
-import { EventHandlerService } from '../services/event-handler.service';
-import { EventType } from '../models/event-handler.model';
+import { InternalEventHandlerService } from '../services/internal-event-handler.service';
+import { InternalEventType } from '../models/internal-event-handler.model';
 import { HelperService } from '../services/helper.service';
 import { FormGroup } from '@angular/forms';
 import { FormQLMode } from '../models/formql-mode.model';
@@ -60,7 +60,7 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
         private viewContainerRef: ViewContainerRef,
-        private eventHandlerService: EventHandlerService,
+        private eventHandlerService: InternalEventHandlerService,
         private storeService: StoreService
     ) {}
 
@@ -70,6 +70,7 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
         (<any>component).instance.reactiveFormGroup = this.reactiveSection.controls[this.component.componentId];
         if (this.component.tabIndex != null)
             (<any>component).instance.tabIndex = this.component.tabIndex;
+        
         this.content.insert(component.hostView);
 
         this.reactiveSection.controls[this.component.componentId].valueChanges.subscribe((change) => {
@@ -91,7 +92,7 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
 
     editField() {
         if (this.mode == FormQLMode.Edit || this.mode == FormQLMode.LiveEdit)
-            this.eventHandlerService.send(EventType.EditingComponent, this.component);
+            this.eventHandlerService.send(InternalEventType.EditingComponent, this.component);
     }
 
     ngOnDestroy(): void {

@@ -16,6 +16,8 @@ export class StoreService {
 
     private readonly _components = new Subject<FormComponent<any>[]>();
 
+    private readonly _data = new Subject<any>();
+
     getForm(): Observable<FormWrapper> {
         return this._form.asObservable();
     }
@@ -24,9 +26,14 @@ export class StoreService {
         return this._components.asObservable();
     }
 
+    getData(): Observable<FormComponent<any>[]> {
+        return this._data.asObservable();
+    }
+
     setComponet(component: FormComponent<any>) {
         this.formService.updateComponent(component).subscribe(res => {
             this._components.next(res.components);
+            this._data.next(res.data);
         });
     }
     
@@ -34,6 +41,7 @@ export class StoreService {
         this.formService.getFormAndData(formName, ids).subscribe(res => {
             this._form.next(res.form);
             this._components.next(res.components);
+            this._data.next(res.data);
         },
         error => {
             this._form.next(<FormWrapper>{
@@ -45,11 +53,11 @@ export class StoreService {
         });
     }
 
-    saveForm() {
-
+    saveForm(name:string, form: FormWrapper) {
+        this.formService.saveForm(name, form);
     }
 
     saveData() {
-
+        
     }
 }

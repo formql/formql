@@ -1,9 +1,9 @@
-export class EventHandler {
-    public eventType: EventType;
+export class InternalEventHandler {
+    public eventType: InternalEventType;
     public event: any;
 }
 
-export enum EventType {
+export enum InternalEventType {
     // Editing events
     EditingComponent = 1,
     EditingSection = 2,

@@ -1,8 +1,8 @@
 import { Component, Input, ViewEncapsulation, ViewChild, ViewContainerRef, OnInit, ComponentFactoryResolver } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Section } from '../models/section.model';
-import { EventHandlerService } from '../services/event-handler.service';
-import { EventType } from '../models/event-handler.model';
+import { InternalEventHandlerService } from '../services/internal-event-handler.service';
+import { InternalEventType } from '../models/internal-event-handler.model';
 import { Page } from '../models/page.model';
 import { ComponentPositionType } from '../models/form-component.model';
 import { FormQLMode } from '../models/formql-mode.model';
@@ -72,7 +72,7 @@ export class SectionWrapperComponent implements OnInit {
     public ComponentPositionType = ComponentPositionType;
 
     constructor(
-        private eventHandlerService: EventHandlerService,
+        private internalEventHandlerService: InternalEventHandlerService,
         private componentFactoryResolver: ComponentFactoryResolver,
         private viewContainerRef: ViewContainerRef
     ) {}
@@ -91,7 +91,7 @@ export class SectionWrapperComponent implements OnInit {
 
     editField() {
         if (this.mode == FormQLMode.Edit || this.mode == FormQLMode.LiveEdit)
-            this.eventHandlerService.send(EventType.EditingSection, this.section);
+            this.internalEventHandlerService.send(InternalEventType.EditingSection, this.section);
     }
 
 }

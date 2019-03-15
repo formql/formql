@@ -1,7 +1,7 @@
-import { OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, AfterViewInit } from "@angular/core";
+import { OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, AfterViewInit, AfterViewChecked, OnInit } from "@angular/core";
 import { FormWrapper, FormError } from "../models/form-wrapper.model";
-import { EventHandlerService } from "../services/event-handler.service";
-import { EventHandler, EventType } from "../models/event-handler.model";
+import { InternalEventHandlerService } from "../services/internal-event-handler.service";
+import { InternalEventHandler, InternalEventType } from "../models/internal-event-handler.model";
 import { HelperService } from "../services/helper.service";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { FormComponent, ComponentControl } from "../models/form-component.model";
@@ -12,15 +12,14 @@ import { StoreService } from "../services/store.service";
 
 @Component({
     selector: 'formql',
-    styles: [`.error-message {text-align: center; padding: 20px; }`],
-    template: `<div *ngIf="error" class="error-message">
+    styleUrls: ["./formql.component.scss"], 
+    template: `<div *ngIf="error" class="fql-error-message">
                     <h4>{{error?.title}}</h4>
                     <span>{{error?.message}}</span>
                </div>
                <ng-container #target></ng-container>`
 })
-export class FormQLComponent implements OnDestroy, AfterViewInit {
-    
+export class FormQLComponent implements OnDestroy, OnInit {
     static componentName = "FormQLComponent";
 
     @Input() formName: string;
@@ -28,7 +27,6 @@ export class FormQLComponent implements OnDestroy, AfterViewInit {
     @Input() mode: FormQLMode = FormQLMode.View;
     @Input() validators: Array<Function>;
     @Input() reactiveForm: FormGroup;
-    
     @Input() customMetadata: any;
 
 	@ViewChild('target', { read: ViewContainerRef }) target: ViewContainerRef;
@@ -37,21 +35,21 @@ export class FormQLComponent implements OnDestroy, AfterViewInit {
     saving: boolean = false;
     
     form: FormWrapper;
-    error: FormError;
-    
     formControls: ComponentControl[];
-   
+    data: any;
+
+    error: FormError;
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
         private vcRef: ViewContainerRef,
-        private eventHandlerService: EventHandlerService,
+        private eventHandlerService: InternalEventHandlerService,
         private formBuilder: FormBuilder,
         private storeService: StoreService
     ) {
     }
 
-    ngAfterViewInit() {
+    ngOnInit() {
         if (!this.reactiveForm)
             this.reactiveForm = this.formBuilder.group([]);
 
@@ -65,8 +63,6 @@ export class FormQLComponent implements OnDestroy, AfterViewInit {
             if (this.ids.length == 1 && this.ids[0] == undefined)
                 this.ids[0] = "0";
         }
-
-        this.storeService.getAll(this.formName, this.ids);
 
         this.storeService.getForm().subscribe(form => {
             if (form && !form.error) {
@@ -89,10 +85,13 @@ export class FormQLComponent implements OnDestroy, AfterViewInit {
                     if (this.loading)                       
                         this.loadForm();
                 });
+                
+                this.storeService.getData().subscribe(data => this.data = data);
             }
             else
                 this.error = {...form.error};
         });
+        this.storeService.getAll(this.formName, this.ids);
     }
 
     ngOnDestroy() {
@@ -107,18 +106,21 @@ export class FormQLComponent implements OnDestroy, AfterViewInit {
     }
 
     loadForm() {
+        if (this.target)
+            this.target.clear();
+
         this.loading = false;        
-        let comp = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, this.form.layoutComponentName));
-        (<any>comp).instance.form = this.form;
-        (<any>comp).instance.reactiveForm = this.reactiveForm;
-        (<any>comp).instance.mode = this.mode;
+        const component = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, this.form.layoutComponentName));
+        (<any>component).instance.form = this.form;
+        (<any>component).instance.reactiveForm = this.reactiveForm;
+        (<any>component).instance.mode = this.mode;
+        component.changeDetectorRef.detectChanges();
     
-        this.target.insert(comp.hostView);
+        this.target.insert(component.hostView);
     }
 
     saveForm() {
-        this.storeService.saveForm();
-        //this.formStoreService.dispatchSaveFormAction(this.formName, this.form);
+        this.storeService.saveForm(this.formName, this.form);
     }
 
     saveData() {
@@ -142,10 +144,10 @@ export class FormQLComponent implements OnDestroy, AfterViewInit {
 
     loadEventHandlers() {
         this.eventHandlerService.event.subscribe(res => {
-            let eventHandler = <EventHandler>res;
+            let eventHandler = <InternalEventHandler>res;
 
             switch (eventHandler.eventType) {
-                case EventType.DndFormChanged:
+                case InternalEventType.DndFormChanged:
                     let pageId = (<Page>res.event).pageId;
                     let index = this.form.pages.findIndex(p=>p.pageId === pageId);
                     
@@ -153,9 +155,9 @@ export class FormQLComponent implements OnDestroy, AfterViewInit {
                         this.form.pages[index] = res.event;
                     
                     this.populateReactiveForm(true, pageId);
-                    break;
+                break;
 
-                case EventType.RemoveComponent:
+                case InternalEventType.RemoveComponent:
                     let componentId = (<FormComponent<any>>res.event).componentId;
                     let updateSectionId = "";
                     this.form.pages.forEach(page => {
@@ -169,8 +171,9 @@ export class FormQLComponent implements OnDestroy, AfterViewInit {
                         });
                     });
                     this.populateReactiveForm(true, updateSectionId);
+                break;
 
-                case EventType.RemoveSection:
+                case InternalEventType.RemoveSection:
                     let sectionId = (<Section>res.event).sectionId;
                     let updatePageId = "";
                     this.form.pages.forEach(page => {
@@ -184,9 +187,6 @@ export class FormQLComponent implements OnDestroy, AfterViewInit {
                     this.populateReactiveForm(true, updatePageId);
                 break;
 
-                case EventType.SubmitForm:
-                    this.saveData();
-                    break;
 
             }
         });

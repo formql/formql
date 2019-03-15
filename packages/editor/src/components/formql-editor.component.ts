@@ -1,8 +1,8 @@
-import { OnInit, OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, Renderer2 } from "@angular/core";
+import { OnInit, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, Renderer2, AfterViewChecked, AfterViewInit } from "@angular/core";
 
 import { FormGroup, FormBuilder} from "@angular/forms";
-import { FormQLMode, HelperService, EventHandlerService, EventHandler, EventType, FormQLComponent} from "@formql/core";
-
+import { FormQLMode, HelperService, InternalEventHandlerService, InternalEventHandler, InternalEventType, FormQLComponent } from "@formql/core";
+import { take } from "rxjs/operators";
 
 @Component({
 	selector: 'formql-editor',
@@ -10,10 +10,12 @@ import { FormQLMode, HelperService, EventHandlerService, EventHandler, EventType
 	styleUrls: ['./formql-editor.component.scss']
 })
 export class FormQLEditorComponent implements OnInit {
+    
     @Input() formName: string;
     @Input() ids: Array<string>;
     @Input() mode: FormQLMode = FormQLMode.Edit;
     @Input() validators: Array<Function>;
+    @Input() pathOpenViewMode: string;  // path should contain {0} for passing the fornName
     
 	@ViewChild('target', { read: ViewContainerRef }) target: ViewContainerRef;
 	@ViewChild('rightSidenav', { read: ViewContainerRef }) rightSidenav: ViewContainerRef;
@@ -22,15 +24,16 @@ export class FormQLEditorComponent implements OnInit {
     @ViewChild('editor', { read: ViewContainerRef }) editor: ViewContainerRef;
     
     formql: any
-    
+    subscription: any;
+
     saving: boolean = false;
     reactiveForm: FormGroup;
     
     constructor(
 		private componentFactoryResolver: ComponentFactoryResolver,
-		private vcRef: ViewContainerRef,
-		private eventHandlerService: EventHandlerService,
-		private formBuilder: FormBuilder,
+        private vcRef: ViewContainerRef,
+        private internalEventHandlerService: InternalEventHandlerService,
+        private formBuilder: FormBuilder,
         private renderer: Renderer2
 
 	) {
@@ -51,9 +54,9 @@ export class FormQLEditorComponent implements OnInit {
         }
         
         this.formql = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, "FormQLComponent"));
-        (<any>this.formql).instance.mode = this.mode;
-        (<any>this.formql).instance.formName = this.formName;
-        (<any>this.formql).instance.reactiveForm = this.reactiveForm;
+        this.formql.instance.mode = this.mode;
+        this.formql.instance.formName = this.formName;
+        this.formql.instance.reactiveForm = this.reactiveForm;
         
 		this.target.insert(this.formql.hostView);
 
@@ -72,39 +75,53 @@ export class FormQLEditorComponent implements OnInit {
     }
 
     editForm() {
-        this.loadEditor('FormEditorComponent', '', EventType.EditingForm);
+        this.loadEditor('FormEditorComponent', '', InternalEventType.EditingForm);
     }
 
-	loadEditor(name:string, object:any, type:EventType) {
+    openViewMode() {
+        let relativePath = this.pathOpenViewMode;
+        if (!relativePath)
+            relativePath = "/#/form/{0}";
+
+        relativePath = relativePath.replace("{0}", this.formName);
+        
+        window.open(window.location.origin + relativePath);
+
+    }
+
+	loadEditor(name:string, object:any, type: InternalEventType) {
 		this.editor.clear();
 
-		let comp = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, name));
+		const component = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, name));
         
         switch(type)
         {
-            case EventType.EditingComponent:
-                (<any>comp).instance.component = object;
+            case InternalEventType.EditingComponent:
+                (<any>component).instance.component = object;
+                (<any>component).instance.data = this.formql.instance.data;
             break;
-            case EventType.EditingSection:
-                (<any>comp).instance.section = object;
+
+            case InternalEventType.EditingSection:
+                (<any>component).instance.section = object;
             break;
-            case EventType.EditingPage:
-                (<any>comp).instance.page = (<any>this.formql).instance.form.pages[0];
+
+            case InternalEventType.EditingPage:
+                (<any>component).instance.page = this.formql.instance.form.pages[0];
             break;
-            case EventType.EditingForm:
-                (<any>comp).instance.form = (<any>this.formql).instance.form;
+
+            case InternalEventType.EditingForm:
+                (<any>component).instance.form = this.formql.instance.form;
             break;
 
         }
         
-		(<any>comp).instance.data = (<any>this.formql).instance.data;
-		(<any>comp).instance.mode = this.mode;
+		(<any>component).instance.data = this.formql.instance.data;
+		(<any>component).instance.mode = this.mode;
 
-		(<any>comp).instance.action.subscribe(action => {
-			this.editorResponse(action);
-		})
-
-        this.editor.insert(comp.hostView);
+        this.subscription = (<any>component).instance.action
+            .subscribe(action => { this.editorResponse(action)});
+        
+        this.editor.insert(component.hostView);
         
         this.openEditBar();
     }
@@ -114,20 +131,26 @@ export class FormQLEditorComponent implements OnInit {
         if ($event) {
             if ($event.componentId)
             {
-                (<any>this.formql).instance.refreshComponent($event);
-                (<any>this.formql).instance.populateReactiveForm(true, $event.componentId);
+                this.formql.instance.refreshComponent($event);
+                this.formql.instance.populateReactiveForm(true, $event.componentId);
             }
             else if ($event.sectionId)
-                (<any>this.formql).instance.populateReactiveForm(true, $event.sectionId);
+                this.formql.instance.populateReactiveForm(true, $event.sectionId);
             else if ($event.pageId)
-                (<any>this.formql).instance.populateReactiveForm(true, $event.pageId);
+                this.formql.instance.populateReactiveForm(true, $event.pageId);
         }
 
-        this.editor.clear();
+        if (this.subscription)
+            this.subscription.unsubscribe();
+        
+        let self = this;
+        setTimeout(function() {
+            self.editor.clear();    
+        },500);
 	}
 
 	saveForm() {
-		// this.formStoreService.dispatchSaveFormAction(this.formName, this.form);
+        this.formql.instance.saveForm();
 	}
 
 	saveData() {
@@ -159,20 +182,20 @@ export class FormQLEditorComponent implements OnInit {
     }
 
 	loadEventHandlers() {
-		this.eventHandlerService.event.subscribe(res => {
-			let eventHandler = <EventHandler>res;
+		this.internalEventHandlerService.event.subscribe(res => {
+			let internalEventHandler = <InternalEventHandler>res;
 
-			switch (eventHandler.eventType) {
-				case EventType.EditingComponent:
-					this.loadEditor("ComponentEditorComponent", eventHandler.event, eventHandler.eventType);
-					break;
+			switch (internalEventHandler.eventType) {
+				case InternalEventType.EditingComponent:
+					this.loadEditor("ComponentEditorComponent", internalEventHandler.event, internalEventHandler.eventType);
+				break;
 
-				case EventType.EditingSection:
-					this.loadEditor("SectionEditorComponent", eventHandler.event, eventHandler.eventType);
-                    break;
-                case EventType.EditingPage:
-					this.loadEditor("PageEditorComponent", eventHandler.event, eventHandler.eventType);
-                        break;
+				case InternalEventType.EditingSection:
+					this.loadEditor("SectionEditorComponent", internalEventHandler.event, internalEventHandler.eventType);
+                break;
+                case InternalEventType.EditingPage:
+					this.loadEditor("PageEditorComponent", internalEventHandler.event, internalEventHandler.eventType);
+                break;
 			}
 		});
 	}

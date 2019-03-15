@@ -2,15 +2,12 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
 import { FormComponent, ComponentValidator } from '../models/form-component.model';
-import { EventHandlerService } from '../services/event-handler.service';
-import { EventType } from '../models/event-handler.model';
-
-
+import { ActionHandlerService } from '../services/action-handler.service.1';
+import { ActionType } from '../models/action-handler.model';
 
 @Component({
     selector: 'formql-button',
-    template: `<button mat-flat-button color="primary" 
-    class="float-right" (click)="onClick()">{{field.label}}</button>`,
+    template: `<button (click)="onClick()">{{field.label}}</button>`,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -36,7 +33,7 @@ export class FormQLButtonComponent implements ControlValueAccessor {
     private _propagateChange = (_: any) => { };
 
     constructor(
-        private eventHandlerService: EventHandlerService
+        private actionHandlerService: ActionHandlerService
     ) {
     }
 
@@ -63,7 +60,7 @@ export class FormQLButtonComponent implements ControlValueAccessor {
     registerOnTouched(fn: any): void { }
 
     onClick() {
-        this.eventHandlerService.send(EventType.SubmitForm, null);
+        this.actionHandlerService.send(ActionType.SubmitForm, null);
     }
 
 }

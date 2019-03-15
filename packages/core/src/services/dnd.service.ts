@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { FormComponent, ComponentPosition } from '../models/form-component.model';
 import { Section, SectionTemplate, SectionPosition } from '../models/section.model';
-import { EventHandlerService } from './event-handler.service';
+import { InternalEventHandlerService } from './internal-event-handler.service';
 import { Page } from '../models/page.model';
 import { componentFactoryName } from '@angular/compiler';
 import { UUID } from 'angular2-uuid';
-import { DndEvent } from '../models/dnd-event.model';
-import { EventType } from '../models/event-handler.model';
+import { DndEvent } from '../models/dnd.model';
+import { InternalEventType } from '../models/internal-event-handler.model';
 import { GridStyle } from '../models/grid-style.model';
 
 @Injectable()
 export class DndService {
 
     constructor(
-        private eventHandlerService: EventHandlerService
+        private eventHandlerService: InternalEventHandlerService
     ) {
 
     }
@@ -56,7 +56,7 @@ export class DndService {
             sourceSection = this.reorderComponents(sourceSection, sourceComponent,event);
 
         sourceSection.template.reRender = true;
-        this.eventHandlerService.send(EventType.DndFormChanged, page);
+        this.eventHandlerService.send(InternalEventType.DndFormChanged, page);
     }
 
     synchronisePageModel(page: Page, event: DndEvent) {
@@ -79,7 +79,7 @@ export class DndService {
 
             page = this.reorderSections(page, sourceSection, event);
             
-            this.eventHandlerService.send(EventType.DndFormChanged, page);
+            this.eventHandlerService.send(InternalEventType.DndFormChanged, page);
         }
     }
 

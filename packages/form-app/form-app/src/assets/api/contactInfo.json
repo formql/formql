@@ -41,7 +41,6 @@
                             "label": "First name",
                             "componentName": "FormQLInputComponent",
                             "type": "text",
-                            "textMask": "['(', /[1-9]/, /\\d/, /\\d/, ')', ' ', /\\d/, /\\d/, /\\d/, '-', /\\d/, /\\d/, /\\d/, /\\d/]",
                             "order": 1,
                             "position": {
                                 "id": "ID1_2",

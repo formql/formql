@@ -1,15 +1,15 @@
 import { Injectable, Output, EventEmitter } from "@angular/core";
-import { EventHandler, EventType } from "../models/event-handler.model";
+import { InternalEventHandler, InternalEventType } from "../models/internal-event-handler.model";
 
 @Injectable({
     providedIn: 'root'
 })
-export class EventHandlerService {
+export class InternalEventHandlerService {
 
   @Output() event: EventEmitter<any> = new EventEmitter();
 
-  send(eventType: EventType, event: any) {
-    let eventHandler = new EventHandler();
+  send(eventType: InternalEventType, event: any) {
+    let eventHandler = new InternalEventHandler();
     eventHandler.event = event;
     eventHandler.eventType = eventType;
     this.event.emit(eventHandler);

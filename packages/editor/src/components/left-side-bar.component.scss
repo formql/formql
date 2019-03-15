@@ -1,11 +1,11 @@
-.flq-left-menu {
+.fql-left-menu {
     display: grid;
     display: -ms-grid;
     grid-template-rows: 55px 55px 55px;
     -ms-grid-rows: 55px 55px 55px;
 }
 
-.flq-left-menu-page {
+.fql-left-menu-page {
     -ms-grid-row: 1;
     -ms-grid-row-span: 1;
     color: white;
@@ -13,19 +13,19 @@
     margin-bottom: 20px;
 }
 
-.flq-left-menu-page svg {
+.fql-left-menu-page svg {
     fill: rgba(255, 255, 255, 0.7);
     width: 40px;
     height: 40px;
     cursor: pointer;
 }
 
-.flq-left-menu-page:hover svg {
+.fql-left-menu-page:hover svg {
     fill: rgba(255, 255, 255, 0.9);
 }
 
 
-.flq-left-menu-section {
+.fql-left-menu-section {
     -ms-grid-row: 2;
     -ms-grid-row-span: 1;
     color: white;
@@ -33,31 +33,31 @@
     margin-bottom: 20px;
 }
 
-.flq-left-menu-section svg {
+.fql-left-menu-section svg {
     fill: rgba(255, 255, 255, 0.7);
     width: 40px;
     height: 40px;
     cursor: grab;
 }
 
-.flq-left-menu-section:hover svg {
+.fql-left-menu-section:hover svg {
     fill: rgba(255, 255, 255, 0.9);
 }
 
-.flq-left-menu-component {
+.fql-left-menu-component {
     -ms-grid-row: 3;
     -ms-grid-row-span: 1;
     color: white;
     margin: 10px;
 }
 
-.flq-left-menu-component svg {
+.fql-left-menu-component svg {
     fill: rgba(255, 255, 255, 0.7);
     width: 44px;
     height: 40px;
     cursor: grab;
 }
 
-.flq-left-menu-component:hover svg {
+.fql-left-menu-component:hover svg {
     fill: rgba(255, 255, 255, 0.9);
 }

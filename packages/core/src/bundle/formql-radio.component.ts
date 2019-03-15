@@ -8,16 +8,15 @@ import { OptionValue, SelectList } from '../models/types.model';
 
 @Component({
     selector: 'formql-radio',
+    styleUrls: ["./formql-radio.component.scss"],
     template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
-        <label [attr.for]="field.componentId" [ngClass]="{'label-required': field.properties?.required?.value}">{{field.label}}</label>    
-        <div class="fql-field-input">    
-            <label *ngFor="let item of list" class="fql-radio">
-                <input type="radio" [value]="item.value" formControlName="{{field.componentId}}">{{item.name}}
+        <label [attr.for]="field.componentId" [ngClass]="{'fql-bundle-label-required': field.properties?.required?.value}">{{field.label}}</label>    
+        <div class="fql-bundle-field-input">    
+            <label *ngFor="let item of list" class="fql-bundle-field-radio">
+                <input type="radio" class="fql-bundle-field-radio" [value]="item.value" formControlName="{{field.componentId}}">{{item.name}}
             </label>
         </div>
     </div>`,
-    styles: [`.label-required:after { content:" *"; color:red;}`,
-        `.fql-radio { cursor: pointer }`],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,

@@ -1,5 +1,5 @@
 import { Component, Input, ViewContainerRef, Renderer2 } from '@angular/core';
-import { WrapperType, EventHandlerService, EventType } from "@formql/core";
+import { WrapperType, InternalEventHandlerService, InternalEventType } from "@formql/core";
 
 @Component({
     selector: '[tooltip]',
@@ -23,7 +23,7 @@ export class TooltipComponent {
     public WrapperType = WrapperType;
 
     constructor(
-        private eventHandlerService: EventHandlerService,
+        private internalEventHandlerService: InternalEventHandlerService,
         private renderer: Renderer2
     ) {}
 
@@ -33,9 +33,9 @@ export class TooltipComponent {
     
     editField() {
         if (this.type == WrapperType.Component)
-            this.eventHandlerService.send(EventType.EditingComponent, this.object);
+            this.internalEventHandlerService.send(InternalEventType.EditingComponent, this.object);
         else    
-            this.eventHandlerService.send(EventType.EditingSection, this.object);
+            this.internalEventHandlerService.send(InternalEventType.EditingSection, this.object);
     }
 
     remove() {
@@ -43,9 +43,9 @@ export class TooltipComponent {
         if (result)
         {
             if (this.type == WrapperType.Component)
-                this.eventHandlerService.send(EventType.RemoveComponent, this.object);
+                this.internalEventHandlerService.send(InternalEventType.RemoveComponent, this.object);
             else    
-                this.eventHandlerService.send(EventType.RemoveSection, this.object);
+                this.internalEventHandlerService.send(InternalEventType.RemoveSection, this.object);
         }
     }
 
