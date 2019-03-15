@@ -1,5 +1,5 @@
 {
-    "name": "@formql/core",
+    "name": "@formql/material",
     "version": "0.2.7",
     "description": "FormQL - A framework for building dynamic forms",
     "license": "MIT",
@@ -13,15 +13,10 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "peerDependencies": {
-        "@angular/common": "^6.0.7",
-        "@angular/compiler": "^6.0.7",
-        "@angular/core": "^6.0.7",
-        "@angular/forms": "^6.0.7",
-        "rxjs": "^6.2.1",
-        "rxjs-compat": "^6.2.1",
-        "angular2-text-mask": "^9.0.0",
-        "text-mask-addons": "^3.8.0",
-        "angular2-uuid": "^1.1.1"
+        "@angular/platform-browser": "^6.0.7",
+        "@angular/cdk": "^6.4.7",
+        "@angular/material": "^6.0.7",
+        "@formql/core": "^0.2.7"
     },
     "bugs": {
         "url": "https://github.com/formql/formql/issues"
@@ -30,6 +25,7 @@
     "keywords": [
         "formql",
         "angular",
+        "material",
         "reactive-forms",
         "typescript",
         "javascript",

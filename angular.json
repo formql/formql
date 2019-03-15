@@ -1,208 +1,248 @@
 {
-    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-    "version": 1,
-    "newProjectRoot": "packages",
-    "defaultProject": "formql",
-    "projects": {
-        "form-app": {
-            "root": "packages/form-app/form-app/",
-            "sourceRoot": "packages/form-app/form-app/src/",
-            "projectType": "application",
-            "prefix": "app",
-            "schematics": {},
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
-                    "options": {
-                        "outputPath": "dist/form-app",
-                        "index": "packages/form-app/form-app/src/index.html",
-                        "main": "packages/form-app/form-app/src/main.ts",
-                        "polyfills": "packages/form-app/form-app/src/polyfills.ts",
-                        "tsConfig": "packages/form-app/form-app/src/tsconfig.app.json",
-                        "assets": [
-                            "packages/form-app/form-app/src/favicon.ico",
-                            "packages/form-app/form-app/src/assets",
-                            "packages/form-app/form-app/src/assets/api"
-                        ],
-                        "styles": [
-                            "packages/form-app/form-app/src/styles.css"
-                        ],
-                        "scripts": []
-                    },
-                    "configurations": {
-                        "production": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "packages/form-app/form-app/src/environments/environment.ts",
-                                    "with": "packages/form-app/form-app/src/environments/environment.prod.ts"
-                                }
-                            ],
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "extractCss": true,
-                            "namedChunks": false,
-                            "aot": true,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true
-                        }
-                    }
-                },
-                "serve": {
-                    "builder": "@angular-devkit/build-angular:dev-server",
-                    "options": {
-                        "browserTarget": "form-app:build"
-                    },
-                    "configurations": {
-                        "production": {
-                            "browserTarget": "form-app:build:production"
-                        }
-                    }
-                },
-                "extract-i18n": {
-                    "builder": "@angular-devkit/build-angular:extract-i18n",
-                    "options": {
-                        "browserTarget": "form-app:build"
-                    }
-                },
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "packages/form-app/form-app/src/test.ts",
-                        "polyfills": "packages/form-app/form-app/src/polyfills.ts",
-                        "tsConfig": "packages/form-app/form-app/src/tsconfig.spec.json",
-                        "karmaConfig": "packages/form-app/form-app/src/karma.conf.js",
-                        "styles": [
-                            "packages/form-app/form-app/src/styles.css"
-                        ],
-                        "scripts": [],
-                        "assets": [
-                            "packages/form-app/form-app/src/favicon.ico",
-                            "packages/form-app/form-app/src/assets"
-                        ]
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "packages/form-app/form-app/src/tsconfig.app.json",
-                            "packages/form-app/form-app/src/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
-                    }
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "packages",
+  "defaultProject": "formql",
+  "projects": {
+    "form-app": {
+      "root": "packages/form-app/form-app/",
+      "sourceRoot": "packages/form-app/form-app/src/",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/form-app",
+            "index": "packages/form-app/form-app/src/index.html",
+            "main": "packages/form-app/form-app/src/main.ts",
+            "polyfills": "packages/form-app/form-app/src/polyfills.ts",
+            "tsConfig": "packages/form-app/form-app/src/tsconfig.app.json",
+            "assets": [
+              "packages/form-app/form-app/src/favicon.ico",
+              "packages/form-app/form-app/src/assets",
+              "packages/form-app/form-app/src/assets/api"
+            ],
+            "styles": [
+              "packages/form-app/form-app/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "packages/form-app/form-app/src/environments/environment.ts",
+                  "with": "packages/form-app/form-app/src/environments/environment.prod.ts"
                 }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
             }
+          }
         },
-        "form-app-e2e": {
-            "root": "packages/form-app/form-app-e2e/",
-            "projectType": "application",
-            "architect": {
-                "e2e": {
-                    "builder": "@angular-devkit/build-angular:protractor",
-                    "options": {
-                        "protractorConfig": "packages/form-app/form-app-e2e/protractor.conf.js",
-                        "devServerTarget": "form-app:serve"
-                    },
-                    "configurations": {
-                        "production": {
-                            "devServerTarget": "form-app:serve:production"
-                        }
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": "packages/form-app/form-app-e2e/tsconfig.e2e.json",
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
-                    }
-                }
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "form-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "form-app:build:production"
             }
+          }
         },
-        "formql": {
-            "root": "packages/core",
-            "sourceRoot": "packages/core/src",
-            "projectType": "library",
-            "prefix": "fql",
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-ng-packagr:build",
-                    "options": {
-                        "tsConfig": "packages/core/tsconfig.lib.json",
-                        "project": "packages/core/ng-package.json"
-                    },
-                    "configurations": {
-                        "production": {
-                            "project": "packages/core/ng-package.prod.json"
-                        }
-                    }
-                },
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "packages/core/src/test.ts",
-                        "tsConfig": "packages/core/tsconfig.spec.json",
-                        "karmaConfig": "packages/core/karma.conf.js"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "packages/core/tsconfig.lib.json",
-                            "packages/core/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
-                    }
-                }
-            }
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "form-app:build"
+          }
         },
-        "formql-editor": {
-            "root": "packages/editor",
-            "sourceRoot": "packages/editor/src",
-            "projectType": "library",
-            "prefix": "fql",
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-ng-packagr:build",
-                    "options": {
-                        "tsConfig": "packages/editor/tsconfig.lib.json",
-                        "project": "packages/editor/ng-package.json"
-                    },
-                    "configurations": {
-                        "production": {
-                            "project": "packages/editor/ng-package.prod.json"
-                        }
-                    }
-                },
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "packages/editor/src/test.ts",
-                        "tsConfig": "packages/editor/tsconfig.spec.json",
-                        "karmaConfig": "packages/editor/karma.conf.js"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "packages/editor/tsconfig.lib.json",
-                            "packages/editor/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
-                    }
-                }
-            }
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "packages/form-app/form-app/src/test.ts",
+            "polyfills": "packages/form-app/form-app/src/polyfills.ts",
+            "tsConfig": "packages/form-app/form-app/src/tsconfig.spec.json",
+            "karmaConfig": "packages/form-app/form-app/src/karma.conf.js",
+            "styles": [
+              "packages/form-app/form-app/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "packages/form-app/form-app/src/favicon.ico",
+              "packages/form-app/form-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/form-app/form-app/src/tsconfig.app.json",
+              "packages/form-app/form-app/src/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
         }
+      }
+    },
+    "form-app-e2e": {
+      "root": "packages/form-app/form-app-e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "packages/form-app/form-app-e2e/protractor.conf.js",
+            "devServerTarget": "form-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "form-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "packages/form-app/form-app-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "formql": {
+      "root": "packages/core",
+      "sourceRoot": "packages/core/src",
+      "projectType": "library",
+      "prefix": "fql",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "packages/core/tsconfig.lib.json",
+            "project": "packages/core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "packages/core/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "packages/core/src/test.ts",
+            "tsConfig": "packages/core/tsconfig.spec.json",
+            "karmaConfig": "packages/core/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/core/tsconfig.lib.json",
+              "packages/core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "formql-editor": {
+      "root": "packages/editor",
+      "sourceRoot": "packages/editor/src",
+      "projectType": "library",
+      "prefix": "fql",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "packages/editor/tsconfig.lib.json",
+            "project": "packages/editor/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "packages/editor/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "packages/editor/src/test.ts",
+            "tsConfig": "packages/editor/tsconfig.spec.json",
+            "karmaConfig": "packages/editor/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/editor/tsconfig.lib.json",
+              "packages/editor/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "formql-material": {
+      "root": "packages/material",
+      "sourceRoot": "packages/material/src",
+      "projectType": "library",
+      "prefix": "fql",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "packages/material/tsconfig.lib.json",
+            "project": "packages/material/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "packages/material/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "packages/material/src/test.ts",
+            "tsConfig": "packages/material/tsconfig.spec.json",
+            "karmaConfig": "packages/material/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/material/tsconfig.lib.json",
+              "packages/material/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
+  }
 }
