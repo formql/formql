@@ -7,7 +7,7 @@ import { ActionType } from '../models/action-handler.model';
 
 @Component({
     selector: 'formql-button',
-    template: `<button (click)="onClick()">{{field.label}}</button>`,
+    template: `<button style="cursor: pointer" (click)="onClick()">{{field.label}}</button>`,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,

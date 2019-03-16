@@ -92,6 +92,14 @@ export class LayoutDirective {
             styleAttrValue += `-ms-grid-rows:${config.gridTemplateRows};`;
         }
 
+        if (config.style)
+        {   
+            let array = Object.keys(config.style);
+            for (let i=0; i < array.length; i++)
+                styleAttrValue += array[i] + ":" + config.style[array[i]] + ";";
+        }
+
+
 
         if (styleAttrValue)
             this.renderer.setAttribute(parentElement, 'style', styleAttrValue);

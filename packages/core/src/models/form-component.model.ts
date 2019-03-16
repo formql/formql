@@ -14,6 +14,7 @@ export interface FormComponent<T>  {
 
     position: ComponentPosition;
 
+    style: any;
     configuration: any;
   }
 

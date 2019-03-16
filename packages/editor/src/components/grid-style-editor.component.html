@@ -1,0 +1,26 @@
+<label class="fql-field-label fql-header" for="header">{{header}}</label>
+<div class="fql-grid-style-property">
+    <div class="fql-grid-style-hiddenhide">
+        <label class="fql-field-label" for="headerTemplate-gridTemplateColumns">hidden</label>
+        <input class="fql-field-input fql-field-input-radio" type="checkbox" id="headerTemplate-gridTemplateColumns" [(ngModel)]="gridStyle.hidden"
+            name="headerTemplate-gridTemplateColumns">
+    </div>
+    <div class="fql-grid-style-column">
+        <label class="fql-field-label" for="headerTemplate-gridTemplateColumns">gridTemplateColumns</label>
+        <input class="fql-field-input" type="text" id="headerTemplate-gridTemplateColumns" [(ngModel)]="gridStyle.gridTemplateColumns"
+            name="headerTemplate-gridTemplateColumns">
+    </div>
+    <div class="fql-grid-style-row">
+        <label class="fql-field-label" for="headerTemplate-gridTemplateRows">gridTemplateRows</label>
+        <input class="fql-field-input" type="text" id="headerTemplate-gridTemplateRows" [(ngModel)]="gridStyle.gridTemplateRows"
+            name="headerTemplate-gridTemplateRows">
+    </div>
+    <div class="fql-grid-style-area">
+        <label class="fql-field-label" for="headerTemplate-gridTemplateAreas">gridTemplateAreas</label>
+        <input class="fql-field-input" type="text" id="headerTemplate-gridTemplateAreas" [(ngModel)]="gridStyle.gridTemplateAreas"
+            name="headerTemplate-gridTemplateAreas">
+    </div>
+    <div class="fql-grid-style-style">
+        <json-field-input [label]="'Style'" [(json)]="gridStyle.style"></json-field-input>
+    </div>
+</div>

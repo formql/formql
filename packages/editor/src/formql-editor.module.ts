@@ -12,6 +12,8 @@ import { SectionEditorComponent } from "./components/section-editor.component";
 import { PageEditorComponent } from "./components/page-editor.component";
 import { FormEditorComponent } from "./components/form-editor.component";
 import { DndNewDirective } from "./directives/dnd-new.directive";
+import { GridStyleEditorComponent } from './components/grid-style-editor.component';
+import { JsonFieldInputComponent } from './components/json-field-input.component';
 
 @NgModule({
     imports: [
@@ -23,6 +25,8 @@ import { DndNewDirective } from "./directives/dnd-new.directive";
         TextMaskModule
     ],
     declarations: [
+        GridStyleEditorComponent,
+        JsonFieldInputComponent,
         LeftSideBarComponent,
         ComponentEditorComponent,
         SectionEditorComponent,
@@ -40,7 +44,9 @@ import { DndNewDirective } from "./directives/dnd-new.directive";
         FormEditorComponent
     ],
     exports: [
-        FormQLEditorComponent
+        FormQLEditorComponent,
+        GridStyleEditorComponent,
+        JsonFieldInputComponent
     ]
 })
 export class FormQLEditorModule { }

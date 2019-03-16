@@ -23,7 +23,7 @@ import { WrapperType } from '../models/wrapper-type.model';
             <div class="fql-section-tooltip">
                 <ng-container #tooltip></ng-container>
             </div>
-            <div class="fql-section-header">
+            <div *ngIf="!section.template.header.hidden" class="fql-section-header">
                 <ng-template gdConfig 
                     [gdConfigOf]="section.template.header" let-headeritem let-i="index">
                     <div sectionContainer 
@@ -37,7 +37,7 @@ import { WrapperType } from '../models/wrapper-type.model';
                     </div>
                 </ng-template>
             </div>
-            <div class="fql-section-body">
+            <div *ngIf="!section.template.body.hidden" class="fql-section-body">
                 <ng-template gdConfig 
                     [gdConfigOf]="section.template.body" let-bodyitem let-i="index">
                     <div sectionContainer  

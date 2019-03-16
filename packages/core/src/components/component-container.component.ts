@@ -23,7 +23,7 @@ import { StoreService } from '../services/store.service';
         <div class="fql-component-tooltip">
             <ng-container #tooltip></ng-container>
         </div>
-        <div class="fql-component-container">
+        <div class="fql-component-container" [ngStyle]="component.style">
             <ng-container #content></ng-container>
         </div>
     </div>`,

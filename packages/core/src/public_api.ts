@@ -14,6 +14,7 @@ export * from './models/types.model';
 export * from './models/wrapper-type.model';
 export * from './models/formql-mode.model';
 export * from './models/internal-event-handler.model';
+export * from './models/grid-style.model';
 export * from './services/form.service';
 export * from './services/helper.service';
 export * from './services/internal-event-handler.service';

@@ -17,18 +17,7 @@
                 <label class="fql-field-label" for="pageId">Page Id</label>
                 <input class="fql-field-input" type="text" id="pageId" [(ngModel)]="updatedPage.pageId" name="pageId" disabled>
                 <div class="fql-properties-div">
-                    <label class="fql-field-label" for="bodyTemplate-gridTemplateColumns">Body Template -
-                        gridTemplateColumns</label>
-                    <input class="fql-field-input" type="text" id="bodyTemplate-gridTemplateColumns" [(ngModel)]="updatedPage.template.body.gridTemplateColumns"
-                        name="bodyTemplate-gridTemplateColumns">
-
-                    <label class="fql-field-label" for="bodyTemplate-gridTemplateRows">Body Template - gridTemplateRows</label>
-                    <input class="fql-field-input" type="text" id="bodyTemplate-gridTemplateRows" [(ngModel)]="updatedPage.template.body.gridTemplateRows"
-                        name="bodyTemplate-gridTemplateRows">
-
-                    <label class="fql-field-label" for="bodyTemplate-gridTemplateAreas">Body Template - gridTemplateAreas</label>
-                    <input class="fql-field-input" type="text" id="bodyTemplate-gridTemplateAreas" [(ngModel)]="updatedPage.template.body.gridTemplateAreas"
-                        name="bodyTemplate-gridTemplateAreas">
+                    <grid-style-editor [header]="'BODY TEMPLATE'" [gridStyle]="updatedPage.template.body"></grid-style-editor>
                 </div>
 
             </div>

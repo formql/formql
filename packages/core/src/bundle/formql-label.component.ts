@@ -5,9 +5,9 @@ import { FormComponent, ComponentValidator } from '../models/form-component.mode
 
 @Component({
   selector: 'formql-label',
-  template: `<div *ngIf="field" style="border-bottom: solid 1px">
-        <label>{{field.label}}</label>
-        </div>`,
+  template: `<div *ngIf="field">
+                <label>{{field.label}}</label>
+            </div>`,
   providers: [
   {
     provide: NG_VALUE_ACCESSOR,

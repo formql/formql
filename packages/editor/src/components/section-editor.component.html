@@ -17,35 +17,11 @@
                 <label class="fql-field-label" for="sectionId">Section Id</label>
                 <input class="fql-field-input" type="text" id="sectionId" [(ngModel)]="updatedSection.sectionId" name="sectionId" disabled>
                 <div class="fql-properties-div">
-                    <label class="fql-field-label" for="headerTemplate-gridTemplateColumns">Header Template -
-                        gridTemplateColumns</label>
-                    <input class="fql-field-input" type="text" id="headerTemplate-gridTemplateColumns" [(ngModel)]="updatedSection.template.header.gridTemplateColumns"
-                        name="headerTemplate-gridTemplateColumns">
-
-                    <label class="fql-field-label" for="headerTemplate-gridTemplateRows">Header Template - gridTemplateRows</label>
-                    <input class="fql-field-input" type="text" id="headerTemplate-gridTemplateRows" [(ngModel)]="updatedSection.template.header.gridTemplateRows"
-                        name="headerTemplate-gridTemplateRows">
-
-                    <label class="fql-field-label" for="headerTemplate-gridTemplateAreas">Header Template -
-                        gridTemplateAreas</label>
-                    <input class="fql-field-input" type="text" id="headerTemplate-gridTemplateAreas" [(ngModel)]="updatedSection.template.header.gridTemplateAreas"
-                        name="headerTemplate-gridTemplateAreas">
+                    <grid-style-editor [header]="'HEADER TEMPLATE'" [gridStyle]="updatedSection.template.header"></grid-style-editor>
                 </div>
                 <div class="fql-properties-div">
-                    <label class="fql-field-label" for="bodyTemplate-gridTemplateColumns">Body Template -
-                        gridTemplateColumns</label>
-                    <input class="fql-field-input" type="text" id="bodyTemplate-gridTemplateColumns" [(ngModel)]="updatedSection.template.body.gridTemplateColumns"
-                        name="bodyTemplate-gridTemplateColumns">
-
-                    <label class="fql-field-label" for="bodyTemplate-gridTemplateRows">Body Template - gridTemplateRows</label>
-                    <input class="fql-field-input" type="text" id="bodyTemplate-gridTemplateRows" [(ngModel)]="updatedSection.template.body.gridTemplateRows"
-                        name="bodyTemplate-gridTemplateRows">
-
-                    <label class="fql-field-label" for="bodyTemplate-gridTemplateAreas">Body Template - gridTemplateAreas</label>
-                    <input class="fql-field-input" type="text" id="bodyTemplate-gridTemplateAreas" [(ngModel)]="updatedSection.template.body.gridTemplateAreas"
-                        name="bodyTemplate-gridTemplateAreas">
+                    <grid-style-editor [header]="'BODY TEMPLATE'" [gridStyle]="updatedSection.template.body"></grid-style-editor>
                 </div>
-
             </div>
         </div>
 

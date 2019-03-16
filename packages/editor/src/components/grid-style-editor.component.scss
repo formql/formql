@@ -1,0 +1,43 @@
+@import "../variables.scss";
+
+
+.fql-grid-style-property {
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr;
+    grid-template-rows: 70px 70px 1fr;
+    grid-template-areas: "hidden column row" "area area area" "style style style";
+}
+
+.fql-field-input-radio {
+    position: relative;
+    top: 10px;
+    right: 20px;
+}
+
+.fql-grid-style-hidden {
+    grid-area: row;
+    padding-left: 5px;
+}
+
+.fql-grid-style-column {
+    grid-area: column;
+    padding-right: 5px;
+}
+
+.fql-grid-style-row {
+    grid-area: row;
+    padding-left: 5px;
+}
+
+.fql-grid-style-area {
+    grid-area: area;
+}
+
+.fql-grid-style-style {
+    grid-area: style;
+}
+
+.fql-header {
+    line-height: 30px;
+    font-size: 16px;
+}

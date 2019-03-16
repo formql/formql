@@ -27,10 +27,11 @@
 
                 <label class="fql-field-label" for="type">Type</label>
                 <input class="fql-field-input" type="text" id="type" [(ngModel)]="updatedComponent.type" name="type">
-
-                <label class="fql-field-label" for="configuration">Configuration</label>
-                <textarea class="fql-field-textarea"  name="comfiguration" id="configuration" [(ngModel)]="updatedComponent.configuration"></textarea>
                 
+                <json-field-input [label]="'Configuration'" [(json)]="updatedComponent.configuration"></json-field-input>
+                
+                <json-field-input [label]="'Style'" [(json)]="updatedComponent.style"></json-field-input>
+
             </div>
         </div>
 
