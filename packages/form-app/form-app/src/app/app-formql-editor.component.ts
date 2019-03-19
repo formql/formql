@@ -6,7 +6,7 @@ import { FormQLMode } from '@formql/core';
     selector: 'app-formql-editor',
     styles: [`.mainDiv { position: absolute; top: 0; left: 0; right: 0;bottom: 0;}`],
     template: `<div class="mainDiv">
-                <formql-editor [mode]="mode" [formName]="formName"></formql-editor>
+                <formql-editor [mode]="mode" [formName]="formName" [pathOpenViewMode]="'/example/#/form/{0}'"></formql-editor>
                 </div>`,
 })
 export class AppFormQLEditorComponent implements OnInit {

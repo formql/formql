@@ -52,8 +52,7 @@ import { WrapperType } from '../models/wrapper-type.model';
                 </ng-template>
             </div>
         </div>`,
-    styleUrls: ['./section-wrapper.component.scss'],
-    //encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./section-wrapper.component.scss']
 })
 export class SectionWrapperComponent implements OnInit {
 

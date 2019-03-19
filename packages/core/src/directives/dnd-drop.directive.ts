@@ -88,12 +88,12 @@ export class DndDropDirective {
         
         let element = sourceELement;
         let i=0;
-        while (element.className.indexOf(className) == -1 && i < 10)
+        while (element.className && element.className.indexOf(className) == -1 && i < 10)
         {
             element = element.parentElement;
             i++;
         }
-        if (element.className.indexOf(className) != -1)
+        if (element.className && element.className.indexOf(className) != -1)
             return element
         
         return null;
