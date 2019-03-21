@@ -75,10 +75,13 @@ export class HelperService {
             const evalFunc = new Function(...props);
             const value = evalFunc(...params);
 
-            if (value == undefined || value == null)
-                response.value == null;
+            if (value === undefined || value === null)
+                response.value = null;
+            else if (Number.isNaN(value))
+                response.value = 0;
             else
                 response.value = this.deepCopy(value);
+            
         }
         catch (err) {
             return response.error = err;
@@ -88,8 +91,10 @@ export class HelperService {
     }
 
     public static resolveType(value, type) {
-        if (value == null || value == undefined || value == '')
+        if (value === null || value === undefined || value === '')
             return null;
+        else if (Number.isNaN(value))
+            return 0;
 
         switch (type) {
             case "number":

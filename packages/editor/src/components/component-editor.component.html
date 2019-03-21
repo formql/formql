@@ -43,8 +43,9 @@
                     <label class="fql-field-label" for="schema">Schema</label>
                     <input class="fql-field-input" type="text" id="schema" [(ngModel)]="updatedComponent.schema" name="schema">
 
-                    <label class="fql-field-label" for="textMask">Text Mask</label>
-                    <textarea class="fql-field-textarea"  name="textMask" id="textMask" [(ngModel)]="updatedComponent.textMask"></textarea>
+                    <!-- <label class="fql-field-label" for="textMask">Text Mask</label> -->
+                    <json-field-input [label]="'Text Mask'" [(json)]="updatedComponent.textMask"></json-field-input>
+                    <!-- <textarea class="fql-field-textarea"  name="textMask" id="textMask" [(ngModel)]="updatedComponent.textMask"></textarea> -->
 
                     <div *ngFor="let item of validators; let i=index" class="fql-properties-div">
                         <label class="fql-field-label" [for]="item.name">{{item.name}}</label>

@@ -167,8 +167,7 @@ export class FormService {
             }
             else
                 this.data[key] = value;
-        }
-        return this.data;
+            }
     }
 
 

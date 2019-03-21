@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, OnInit } from '@angular/core';
+import { Component, Input, forwardRef, OnInit, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
 import { FormComponent, ComponentValidator } from '@formql/core';
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
@@ -30,6 +30,7 @@ import createNumberMask from "text-mask-addons/dist/createNumberMask";
         }]
 })
 export class FormQLMatFormFieldComponent implements OnInit, ControlValueAccessor {
+    
     static componentName = 'FormQLMatFormFieldComponent';
     static formQLComponent = true;
 
@@ -50,6 +51,7 @@ export class FormQLMatFormFieldComponent implements OnInit, ControlValueAccessor
     currencyMask: any;
 
     constructor() {
+        
      
     }
 
@@ -57,7 +59,7 @@ export class FormQLMatFormFieldComponent implements OnInit, ControlValueAccessor
         if (this.field && this.field.textMask)
             this.currencyMask = createNumberMask(this.field.textMask);
     }
-
+    
     get value(): any {
 
         return this._value;
