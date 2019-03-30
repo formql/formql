@@ -1,18 +1,19 @@
-import { OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, AfterViewInit, AfterViewChecked, OnInit } from "@angular/core";
-import { FormWrapper, FormError } from "../models/form-wrapper.model";
-import { InternalEventHandlerService } from "../services/internal-event-handler.service";
-import { InternalEventHandler, InternalEventType } from "../models/internal-event-handler.model";
-import { HelperService } from "../services/helper.service";
-import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
-import { FormComponent, ComponentControl } from "../models/form-component.model";
-import { FormQLMode } from "../models/formql-mode.model";
-import { Page } from "../models/page.model";
-import { Section } from "../models/section.model";
-import { StoreService } from "../services/store.service";
+import { OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input,  OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormWindow, FormError } from '../models/form-window.model';
+import { InternalEventHandlerService } from '../services/internal-event-handler.service';
+import { InternalEventHandler, InternalEventType } from '../models/internal-event.model';
+import { HelperService } from '../services/helper.service';
+import { FormComponent, ComponentControl } from '../models/form-component.model';
+import { FormPage } from '../models/form-page.model';
+import { StoreService } from '../services/store.service';
+import { FormQLMode } from '../models/type.model';
+import { FormSection } from '../models/form-section.model';
 
 @Component({
+    // tslint:disable-next-line: component-selector
     selector: 'formql',
-    styleUrls: ["./formql.component.scss"], 
+    styleUrls: ['./formql.component.scss'],
     template: `<div *ngIf="error" class="fql-error-message">
                     <h4>{{error?.title}}</h4>
                     <span>{{error?.message}}</span>
@@ -20,7 +21,7 @@ import { StoreService } from "../services/store.service";
                <ng-container #target></ng-container>`
 })
 export class FormQLComponent implements OnDestroy, OnInit {
-    static componentName = "FormQLComponent";
+    static componentName = 'FormQLComponent';
 
     @Input() formName: string;
     @Input() ids: Array<string>;
@@ -29,12 +30,12 @@ export class FormQLComponent implements OnDestroy, OnInit {
     @Input() reactiveForm: FormGroup;
     @Input() customMetadata: any;
 
-	@ViewChild('target', { read: ViewContainerRef }) target: ViewContainerRef;
+    @ViewChild('target', { read: ViewContainerRef }) target: ViewContainerRef;
 
-    loading: boolean = true;
-    saving: boolean = false;
-    
-    form: FormWrapper;
+    loading = true;
+    saving = false;
+
+    form: FormWindow;
     formControls: ComponentControl[];
     data: any;
 
@@ -43,7 +44,7 @@ export class FormQLComponent implements OnDestroy, OnInit {
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
         private vcRef: ViewContainerRef,
-        private eventHandlerService: InternalEventHandlerService,
+        private internalEventHandlerService: InternalEventHandlerService,
         private formBuilder: FormBuilder,
         private storeService: StoreService
     ) {
@@ -53,69 +54,61 @@ export class FormQLComponent implements OnDestroy, OnInit {
         if (!this.reactiveForm)
             this.reactiveForm = this.formBuilder.group([]);
 
-        this.loadEventHandlers();
-
-        if (this.ids == null || (this.ids != null && this.ids.length == 0)) {
-            this.ids = new Array<string>();
-            this.ids.push("0");
-        }
-        else {
-            if (this.ids.length == 1 && this.ids[0] == undefined)
-                this.ids[0] = "0";
-        }
+        if (this.mode === FormQLMode.Edit)
+            this.loadInternalEventHandlers();
 
         this.storeService.getForm().subscribe(form => {
             if (form && !form.error) {
-                this.formControls = Array<ComponentControl>();
                 this.form = form;
 
                 this.storeService.getComponents().subscribe(components => {
                     if (this.loading)
                         this.populateReactiveForm(false);
-                    
-                    if (components && components.length > 0) {
+
+                    if (components && components.length > 0)
                         components.forEach(component => {
                             if (component != null) {
-                                const componentControl = this.formControls.find(fc => fc.key == component.componentId);
-                                HelperService.setValidators(this.componentFactoryResolver, component, componentControl.control);
+                                const componentControl = this.formControls.find(fc => fc.key === component.componentId);
+                                component = HelperService.setValidators(this.componentFactoryResolver, component, componentControl.control);
                             }
                         });
-                    }
-                    
-                    if (this.loading)                       
+
+                    if (this.loading)
                         this.loadForm();
                 });
-                
                 this.storeService.getData().subscribe(data => this.data = data);
-            }
-            else
+            } else
                 this.error = {...form.error};
         });
         this.storeService.getAll(this.formName, this.ids);
     }
 
     ngOnDestroy() {
-        if (!this.eventHandlerService.event) 
-            this.eventHandlerService.event.unsubscribe();
-        
+        if (this.internalEventHandlerService && this.internalEventHandlerService.event)
+            this.internalEventHandlerService.event.unsubscribe();
+
         if (this.storeService.getForm().subscribe)
             this.storeService.getForm().subscribe().unsubscribe();
 
         if (this.storeService.getComponents().subscribe)
             this.storeService.getComponents().subscribe().unsubscribe();
+
+        if (this.storeService.getData().subscribe)
+            this.storeService.getData().subscribe().unsubscribe();
     }
 
     loadForm() {
         if (this.target)
             this.target.clear();
 
-        this.loading = false;        
-        const component = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, this.form.layoutComponentName));
+        this.loading = false;
+        const component = this.vcRef.createComponent(
+            HelperService.getFactory(this.componentFactoryResolver, this.form.layoutComponentName));
         (<any>component).instance.form = this.form;
         (<any>component).instance.reactiveForm = this.reactiveForm;
         (<any>component).instance.mode = this.mode;
         component.changeDetectorRef.detectChanges();
-    
+
         this.target.insert(component.hostView);
     }
 
@@ -124,7 +117,7 @@ export class FormQLComponent implements OnDestroy, OnInit {
     }
 
     saveData() {
-        if (this.mode != FormQLMode.Edit) {
+        if (this.mode !== FormQLMode.Edit)
             this.storeService.saveData();
             // this.components.forEach(component => {
             //     if (component != null) {
@@ -135,38 +128,36 @@ export class FormQLComponent implements OnDestroy, OnInit {
             //     }
             // });
 
-            //if (this.reactiveForm.valid)
-            //this.formStoreService.dispatchSaveDataAction(this.form.dataSource.mutation, this.ids, this.data);
-            //else
-            //	alert('form not valid');
-        }
+            // if (this.reactiveForm.valid)
+            // this.formStoreService.dispatchSaveDataAction(this.form.dataSource.mutation, this.ids, this.data);
+            // else
+            // alert('form not valid');
     }
 
-    loadEventHandlers() {
-        this.eventHandlerService.event.subscribe(res => {
-            let eventHandler = <InternalEventHandler>res;
+    loadInternalEventHandlers() {
+        this.internalEventHandlerService.event.subscribe(res => {
+            const eventHandler = <InternalEventHandler>res;
 
             switch (eventHandler.eventType) {
                 case InternalEventType.DndFormChanged:
-                    let pageId = (<Page>res.event).pageId;
-                    let index = this.form.pages.findIndex(p=>p.pageId === pageId);
-                    
-                    if (index >= 0)
-                        this.form.pages[index] = res.event;
-                    
+                    const pageId = (<FormPage>res.event).pageId;
+                    const indexDnd = this.form.pages.findIndex(p => p.pageId === pageId);
+
+                    if (indexDnd >= 0)
+                        this.form.pages[indexDnd] = res.event;
+
                     this.populateReactiveForm(true, pageId);
                 break;
 
                 case InternalEventType.RemoveComponent:
-                    let componentId = (<FormComponent<any>>res.event).componentId;
-                    let updateSectionId = "";
+                    const componentId = (<FormComponent<any>>res.event).componentId;
+                    let updateSectionId = '';
                     this.form.pages.forEach(page => {
                         page.sections.forEach(section => {
-                            let index = section.components.findIndex(c=>c.componentId == componentId);
-                            if (index >= 0)
-                            {
-                                section.components.splice(index, 1);
-                                updateSectionId = section.sectionId; 
+                            const indexComponent = section.components.findIndex(c => c.componentId == componentId);
+                            if (indexComponent >= 0) {
+                                section.components.splice(indexComponent, 1);
+                                updateSectionId = section.sectionId;
                             }
                         });
                     });
@@ -174,14 +165,13 @@ export class FormQLComponent implements OnDestroy, OnInit {
                 break;
 
                 case InternalEventType.RemoveSection:
-                    let sectionId = (<Section>res.event).sectionId;
-                    let updatePageId = "";
+                    const sectionId = (<FormSection>res.event).sectionId;
+                    let updatePageId = '';
                     this.form.pages.forEach(page => {
-                        let index = page.sections.findIndex(c=>c.sectionId == sectionId);
-                        if (index >= 0)
-                        {
-                            page.sections.splice(index, 1);
-                            updatePageId = page.pageId; 
+                        const indexSection = page.sections.findIndex(c => c.sectionId == sectionId);
+                        if (indexSection >= 0) {
+                            page.sections.splice(indexSection, 1);
+                            updatePageId = page.pageId;
                         }
                     });
                     this.populateReactiveForm(true, updatePageId);
@@ -196,17 +186,22 @@ export class FormQLComponent implements OnDestroy, OnInit {
         this.storeService.setComponet(component);
     }
 
-    populateReactiveForm(update:boolean, objectId:string = null)  {
+    populateReactiveForm(update: boolean, objectId: string = null)  {
+        this.formControls = Array<ComponentControl>();
+        const components = [];
         if (this.form.pages != null) {
             const pageGroup: any = {};
             this.form.pages.forEach(page => {
-                let sectionGroup: any = {};
+                const sectionGroup: any = {};
                 if (page.sections != null) {
                     page.sections.forEach(section => {
-                        let componentGroup: any = {};
+                        const componentGroup: any = {};
                         if (section.components != null) {
                             section.components.forEach(component => {
-                                let singleComponentGroup: any = {};
+                                if (update)
+                                    components.push(component);
+
+                                const singleComponentGroup: any = {};
                                 singleComponentGroup[component.componentId] = new FormControl();
                                 this.formControls.push(<ComponentControl>{
                                     key: component.componentId,
@@ -220,35 +215,37 @@ export class FormQLComponent implements OnDestroy, OnInit {
                 }
                 pageGroup[page.pageId] = new FormGroup(sectionGroup);
             });
-            
-            if (update)
-            {
+
+            if (update) {
                 this.form.pages.forEach(page => {
                     this.reactiveForm.setControl(page.pageId, pageGroup[page.pageId]);
                 });
                 this.updateTemplates(objectId);
-            }
-            else
+                components.forEach(component => {
+                    if (component != null) {
+                        const componentControl = this.formControls.find(fc => fc.key === component.componentId);
+                        component = HelperService.setValidators(this.componentFactoryResolver, component, componentControl.control);
+                    }
+                });
+            } else
                 this.reactiveForm = this.formBuilder.group(pageGroup);
         }
-        
     }
 
-    updateTemplates(objectId:string = null) {
+    updateTemplates(objectId: string = null) {
         this.form.pages.forEach(page => {
-            if (page.template.reRender || (objectId && (page.pageId == objectId || page.sections.find(c=>c.sectionId==objectId))))
-            {
+            if (page.template.reRender ||
+                (objectId && (page.pageId === objectId || page.sections.find(c => c.sectionId === objectId)))) {
                 page.template.reRender = false;
                 page.template = HelperService.deepCopy(page.template);
             }
             page.sections.forEach(section => {
-                if (section.template.reRender || (objectId && (section.sectionId == objectId || section.components.find(c=>c.componentId==objectId))))
-                {
+                if (section.template.reRender ||
+                    (objectId && (section.sectionId === objectId || section.components.find(c => c.componentId === objectId)))) {
                     section.template.reRender = false;
                     section.template = HelperService.deepCopy(section.template);
                 }
             });
-            
         });
     }
 }

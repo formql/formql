@@ -13,7 +13,7 @@
             "title": "header",
             "body": {
                 "gridTemplateColumns": "1fr 1fr",
-                "gridTemplateRows": "1fr 50px",
+                "gridTemplateRows": "",
                 "gridTemplateAreas": "\"ID1_1 ID1_2\" \"ID2_1 ID2_2\""
             },
             "reRender": false
@@ -31,28 +31,7 @@
                     "type": 1
                 },
                 "componentId": "0af1e87f-19fe-e6e0-80ca-f1d512b889ec",
-                "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "value": null,
                 "style": {
                     "padding": "0px",
@@ -83,16 +62,6 @@
                         "condition": "true",
                         "value": null,
                         "errorMessage": "Please enter first name"
-                    },
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
                     }
                 },
                 "value": null
@@ -109,21 +78,6 @@
                 },
                 "componentId": "0af1e87f-29fe-e6e0-80ca-f1d512b889ec",
                 "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
                     "required": {
                         "key": "required",
                         "condition": "true",
@@ -144,28 +98,7 @@
                 },
                 "componentId": "bb22abb9-0fd0-fa7b-ff0a-50e2c2031970",
                 "conditions": {},
-                "properties": {
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "value": null
             }, {
                 "schema": "contact.email",
@@ -179,60 +112,7 @@
                     "type": 2
                 },
                 "componentId": "776bd62b-b83a-9b67-43b9-03cf7daa2dcb",
-                "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
-                        "value": null
-                    }
-                },
-                "value": null
-            }, {
-                "componentId": "ba201941-0126-0427-4d73-f1c2677aec04",
-                "label": "Comments",
-                "componentName": "FormQLMatTextareaComponent",
-                "position": {
-                    "id": "ID4_1",
-                    "index": 0,
-                    "type": 2
-                },
-                "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "contact.addComments !== true",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "value": null
             }, {
                 "componentId": "842329ce-9118-8865-f71e-f8f223150a1f",
@@ -243,30 +123,26 @@
                     "index": 0,
                     "type": 2
                 },
+                "properties": {},
+                "value": null,
+                "schema": "contact.addComments"
+            }, {
+                "componentId": "ba201941-0126-0427-4d73-f1c2677aec04",
+                "label": "Comments",
+                "componentName": "FormQLMatTextareaComponent",
+                "position": {
+                    "id": "ID4_1",
+                    "index": 0,
+                    "type": 2
+                },
                 "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
                     "hidden": {
                         "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
+                        "condition": "contact.addComments !== true",
                         "value": null
                     }
                 },
-                "value": null,
-                "schema": "contact.addComments"
+                "value": null
             }],
             "position": {
                 "id": "ID1_1",
@@ -291,7 +167,7 @@
                     "hidden": false,
                     "gridTemplateColumns": "1fr 1fr",
                     "style": null,
-                    "gridTemplateRows": "1fr 1fr 67px 80px",
+                    "gridTemplateRows": "",
                     "gridTemplateAreas": "\"ID1_1 ID1_2\" \"ID2_1 ID2_2\" \"ID3_1 ID3_1\" \"ID4_1 ID4_1\""
                 },
                 "reRender": false
@@ -306,27 +182,11 @@
                 "order": 1,
                 "position": {
                     "id": "ID1_1",
-                    "index": 1,
+                    "index": 2,
                     "type": 1
                 },
                 "componentId": "0af1e87f-09fe-e6e0-80ca-f1d512b889ec",
-                "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "value": null,
                 "style": {
                     "padding": "0px",
@@ -362,11 +222,6 @@
                         "condition": "contact.fistName === ''",
                         "value": null,
                         "errorMessage": "bbbbbbbbbbbb"
-                    },
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
                     }
                 },
                 "configuration": {
@@ -381,32 +236,11 @@
                 "order": 1,
                 "position": {
                     "id": "ID1_1",
-                    "index": 2,
+                    "index": 3,
                     "type": 2
                 },
                 "componentId": "0af1e87f-09fe-e9e0-80ca-f1d512b889ec",
-                "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "value": null
             }, {
                 "schema": "contact.addressCity",
@@ -416,33 +250,12 @@
                 "order": 1,
                 "position": {
                     "id": "ID1_1",
-                    "index": 3,
+                    "index": 4,
                     "type": 2
                 },
                 "componentId": "bb22abb9-0fd0-f27b-ff0a-50e2c2031970",
                 "conditions": {},
-                "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "value": null
             }, {
                 "schema": "contact.addressPostCode",
@@ -452,32 +265,11 @@
                 "order": 1,
                 "position": {
                     "id": "ID1_1",
-                    "index": 4,
+                    "index": 5,
                     "type": 2
                 },
                 "componentId": "776bd62b-b83a-ab67-43b9-03cf7daa2dcb",
-                "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "value": null
             }],
             "position": {
@@ -517,23 +309,7 @@
                     "type": 2
                 },
                 "componentId": "786bd72b-b83a-9b67-43b9-03cf7daa2dcb",
-                "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "value": null,
                 "style": {
                     "float": "right"

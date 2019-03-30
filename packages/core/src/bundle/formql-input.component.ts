@@ -7,15 +7,16 @@ import { HelperService } from '../services/helper.service';
 
 @Component({
     selector: 'formql-input',
-    styleUrls: ["./formql-input.component.scss"],
+    styleUrls: ['./formql-input.component.scss'],
     template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
-        <label [attr.for]="field.componentId" [ngClass]="{'fql-bundle-label-required': field.properties?.required?.value}">{{field.label}}</label>
+        <label [attr.for]="field.componentId"
+               [ngClass]="{'fql-bundle-label-required': field.properties?.required?.value}">{{field.label}}</label>
         <div>
-            <input *ngIf="!mask" [id]="field.componentId" [type]="field.type" 
+            <input *ngIf="!mask" [id]="field.componentId" [type]="field.type"
                 formControlName="{{field.componentId}}" class="fql-bundle-field-input" [tabIndex]="tabIndex"
                 [attr.disabled]="field.properties?.readonly?.value ? '' : null">
-            <input *ngIf="mask" [textMask]="{ mask: mask, guide: false}" [id]="field.componentId" type="text" 
-                formControlName="{{field.componentId}}" 
+            <input *ngIf="mask" [textMask]="{ mask: mask, guide: false}" [id]="field.componentId" type="text"
+                formControlName="{{field.componentId}}"
                 class="fql-bundle-field-input" [tabIndex]="tabIndex"
                 [attr.disabled]="field.properties?.readonly?.value ? '' : null">
         </div>
@@ -38,9 +39,9 @@ export class FormQLInputComponent implements ControlValueAccessor, OnInit {
     static formQLComponent = true;
     static validators = [
         <ComponentValidator>{
-            name: "Required",
+            name: 'Required',
             validator: Validators.required,
-            key: "required"
+            key: 'required'
         }
     ];
 
@@ -49,24 +50,22 @@ export class FormQLInputComponent implements ControlValueAccessor, OnInit {
     @Input() tabIndex: string;
 
     private _value: string;
-    private _propagateChange = (_: any) => { };
-
     public mask: any;
 
+    private _propagateChange = (_: any) => { };
+
     ngOnInit() {
-        if (this.field && this.field.textMask && this.field.type)
-        {
-            switch(this.field.type)
-            {
-                case "number":
+        if (this.field && this.field.textMask && this.field.type) {
+            switch (this.field.type) {
+                case 'number':
                     this.mask = createNumberMask(JSON.parse(this.field.textMask));
                 break;
 
-                case "date":
+                case 'date':
                     this.mask = createAutoCorrectedDatePipe(this.field.textMask);
                 break;
 
-                case "text":
+                case 'text':
                     this.mask = HelperService.maskToArray(this.field.textMask);
                 break;
             }
@@ -84,9 +83,8 @@ export class FormQLInputComponent implements ControlValueAccessor, OnInit {
     }
 
     writeValue(value: string): void {
-        if (value) {
+        if (value)
             this._value = value;
-        }
     }
 
     registerOnChange(fn: any): void {

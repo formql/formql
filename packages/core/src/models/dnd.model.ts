@@ -1,4 +1,4 @@
-import { ComponentPositionType } from "./form-component.model";
+import { ComponentPositionType } from './form-component.model';
 
 export interface DndEvent {
     sourceObjectId: string;
@@ -6,7 +6,7 @@ export interface DndEvent {
     targetPositionId: string;
     targetWrapperId: string;
     targetIndexId: string;
-    positionType: ComponentPositionType
+    positionType: ComponentPositionType;
 }
 
 export interface DndTransfer {

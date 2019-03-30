@@ -11,7 +11,7 @@
     </div>
     <div class="tab-wrap">
         <input class="fql-field-input-tab" type="radio" name="tabs" id="tab1" checked>
-        <div class="tab-label-content" id="tab1-content">
+        <div class="fql-tab-label-content" id="tab1-content">
             <label class="fql-tab-label" for="tab1">Properties</label>
             <div class="tab-content">
                 <label class="fql-field-label" for="componentId">Component Id</label>
@@ -28,29 +28,28 @@
                 <label class="fql-field-label" for="type">Type</label>
                 <input class="fql-field-input" type="text" id="type" [(ngModel)]="updatedComponent.type" name="type">
                 
-                <json-field-input [label]="'Configuration'" [(json)]="updatedComponent.configuration"></json-field-input>
+                <formql-json-field-input [label]="'Configuration'" [(json)]="updatedComponent.configuration"></formql-json-field-input>
                 
-                <json-field-input [label]="'Style'" [(json)]="updatedComponent.style"></json-field-input>
+                <formql-json-field-input [label]="'Style'" [(json)]="updatedComponent.style"></formql-json-field-input>
 
             </div>
         </div>
 
         <input class="fql-field-input-tab" type="radio" name="tabs" id="tab2">
-        <div class="tab-label-content" id="tab2-content">
+        <div class="fql-tab-label-content" id="tab2-content">
             <label class="fql-tab-label" for="tab2">Rules</label>
             <div class="tab-content">
                 <div>
                     <label class="fql-field-label" for="schema">Schema</label>
                     <input class="fql-field-input" type="text" id="schema" [(ngModel)]="updatedComponent.schema" name="schema">
 
-                    <!-- <label class="fql-field-label" for="textMask">Text Mask</label> -->
-                    <json-field-input [label]="'Text Mask'" [(json)]="updatedComponent.textMask"></json-field-input>
-                    <!-- <textarea class="fql-field-textarea"  name="textMask" id="textMask" [(ngModel)]="updatedComponent.textMask"></textarea> -->
-
+                    <formql-json-field-input [label]="'Text Mask'" [(json)]="updatedComponent.textMask"></formql-json-field-input>
+                   
                     <div *ngFor="let item of validators; let i=index" class="fql-properties-div">
                         <label class="fql-field-label" [for]="item.name">{{item.name}}</label>
                         <textarea class="fql-field-textarea"  [name]="item.name" [id]="item.name" [(ngModel)]="properties[i].condition"></textarea>
-                        Result: {{getResult(properties[i].condition)}}
+                        <ng-container *ngIf="item.name === 'Calculated Field'">Result: {{getEvaluatedValue(properties[i].condition)}}</ng-container>
+                        <ng-container *ngIf="item.name !== 'Calculated Field'">Result: {{getEvaluatedCondition(properties[i].condition)}}</ng-container>
                         <br>
                         <span style="color:red">{{getError(properties[i].condition)}}</span>
                     </div>
@@ -59,7 +58,7 @@
         </div>
 
         <input class="fql-field-input-tab" type="radio" name="tabs" id="tab3">
-        <div class="tab-label-content" id="tab3-content">
+        <div class="fql-tab-label-content" id="tab3-content">
             <label class="fql-tab-label" for="tab3">Advanced</label>
             <div class="tab-content">
                 Comming soon... :-)

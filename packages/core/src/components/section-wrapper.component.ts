@@ -1,51 +1,50 @@
 import { Component, Input, ViewEncapsulation, ViewChild, ViewContainerRef, OnInit, ComponentFactoryResolver } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Section } from '../models/section.model';
+import { FormSection } from '../models/form-section.model';
 import { InternalEventHandlerService } from '../services/internal-event-handler.service';
-import { InternalEventType } from '../models/internal-event-handler.model';
-import { Page } from '../models/page.model';
+import { InternalEventType } from '../models/internal-event.model';
+import { FormPage } from '../models/form-page.model';
 import { ComponentPositionType } from '../models/form-component.model';
-import { FormQLMode } from '../models/formql-mode.model';
 import { HelperService } from '../services/helper.service';
-import { WrapperType } from '../models/wrapper-type.model';
-
+import { FormQLMode, ContainerType } from '../models/type.model';
 
 @Component({
-    selector: '[sectionWrapper]',
+    // tslint:disable-next-line: component-selector
+    selector: '[formql-section-wrapper]',
     template: `
-        <div #wrapper dnd 
-            [sourceObjectId]="section.sectionId" 
+        <div #wrapper formqlDnd
+            [sourceObjectId]="section.sectionId"
             [attr.sectionId]="section.sectionId"
             [sourceWrapperId]="page.pageId"
-            [type]="WrapperType.Section" 
+            [type]="ContainerType.Section"
             [mode]="mode"
-            [ngClass]="[(mode == FormQLMode.Edit || mode == FormQLMode.LiveEdit) ? 'fql-section-wrapper-edit' : 'fql-section-wrapper']">
+            [ngClass]="[(mode === FormQLMode.Edit) ? 'fql-section-wrapper-edit' : 'fql-section-wrapper']">
             <div class="fql-section-tooltip">
                 <ng-container #tooltip></ng-container>
             </div>
             <div *ngIf="!section.template.header.hidden" class="fql-section-header">
-                <ng-template gdConfig 
-                    [gdConfigOf]="section.template.header" let-headeritem let-i="index">
-                    <div sectionContainer 
-                        [positionId]="headeritem.id" 
-                        [positionType]="ComponentPositionType.Header"  
+                <ng-template formqlGdConfig
+                    [formqlGdConfigOf]="section.template.header" let-headeritem let-i="index">
+                    <div formql-section-container
+                        [positionId]="headeritem.id"
+                        [positionType]="ComponentPositionType.Header"
                         [ngStyle]="headeritem.style"
-                        [page]="page" 
-                        [section]="section"  
+                        [page]="page"
+                        [section]="section"
                         [reactiveSection]="reactiveSection"
                         [mode]="mode">
                     </div>
                 </ng-template>
             </div>
             <div *ngIf="!section.template.body.hidden" class="fql-section-body">
-                <ng-template gdConfig 
-                    [gdConfigOf]="section.template.body" let-bodyitem let-i="index">
-                    <div sectionContainer  
-                        [positionId]="bodyitem.id" 
-                        [positionType]="ComponentPositionType.Body" 
-                        [ngStyle]="bodyitem.style" 
-                        [page]="page" 
-                        [section]="section"  
+                <ng-template formqlGdConfig
+                    [formqlGdConfigOf]="section.template.body" let-bodyitem let-i="index">
+                    <div formql-section-container
+                        [positionId]="bodyitem.id"
+                        [positionType]="ComponentPositionType.Body"
+                        [ngStyle]="bodyitem.style"
+                        [page]="page"
+                        [section]="section"
                         [reactiveSection]="reactiveSection"
                         [mode]="mode">
                     </div>
@@ -59,15 +58,15 @@ export class SectionWrapperComponent implements OnInit {
     @ViewChild('wrapper', { read: ViewContainerRef }) wrapper: ViewContainerRef;
     @ViewChild('tooltip', { read: ViewContainerRef }) tooltip: ViewContainerRef;
 
-    @Input() section: Section;
+    @Input() section: FormSection;
     @Input() reactiveSection: FormGroup;
-    @Input() page: Page;
+    @Input() page: FormPage;
     @Input() mode: FormQLMode;
 
     error: string;
-    
+
     public FormQLMode = FormQLMode;
-    public WrapperType = WrapperType;
+    public ContainerType = ContainerType;
     public ComponentPositionType = ComponentPositionType;
 
     constructor(
@@ -77,19 +76,20 @@ export class SectionWrapperComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-       
-        if (this.mode == FormQLMode.Edit || this.mode == FormQLMode.LiveEdit)
+
+        if (this.mode === FormQLMode.Edit)
         {
-            const tooltip = this.viewContainerRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, "TooltipComponent"));
+            const tooltip = this.viewContainerRef.createComponent(
+                HelperService.getFactory(this.componentFactoryResolver, 'TooltipComponent'));
             (<any>tooltip).instance.wrapper = this.wrapper;
-            (<any>tooltip).instance.type = WrapperType.Section;
+            (<any>tooltip).instance.type = ContainerType.Section;
             (<any>tooltip).instance.object = this.section;
             this.tooltip.insert(tooltip.hostView);
         }
     }
 
     editField() {
-        if (this.mode == FormQLMode.Edit || this.mode == FormQLMode.LiveEdit)
+        if (this.mode === FormQLMode.Edit)
             this.internalEventHandlerService.send(InternalEventType.EditingSection, this.section);
     }
 

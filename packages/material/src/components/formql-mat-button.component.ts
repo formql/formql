@@ -1,6 +1,6 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
-import { FormComponent, ComponentValidator, InternalEventHandlerService, InternalEventType} from '@formql/core';
+import { FormComponent, ComponentValidator, InternalEventHandlerService, InternalEventType } from '@formql/core';
 
 @Component({
     selector: 'formql-mat-button',
@@ -45,9 +45,8 @@ export class FormQLMatButtonComponent implements ControlValueAccessor {
     }
 
     writeValue(value: string): void {
-        if (value) {
+        if (value)
             this._value = value;
-        }
     }
 
     registerOnChange(fn: any): void {

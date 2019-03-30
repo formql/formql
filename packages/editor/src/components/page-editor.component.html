@@ -11,20 +11,20 @@
     </div>
     <div class="tab-wrap">
         <input class="fql-field-input-tab" type="radio" name="tabs" id="tab1" checked>
-        <div class="tab-label-content" id="tab1-content">
+        <div class="fql-tab-label-content" id="tab1-content">
             <label class="fql-tab-label" for="tab1">Properties</label>
             <div class="tab-content">
                 <label class="fql-field-label" for="pageId">Page Id</label>
                 <input class="fql-field-input" type="text" id="pageId" [(ngModel)]="updatedPage.pageId" name="pageId" disabled>
                 <div class="fql-properties-div">
-                    <grid-style-editor [header]="'BODY TEMPLATE'" [gridStyle]="updatedPage.template.body"></grid-style-editor>
+                    <formql-grid-style-editor [header]="'BODY TEMPLATE'" [gridStyle]="updatedPage.template.body"></formql-grid-style-editor>
                 </div>
 
             </div>
         </div>
 
         <input class="fql-field-input-tab" type="radio" name="tabs" id="tab2">
-        <div class="tab-label-content" id="tab2-content">
+        <div class="fql-tab-label-content" id="tab2-content">
             <label class="fql-tab-label" for="tab2">Rules</label>
             <div class="tab-content">
 
@@ -32,7 +32,7 @@
         </div>
 
         <input class="fql-field-input-tab" type="radio" name="tabs" id="tab3">
-        <div class="tab-label-content" id="tab3-content">
+        <div class="fql-tab-label-content" id="tab3-content">
             <label class="fql-tab-label" for="tab3">Advanced</label>
             <div class="tab-content">
                 Comming soon... :-)

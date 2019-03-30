@@ -3,23 +3,23 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormQLMatCheckboxComponent } from './formql-mat-checkbox.component';
 
 describe('FormQLMatCheckboxComponent', () => {
-  let component: FormQLMatCheckboxComponent;
-  let fixture: ComponentFixture<FormQLMatCheckboxComponent>;
+    let component: FormQLMatCheckboxComponent;
+    let fixture: ComponentFixture<FormQLMatCheckboxComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ FormQLMatCheckboxComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [FormQLMatCheckboxComponent]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(FormQLMatCheckboxComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(FormQLMatCheckboxComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

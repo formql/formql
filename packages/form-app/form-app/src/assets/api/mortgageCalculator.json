@@ -13,7 +13,7 @@
             "title": "header",
             "body": {
                 "gridTemplateColumns": "1fr",
-                "gridTemplateRows": "1fr 1fr",
+                "gridTemplateRows": null,
                 "gridTemplateAreas": "\"ID1_1\" \"ID1_2\""
             },
             "reRender": false
@@ -133,7 +133,7 @@
                 "value": null
             }, {
                 "schema": "contact.mobile",
-                "label": "Mobile",
+                "label": "Mobile3",
                 "componentName": "FormQLMatFormFieldComponent",
                 "type": "text",
                 "order": 1,
@@ -413,7 +413,19 @@
                 },
                 "schema": "contact.mortgageInterestRate",
                 "type": "number",
-                "textMask": null,
+                "textMask": {
+                    "prefix": "",
+                    "suffix": "%",
+                    "includeThousandsSeparator": true,
+                    "thousandsSeparatorSymbol": ",",
+                    "allowDecimal": true,
+                    "decimalSymbol": ".",
+                    "decimalLimit": 2,
+                    "integerLimit": null,
+                    "requireDecimal": false,
+                    "allowNegative": false,
+                    "allowLeadingZeroes": false
+                },
                 "value": null
             }, {
                 "componentId": "18bf310f-d940-f19b-d800-64ed3de1a039",
@@ -448,7 +460,20 @@
                 },
                 "schema": "contact.mortgageTotalCost",
                 "type": "number",
-                "value": null
+                "value": null,
+                "textMask": {
+                    "prefix": "£",
+                    "suffix": "",
+                    "includeThousandsSeparator": true,
+                    "thousandsSeparatorSymbol": ",",
+                    "allowDecimal": true,
+                    "decimalSymbol": ".",
+                    "decimalLimit": 2,
+                    "integerLimit": null,
+                    "requireDecimal": false,
+                    "allowNegative": false,
+                    "allowLeadingZeroes": false
+                }
             }, {
                 "componentId": "6349d4ef-dcfc-376e-4eab-d6382cc48bc7",
                 "label": "Mortgage amount",
@@ -482,7 +507,19 @@
                 },
                 "schema": "contact.mortgageAmount",
                 "type": "number",
-                "textMask": null,
+                "textMask": {
+                    "prefix": "£",
+                    "suffix": "",
+                    "includeThousandsSeparator": true,
+                    "thousandsSeparatorSymbol": ",",
+                    "allowDecimal": true,
+                    "decimalSymbol": ".",
+                    "decimalLimit": 2,
+                    "integerLimit": null,
+                    "requireDecimal": false,
+                    "allowNegative": false,
+                    "allowLeadingZeroes": false
+                },
                 "value": null
             }, {
                 "componentId": "e7450d71-d1b7-e450-08ea-0c3591b75a39",
@@ -516,7 +553,19 @@
                     }
                 },
                 "schema": "contact.mortgageMonthlyPayments",
-                "textMask": null,
+                "textMask": {
+                    "prefix": "£",
+                    "suffix": "",
+                    "includeThousandsSeparator": true,
+                    "thousandsSeparatorSymbol": ",",
+                    "allowDecimal": true,
+                    "decimalSymbol": ".",
+                    "decimalLimit": 2,
+                    "integerLimit": null,
+                    "requireDecimal": false,
+                    "allowNegative": false,
+                    "allowLeadingZeroes": false
+                },
                 "type": "number",
                 "value": null
             }, {
@@ -541,7 +590,7 @@
                     },
                     "readonly": {
                         "key": "readonly",
-                        "condition": "",
+                        "condition": "true",
                         "value": null
                     },
                     "required": {
@@ -552,7 +601,19 @@
                 },
                 "schema": "contact.mortgageTotalPayments",
                 "type": "number",
-                "textMask": null,
+                "textMask": {
+                    "prefix": "£",
+                    "suffix": "",
+                    "includeThousandsSeparator": true,
+                    "thousandsSeparatorSymbol": ",",
+                    "allowDecimal": true,
+                    "decimalSymbol": ".",
+                    "decimalLimit": 2,
+                    "integerLimit": null,
+                    "requireDecimal": false,
+                    "allowNegative": false,
+                    "allowLeadingZeroes": false
+                },
                 "value": null
             }],
             "template": {

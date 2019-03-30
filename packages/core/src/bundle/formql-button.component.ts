@@ -3,7 +3,7 @@ import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
 import { FormComponent, ComponentValidator } from '../models/form-component.model';
 import { ActionHandlerService } from '../services/action-handler.service.1';
-import { ActionType } from '../models/action-handler.model';
+import { ActionType } from '../models/action.model';
 
 @Component({
     selector: 'formql-button',
@@ -48,9 +48,8 @@ export class FormQLButtonComponent implements ControlValueAccessor {
     }
 
     writeValue(value: string): void {
-        if (value) {
+        if (value)
             this._value = value;
-        }
     }
 
     registerOnChange(fn: any): void {

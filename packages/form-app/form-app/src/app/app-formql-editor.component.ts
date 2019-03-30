@@ -21,9 +21,7 @@ export class AppFormQLEditorComponent implements OnInit {
         let routeSnap = this.route.snapshot;
         if (this.isEditMode(routeSnap))
             this.mode = FormQLMode.Edit;
-        else if (this.idLiveEditMode(routeSnap))
-            this.mode = FormQLMode.LiveEdit;
-
+        
         if (this.formName == null)
             this.formName = routeSnap.params["name"];
 
@@ -36,9 +34,5 @@ export class AppFormQLEditorComponent implements OnInit {
 
     private isEditMode(routeSnap) {
         return (routeSnap.url.join("/").indexOf("/edit") != -1 || (routeSnap.parent != null && routeSnap.parent.url.join("/").indexOf("/edit") != -1));
-    }
-
-    private idLiveEditMode(routeSnap) {
-        return (routeSnap.url.join("/").indexOf("/liveEdit") != -1 || (routeSnap.parent != null && routeSnap.parent.url.join("/").indexOf("/liveEdit") != -1));
     }
 }

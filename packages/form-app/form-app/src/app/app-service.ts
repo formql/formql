@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-import { IFormQLService, FormWrapper } from "@formql/core";
+import { IFormQLService, FormWindow, FormDataSource } from "@formql/core";
 import { of } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 
@@ -11,7 +11,7 @@ export class DummyService implements IFormQLService {
     constructor(private http: HttpClient) {
 
     }
-    getData(query: string, ids: string[]) {
+    getData(dataSource: FormDataSource, ids: string[]) {
         return of({});
     }    
 
@@ -23,13 +23,13 @@ export class DummyService implements IFormQLService {
             return this.http.get(`assets/api/${name}.json`);
     }
     getForms() {
-        return of(new Array<FormWrapper>());
+        return of(new Array<FormWindow>());
     }
-    saveForm(name: string, form: FormWrapper) {
+    saveForm(name: string, form: FormWindow) {
         localStorage.setItem(name, JSON.stringify(form));
         return of(form);
     }
-    saveData(mutation: string, ids: string[], data: any) {
+    saveData(dataSource: FormDataSource, ids: string[], data: any) {
         return of({a:1});
     }
 

@@ -30,7 +30,7 @@ input[type="radio"][name="tabs"] {
   position: absolute;
   z-index: -1;
   &:checked {
-    + .tab-label-content {
+    + .fql-tab-label-content {
       label {
         color: #000;
       }
@@ -73,7 +73,7 @@ input[type="radio"][name="tabs"] {
   transition: left 0.3s ease-out;
 }
 
-.tab-label-content {
+.fql-tab-label-content {
   width: 100%;
   .tab-content {
     position: absolute;

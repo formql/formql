@@ -1,16 +1,19 @@
 import { Component, Input, forwardRef, OnInit, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
 import { FormComponent, ComponentValidator } from '@formql/core';
-import createNumberMask from "text-mask-addons/dist/createNumberMask";
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
 
 @Component({
     selector: 'formql-mat-form-field',
     template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
     <mat-form-field style="width:100%">
-      <input *ngIf="currencyMask" [textMask]="{mask: currencyMask}" [id]="field.componentId" [type]="field.type == 'number' ? 'text' : field.type" formControlName="{{field.componentId}}" matInput [placeholder]="field.label"
+      <input *ngIf="currencyMask" [textMask]="{mask: currencyMask}"
+        [id]="field.componentId"
+        [type]="field.type == 'number' ? 'text' : field.type" formControlName="{{field.componentId}}" matInput [placeholder]="field.label"
       [required]="field.properties?.required?.value">
-      <input *ngIf="!currencyMask" [id]="field.componentId" [type]="field.type" formControlName="{{field.componentId}}" matInput [placeholder]="field.label"
+      <input *ngIf="!currencyMask" [id]="field.componentId"
+        [type]="field.type" formControlName="{{field.componentId}}" matInput [placeholder]="field.label"
       [required]="field.properties?.required?.value">
       <mat-error *ngIf="!reactiveFormGroup.controls[field.componentId].valid && reactiveFormGroup.controls[field.componentId].touched">
         <span *ngIf="reactiveFormGroup.controls[field.componentId].errors?.required">{{ field.properties?.required?.errorMessage }}</span>
@@ -30,15 +33,15 @@ import createNumberMask from "text-mask-addons/dist/createNumberMask";
         }]
 })
 export class FormQLMatFormFieldComponent implements OnInit, ControlValueAccessor {
-    
+
     static componentName = 'FormQLMatFormFieldComponent';
     static formQLComponent = true;
 
     static validators = [
         <ComponentValidator>{
-            name: "Required",
+            name: 'Required',
             validator: Validators.required,
-            key: "required"
+            key: 'required'
         }
     ];
 
@@ -46,22 +49,18 @@ export class FormQLMatFormFieldComponent implements OnInit, ControlValueAccessor
     @Input() reactiveFormGroup: FormGroup;
 
     private _value: string;
-    private _propagateChange = (_: any) => { };
-
     currencyMask: any;
 
-    constructor() {
-        
-     
-    }
+    private _propagateChange = (_: any) => { };
+
+    constructor() {}
 
     ngOnInit(): void {
         if (this.field && this.field.textMask)
             this.currencyMask = createNumberMask(this.field.textMask);
     }
-    
-    get value(): any {
 
+    get value(): any {
         return this._value;
     }
 
@@ -71,9 +70,8 @@ export class FormQLMatFormFieldComponent implements OnInit, ControlValueAccessor
     }
 
     writeValue(value: string): void {
-        if (value) {
+        if (value)
             this._value = value;
-        }
     }
 
     registerOnChange(fn: any): void {

@@ -1,15 +1,15 @@
-import { ValidatorFn, FormControl } from "@angular/forms";
+import { ValidatorFn, FormControl } from '@angular/forms';
 
 export interface FormComponent<T>  {
-    componentId: string; 
+    componentId: string;
     componentName: string;
     value: T;
     textMask: any;
     schema: string;
     label: string;
-    type: string; 
+    type: string;
     tabIndex: string;
-    
+
     properties: ComponentProperties;
 
     position: ComponentPosition;
@@ -18,7 +18,6 @@ export interface FormComponent<T>  {
     configuration: any;
   }
 
-  
 export interface ComponentPosition {
   id: string;
   index: number;
@@ -27,10 +26,11 @@ export interface ComponentPosition {
 
 export enum ComponentPositionType {
     Header = 1,
-    Body = 2
+    Body = 2,
+    Footer = 3
 }
 
-export declare type ComponentProperties = {
+export declare interface ComponentProperties {
   [key: string]: ComponentProperty;
 }
 

@@ -4,68 +4,67 @@ import { FormComponent, ComponentValidator } from '../models/form-component.mode
 
 
 @Component({
-  selector: 'formql-textbox',
-  styleUrls: ["./formql-textarea.component.scss"],
-  template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
-        <label [attr.for]="field.componentId" [ngClass]="{'fql-bundle-label-required': field.properties?.required?.value}">{{field.label}}</label>
+    selector: 'formql-textbox',
+    styleUrls: ['./formql-textarea.component.scss'],
+    template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
+        <label [attr.for]="field.componentId"
+               [ngClass]="{'fql-bundle-label-required': field.properties?.required?.value}">{{field.label}}</label>
         <div>
-            <textarea [id]="field.componentId" formControlName="{{field.componentId}}" class="fql-bundle-field-input" 
+            <textarea [id]="field.componentId" formControlName="{{field.componentId}}" class="fql-bundle-field-input"
             [tabIndex]="tabIndex" [attr.disabled]="field.properties?.readonly?.value ? '' : null">
             </textarea>
         </div>
         </div>`,
-  providers: [
-  {
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => FormQLTextareaComponent),
-    multi: true
-  },
-  {
-    provide: NG_VALIDATORS,
-    useExisting: forwardRef(() => FormQLTextareaComponent),
-    multi: true
-  }]
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => FormQLTextareaComponent),
+            multi: true
+        },
+        {
+            provide: NG_VALIDATORS,
+            useExisting: forwardRef(() => FormQLTextareaComponent),
+            multi: true
+        }]
 })
 export class FormQLTextareaComponent implements ControlValueAccessor {
-  static componentName = 'FormQLTextareaComponent';
-  static formQLComponent = true;
-  static validators = [
-    <ComponentValidator> {
-      name: "Required",
-      validator: Validators.required,
-      key: "required"
+    static componentName = 'FormQLTextareaComponent';
+    static formQLComponent = true;
+    static validators = [
+        <ComponentValidator>{
+            name: 'Required',
+            validator: Validators.required,
+            key: 'required'
+        }
+    ];
+
+    @Input() field: FormComponent<any>;
+    @Input() reactiveFormGroup: FormGroup;
+    @Input() tabIndex: string;
+
+    private _value: string;
+    private _propagateChange = (_: any) => { };
+
+    constructor() {
     }
-  ];
-  
-  @Input() field: FormComponent<any>;
-  @Input() reactiveFormGroup: FormGroup;
-  @Input() tabIndex: string;
 
-  private _value: string;
-  private _propagateChange = (_: any) => { };
+    get value(): any {
+        return this._value;
+    }
 
-  constructor() {
-  }
+    set value(value: any) {
+        this._value = value;
+        this._propagateChange(this._value);
+    }
 
-  get value(): any {
-    
-    return this._value;
-  }
+    writeValue(value: string): void {
+        if (value)
+            this._value = value;
+    }
 
-  set value(value: any) {
-    this._value = value;
-    this._propagateChange(this._value);
-  }
+    registerOnChange(fn: any): void {
+        this._propagateChange = fn;
+    }
 
-	writeValue(value: string): void {
-    if (value) {
-			this._value = value;
-		}
-	}
-
-	registerOnChange(fn: any): void {
-		this._propagateChange = fn;
-	}
-
-	registerOnTouched(fn: any): void {}
+    registerOnTouched(fn: any): void { }
 }

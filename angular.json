@@ -128,7 +128,7 @@
       "root": "packages/core",
       "sourceRoot": "packages/core/src",
       "projectType": "library",
-      "prefix": "fql",
+      "prefix": "formql",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -168,7 +168,7 @@
       "root": "packages/editor",
       "sourceRoot": "packages/editor/src",
       "projectType": "library",
-      "prefix": "fql",
+      "prefix": "formql",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -208,7 +208,7 @@
       "root": "packages/material",
       "sourceRoot": "packages/material/src",
       "projectType": "library",
-      "prefix": "fql",
+      "prefix": "formql",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",

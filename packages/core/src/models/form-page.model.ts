@@ -1,9 +1,9 @@
-import { Section } from "./section.model";
-import { GridStyle } from "./grid-style.model";
+import { FormSection } from './form-section.model';
+import { GridStyle } from './style.model';
 
-export class Page {
+export class FormPage {
     public pageId: string;
-    public sections: Section[];
+    public sections: FormSection[];
     public structure: string;
     public template: PageTemplate;
 }

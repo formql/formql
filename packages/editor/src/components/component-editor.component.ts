@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter, ComponentFactoryResolver } from '@angular/core';
-import { FormComponent, HelperService, ComponentProperties, FormQLMode, ComponentProperty, ComponentValidator } from '@formql/core';
+import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ComponentProperties, ComponentProperty, ComponentValidator, FormComponent, FormQLMode, HelperService } from '@formql/core';
 
 @Component({
-    selector: '[component-editor]',
+    selector: 'formql-component-editor',
     templateUrl: './component-editor.component.html',
     styleUrls: ['./component-editor.component.scss']
 })
 export class ComponentEditorComponent implements OnInit {
-    static componentName = "ComponentEditorComponent";
+    static componentName = 'ComponentEditorComponent';
 
     @Input() component: FormComponent<any>;
     @Input() data: any;
@@ -15,7 +15,7 @@ export class ComponentEditorComponent implements OnInit {
     @Output() action = new EventEmitter<any>();
 
     updatedComponent: FormComponent<any>;
-    disableSaveButton: boolean = false;
+    disableSaveButton = false;
     componentList: Array<any>;
     validators: Array<ComponentValidator>;
     properties: Array<ComponentProperty>;
@@ -24,40 +24,39 @@ export class ComponentEditorComponent implements OnInit {
         private componentFactoryResolver: ComponentFactoryResolver
     ) {
         this.componentList = Array.from(this.componentFactoryResolver['_factories'].keys())
-                .filter((x:any)=>x.formQLComponent)
-                .map((x:any)=>x.componentName)
-                .filter((x, index, self) => index == self.indexOf(x))
-                .sort();
+            .filter((x: any) => x.formQLComponent)
+            .map((x: any) => x.componentName)
+            .filter((x, index, self) => index === self.indexOf(x))
+            .sort();
     }
 
     ngOnInit() {
         this.updatedComponent = <FormComponent<any>>{};
-        this.updatedComponent = HelperService.deepCopy(this.component, ["value"]);
-        // if (this.updatedComponent.textMask)
-        //     this.updatedComponent.textMask.replace('\\\\', '\\');
-
+        this.updatedComponent = HelperService.deepCopy(this.component, ['value']);
         this.loadValidators();
     }
 
     save() {
-        HelperService.propertyCopy(this.updatedComponent, this.component, ["value"]);
-        // if (this.updatedComponent.textMask)
-        //     this.updatedComponent.textMask.replace('\\', '\\\\');
-            
+        this.component = HelperService.propertyCopy(this.updatedComponent, this.component, ['value']);
         this.action.emit(this.component);
     }
 
-    getResult(condition) {
-        let response = HelperService.evaluateCondition(condition, this.data);
+    getEvaluatedValue(condition) {
+        const response = HelperService.evaluateValue(condition, this.data);
         return response.value;
     }
-    
+
+    getEvaluatedCondition(condition) {
+        const response = HelperService.evaluateCondition(condition, this.data);
+        return response.value;
+    }
+
     getError(condition) {
-        let response = HelperService.evaluateCondition(condition, this.data);
+        const response = HelperService.evaluateCondition(condition, this.data);
         return response.error;
     }
 
-    
+
     actionTriggered($event) {
         if ($event)
             this.save();
@@ -71,34 +70,30 @@ export class ComponentEditorComponent implements OnInit {
 
     loadValidators() {
         this.validators = Array<ComponentValidator>();
-        this.validators.push(<ComponentValidator>{ name: "Calculated Field", key: "value", validator: null });
-        this.validators.push(<ComponentValidator>{ name: "Hidden Condition", key: "hidden", validator: null });
-        this.validators.push(<ComponentValidator>{ name: "Read Only Condition", key: "readonly", validator: null });
-        
-        let factories = Array.from(this.componentFactoryResolver['_factories'].keys());
-        let type = factories.find((x: any)=>x.componentName == this.component.componentName);
+        this.validators.push(<ComponentValidator>{ name: 'Calculated Field', key: 'value', validator: null });
+        this.validators.push(<ComponentValidator>{ name: 'Hidden Condition', key: 'hidden', validator: null });
+        this.validators.push(<ComponentValidator>{ name: 'Read Only Condition', key: 'readonly', validator: null });
 
-        if (type != null && type["validators"] != null)
-        {
-          type["validators"].forEach(v=>{
-            this.validators.push(v);
-          });
-        }
+        const factories = Array.from(this.componentFactoryResolver['_factories'].keys());
+        const type = factories.find((x: any) => x.componentName === this.component.componentName);
+
+        if (type != null && type['validators'] !== null)
+            type['validators'].forEach((v: ComponentValidator) => {
+                this.validators.push(v);
+            });
 
         this.properties = Array<ComponentProperty>();
 
         this.validators.forEach(v => {
-          if (this.updatedComponent.properties == null)
-            this.updatedComponent.properties = <ComponentProperties>{};
+            if (!this.updatedComponent.properties)
+                this.updatedComponent.properties = <ComponentProperties>{};
 
-          let item = this.updatedComponent.properties[v.key];
-          if (item == undefined)
-          {
-            this.updatedComponent.properties[v.key] = <ComponentProperty>{ key: v.key, condition: ""};
-            this.properties.push(this.updatedComponent.properties[v.key]);
-          }
-          else
-            this.properties.push(item);
+            const item = this.updatedComponent.properties[v.key];
+            if (item === undefined) {
+                this.updatedComponent.properties[v.key] = <ComponentProperty>{ key: v.key, condition: '' };
+                this.properties.push(this.updatedComponent.properties[v.key]);
+            } else
+                this.properties.push(item);
         });
     }
 }

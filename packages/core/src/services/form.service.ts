@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, tap, concatMap } from 'rxjs/operators'
+import { map, concatMap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-import { FormWrapper, FormState } from '../models/form-wrapper.model';
+import { FormWindow, FormState, FormDataSource } from '../models/form-window.model';
 import { FormComponent } from '../models/form-component.model';
 import { UUID } from 'angular2-uuid';
 import { HelperService } from './helper.service';
@@ -13,49 +13,41 @@ import { IFormQLService } from '../interfaces/formql-service';
 })
 export class FormService {
 
-    private form: FormWrapper;
-    private components: Array<FormComponent<any>>;
-    private data: any;
-
     private service: IFormQLService;
 
     constructor(
-        @Inject("FormQLService") srv
+        @Inject('FormQLService') srv
         ) {
         this.service = srv;
     }
 
+
     getFormAndData(formName: string, ids: Array<string>): Observable<FormState> {
         if (ids)
-        {   
             return this.service.getForm(formName).pipe(
-                    map(res => <FormWrapper>res),
+                    map(response => <FormWindow>response),
                     concatMap(model =>
-                        this.service.getData(model.dataSource.query, ids).pipe(
-                            tap(data => this.populateComponents(model, data)),
-                            map(result => <FormState>{ components: this.components, form: this.form, data: this.data })
+                        this.service.getData(model.dataSource, ids).pipe(
+                            map(data => this.populateComponents(model, data))
                     )));
-        }
         else
-        {
             return this.service.getForm(formName).pipe(
-                tap(model => this.populateComponents(model, {})),
-                map(result => <FormState>{ components: this.components, form: this.form, data: new Object() }));
-        }
+                map(model => this.populateComponents(model, null))
+            );
     }
 
-    populateComponents(form: FormWrapper, data: any) {
-        this.components = new Array<FormComponent<any>>();
-        this.form = form;
-        if (data)
-            this.data = { ...data};
+    populateComponents(form: FormWindow, data: any): FormState {
+        let formState = <FormState>{
+            components: new Array<FormComponent<any>>(),
+            data: { ...data},
+            form: form
+        };
 
         form.pages.forEach(page => {
-
             if (!page.pageId)
                 page.pageId = UUID.UUID();
 
-            if (page.sections != null) {
+            if (page.sections != null)
                 page.sections.forEach(section => {
 
                     if (!section.sectionId)
@@ -66,113 +58,50 @@ export class FormService {
                             if (!component.componentId)
                                 component.componentId = UUID.UUID();
 
-                            component.value = this.getValue(component.schema);
-                            this.components.push(component);
-
+                            component.value = this.getValue(component.schema, data, component.type);
+                            formState.components.push(component);
                         });
                     }
                 });
-            }
         });
-        this.resolveConditions();
+        formState = this.resolveConditions(formState);
+        return formState;
     }
 
-    populateComponentsAsync(form: FormWrapper, data: any) {
-        return Observable.create(observer => {
-            this.components = new Array<FormComponent<any>>();
-            this.form = form;
-            if (data)
-                this.data = HelperService.deepCopy(data);
-
-            form.pages.forEach(page => {
-
-                if (!page.pageId)
-                    page.pageId = UUID.UUID();
-
-                if (page.sections != null) {
-                    page.sections.forEach(section => {
-
-                        if (!section.sectionId)
-                            section.sectionId = UUID.UUID();
-
-                        if (section.components != null) {
-                            section.components.forEach(component => {
-                                if (!component.componentId)
-                                    component.componentId = UUID.UUID();
-
-                                component.value = this.getValue(component.schema);
-                                this.components.push(component);
-
-                            });
-                        }
-                    });
-                }
-            });
-            this.resolveConditions();
-            observer.next(null);
-            observer.complete();
-        });
-        
-
+    getValue(schema: string, data: any, type: string) {
+        const evaluatedValue = HelperService.evaluateValue(schema, data);
+        if (evaluatedValue.error)
+            return null;
+        else
+            return HelperService.resolveType(evaluatedValue.value, type);
     }
 
-    getValue(schema) {
-        if (schema && this.data) {
-            if (schema.indexOf('.') != -1) {
-                const arr = schema.split('.');
-                if (!this.data[arr[0]] && arr.length > 1) 
-                    this.data[arr[0]] = {};
-                
-                let value = this.data[arr[0]];
-                for (let i = 1; i < arr.length; i++) {
-                    if (value[arr[i]])
-                        value = value[arr[i]];
-                    else
-                    {
-                        value[arr[i]] = null;
-                        return;
-                    }
-                }
-                return value;
-            }
-            else
-            {
-                if (this.data[schema])
-                    return this.data[schema];
-                else
-                    this.data[schema] = null;
-            }
-        }
-        return;
-    }
-
-    setValue(value, schema) {
-        if (value == undefined || value == '')
+    setValue(schema: string, value: any, data: any) {
+        if (value === undefined || value === '')
             value = null;
-        if (this.data && schema) {
+        if (schema) {
+            if (!data)
+                data = {};
             let key = schema;
-            if (schema.indexOf('.') != -1) {
+            if (schema.indexOf('.') !== -1) {
                 const arr = schema.split('.');
-                let item = this.data;
-                for (let i = 0; i <= arr.length - 1; i++) 
-                {
+                let item = data;
+                for (let i = 0; i <= arr.length - 1; i++) {
                     key = arr[i];
                     if (!item[key])
                         item[key] = {};
-                    
-                    if (i != arr.length - 1)
+
+                    if (i !== arr.length - 1)
                         item = item[key];
                 }
                 item[key] = value;
-            }
-            else
-                this.data[key] = value;
-            }
+            } else
+                data[key] = value;
+        }
+        return data;
     }
 
-
-    getData(query: string, ids: Array<string>) {
-
+    getData(query: FormDataSource, ids: Array<string>) {
         return this.service.getData(query, ids).pipe(
             map((data: any) => {
                 if (data)
@@ -194,22 +123,22 @@ export class FormService {
 
     /**
      * Get Form
-     * @param name 
+     * @param name
      */
     getForm(name: string) {
         return this.service.getForm(name).pipe(
-            map((data: FormWrapper) => {
+            map((data: FormWindow) => {
                 return data;
             }));
     }
 
     /**
-     * Save Form 
-     * @param model 
+     * Save Form
+     * @param model
      */
-    saveForm(name: string, form: FormWrapper) {
-        // remove all transactional data 
-        let updateForm = HelperService.deepCopy(form);
+    saveForm(name: string, form: FormWindow) {
+        // remove all transactional data
+        const updateForm = HelperService.deepCopy(form);
         updateForm.pages.forEach(page => {
             page.sections.forEach(section => {
                 section.components.forEach(component => {
@@ -224,74 +153,83 @@ export class FormService {
         });
 
         return this.service.saveForm(name, updateForm).pipe(
-            map((data: any) => {
-                return this.form;
+            map((response: any) => {
+                return response;
             }));
     }
 
     /**
-     * Save Form 
-     * @param model 
+     * Save Form
+     * @param model
      */
-    saveData(mutation: string, ids: Array<string>, data: any) {
-        
-        return this.service.saveData(mutation, ids, data).pipe(
-            map((data: any) => {
-                return data;
+    saveData(dataSource: FormDataSource, ids: Array<string>, data: any) {
+        return this.service.saveData(dataSource, ids, data).pipe(
+            map((result: any) => {
+                return result;
             }));
     }
 
-    updateComponent(component: FormComponent<any>) {
-        let value = HelperService.resolveType(component.value, component.type);
-        this.setValue(value, component.schema);
-        this.components = this.components.map((f: FormComponent<any>) => {
-            if (f.schema == component.schema || (f.schema && f.schema.indexOf('.') == -1))
-                f.value = this.getValue(f.schema);
-            return f.componentId === component.componentId ? component : f;
+    updateComponent(component: FormComponent<any>, formState: FormState) {
+        const value = HelperService.resolveType(component.value, component.type);
+        formState.data = this.setValue(component.schema, value, formState.data);
+        formState.components.forEach((c: FormComponent<any>) => {
+            if (c.schema === component.schema || (c.schema && c.schema.indexOf('.') === -1))
+                c.value = this.getValue(c.schema, formState.data, c.type);
         });
-        this.resolveConditions();
-        return of({ component: component, data: this.data, components: this.components });
+        formState = this.resolveConditions(formState);
+        return of(formState);
     }
 
-    updateForm(form: FormWrapper) {
-        this.form = form;
-        return of({ form: form });
-    }
-
-
-    resolveConditions() {
-        this.components.forEach(component => {
+    resolveConditions(formState: FormState, reRun = false): FormState {
+        let recalculate = false;
+        formState.components.forEach(component => {
             if (component.properties) {
                 Object.keys(component.properties).forEach(key => {
                     const property = component.properties[key];
-                    if (!HelperService.isNullOrEmpty(property.condition)) {
-                        const evaluatedValue = HelperService.evaluateValue(property.condition, this.data);
-                        if (!evaluatedValue.error)
-                        {
-                            if (key === "value")
-                            {
-                                const value = HelperService.resolveType(evaluatedValue.value, component.type);
-                                this.setValue(value,component.schema);
+                    if (property.condition) {
+                        let evaluatedValue: any;
+                        if (key === 'value')
+                            evaluatedValue = HelperService.evaluateValue(property.condition, formState.data);
+                        else
+                            evaluatedValue = HelperService.evaluateCondition(property.condition, formState.data);
+
+                        if (!evaluatedValue.error && key === 'value') {
+                            const value = HelperService.resolveType(evaluatedValue.value, component.type);
+                            if (component.value !== value) {
+                                recalculate = true;
+                                formState.data = this.setValue(component.schema, value, formState.data);
                                 component.value = value;
-                                property.value = true;
-                                return;
-                            }
-                            else if (evaluatedValue.value)
-                            {
-                                property.value = true;
-                                return;
                             }
                         }
-                    }
-                    property.value = false;
+                        property.value = evaluatedValue.value;
+                    } else
+                        delete component.properties[key];
                 });
-                return;
             }
-            if (component.properties)
-                component.properties = null;
         });
-    }
 
-    
+        // recalculate the calculated values as they might be dependant from each other
+        if (recalculate) {
+            recalculate = false;
+            formState.components.
+                filter(component => component.properties && component.properties['value'] && component.properties['value'].condition).
+                forEach(component => {
+                    const property = component.properties['value'];
+                    const evaluatedValue = HelperService.evaluateValue(property.condition, formState.data);
+                    if (!evaluatedValue.error) {
+                        const value = HelperService.resolveType(evaluatedValue.value, component.type);
+                        if (component.value !== value) {
+                            recalculate = true;
+                            component.value = value;
+                            formState.data = this.setValue(component.schema, value, formState.data);
+                            property.value = true;
+                        }
+                    }
+                });
+            if (recalculate && !reRun)
+                formState = this.resolveConditions(formState, true);
+        }
+        return formState;
+    }
 }
 

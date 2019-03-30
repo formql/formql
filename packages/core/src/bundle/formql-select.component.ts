@@ -3,17 +3,18 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Vali
 import { FormComponent, ComponentValidator } from '../models/form-component.model';
 import { createNumberMask, createAutoCorrectedDatePipe } from 'text-mask-addons';
 import { HelperService } from '../services/helper.service';
-import { OptionValue, SelectList } from '../models/types.model';
+import { OptionValue, SelectList } from '../models/type.model';
 
 
 @Component({
     selector: 'formql-select',
-    styleUrls: ["./formql-select.component.scss"],
+    styleUrls: ['./formql-select.component.scss'],
     template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
-        <label [attr.for]="field.componentId" [ngClass]="{'fql-bundle-label-required': field.properties?.required?.value}">{{field.label}}</label>
+        <label [attr.for]="field.componentId"
+               [ngClass]="{'fql-bundle-label-required': field.properties?.required?.value}">{{field.label}}</label>
         <div>
-            <select formControlName="{{field.componentId}}" [id]="field.componentId" 
-                class="fql-bundle-field-input" [tabIndex]="tabIndex" 
+            <select formControlName="{{field.componentId}}" [id]="field.componentId"
+                class="fql-bundle-field-input" [tabIndex]="tabIndex"
                 [attr.disabled]="field.properties?.readonly?.value ? '' : null"
                 [attr.multiple]="field.type === 'multiple'">
                 <ng-container *ngIf="list">
@@ -40,9 +41,9 @@ export class FormQLSelectComponent implements ControlValueAccessor, OnInit {
     static formQLComponent = true;
     static validators = [
         <ComponentValidator>{
-            name: "Required",
+            name: 'Required',
             validator: Validators.required,
-            key: "required"
+            key: 'required'
         }
     ];
 
@@ -51,9 +52,9 @@ export class FormQLSelectComponent implements ControlValueAccessor, OnInit {
     @Input() tabIndex: string;
 
     private _value: string;
-    private _propagateChange = (_: any) => { };
-
     list: Array<OptionValue>;
+
+    private _propagateChange = (_: any) => { };
 
     ngOnInit() {
         if (this.field.configuration)
@@ -71,9 +72,8 @@ export class FormQLSelectComponent implements ControlValueAccessor, OnInit {
     }
 
     writeValue(value: string): void {
-        if (value) {
+        if (value)
             this._value = value;
-        }
     }
 
     registerOnChange(fn: any): void {

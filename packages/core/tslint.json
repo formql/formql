@@ -4,13 +4,13 @@
         "directive-selector": [
             true,
             "attribute",
-            "fql",
+            "formql",
             "camelCase"
         ],
         "component-selector": [
             true,
             "element",
-            "fql",
+            "formql",
             "kebab-case"
         ]
     }

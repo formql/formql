@@ -1,24 +1,23 @@
-import { Component, OnInit, Input, ComponentFactoryResolver, ViewContainerRef, ViewChild, Renderer2, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ComponentFactoryResolver, ViewContainerRef, ViewChild, OnDestroy } from '@angular/core';
 import { FormComponent } from '../models/form-component.model';
 import { InternalEventHandlerService } from '../services/internal-event-handler.service';
-import { InternalEventType } from '../models/internal-event-handler.model';
+import { InternalEventType } from '../models/internal-event.model';
 import { HelperService } from '../services/helper.service';
 import { FormGroup } from '@angular/forms';
-import { FormQLMode } from '../models/formql-mode.model';
-import { WrapperType } from '../models/wrapper-type.model';
 import { StoreService } from '../services/store.service';
-
+import { FormQLMode, ContainerType } from '../models/type.model';
 
 @Component({
-    selector: '[componentContainer]',
+    // tslint:disable-next-line: component-selector
+    selector: '[formql-component-container]',
     template: `
-    <div #wrapper dnd 
+    <div #wrapper formqlDnd
         [sourceObjectId]="component.componentId"
         [attr.componentId]="component.componentId"
-        [sourceWrapperId]="sectionId" 
-        [type]="WrapperType.Component" 
+        [sourceWrapperId]="sectionId"
+        [type]="ContainerType.Component"
         [mode]="mode"
-        [ngClass]="{'fql-component-container-wrapper': (mode == FormQLMode.Edit || mode == FormQLMode.LiveEdit)}">
+        [ngClass]="{'fql-component-container-wrapper': (mode === FormQLMode.Edit)}">
         <div class="fql-component-vilibility-off"></div>
         <div class="fql-component-tooltip">
             <ng-container #tooltip></ng-container>
@@ -41,11 +40,11 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
     @Input() component: FormComponent<any>;
     @Input() reactiveSection: FormGroup;
     @Input() sectionId: string;
-    @Input('value') 
+    @Input('value')
     set value(value: any) {
         this._value = value;
         if (this.reactiveSection && this.component) {
-            let control = this.reactiveSection.controls[this.component.componentId].get(this.component.componentId);
+            const control = this.reactiveSection.controls[this.component.componentId].get(this.component.componentId);
             control.setValue(this.component.value);
         }
     }
@@ -55,7 +54,7 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
     @Input() mode: FormQLMode;
 
     public FormQLMode = FormQLMode;
-    public WrapperType = WrapperType;
+    public ContainerType = ContainerType;
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -65,33 +64,35 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        const component = this.viewContainerRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, this.component.componentName));
+        const component = this.viewContainerRef.createComponent(
+            HelperService.getFactory(this.componentFactoryResolver, this.component.componentName));
         (<any>component).instance.field = this.component;
         (<any>component).instance.reactiveFormGroup = this.reactiveSection.controls[this.component.componentId];
         if (this.component.tabIndex != null)
             (<any>component).instance.tabIndex = this.component.tabIndex;
-        
+
         this.content.insert(component.hostView);
 
         this.reactiveSection.controls[this.component.componentId].valueChanges.subscribe((change) => {
-            if (this.component.value != change[this.component.componentId]) {
+            if (this.component.value !== change[this.component.componentId]) {
                 this.component.value = change[this.component.componentId];
                 this.storeService.setComponet(this.component);
             }
         });
 
-        if (this.mode == FormQLMode.Edit || this.mode == FormQLMode.LiveEdit)
+        if (this.mode === FormQLMode.Edit)
         {
-            const tooltip = this.viewContainerRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, "TooltipComponent"));
+            const tooltip = this.viewContainerRef.createComponent(
+                HelperService.getFactory(this.componentFactoryResolver, 'TooltipComponent'));
             (<any>tooltip).instance.wrapper = this.wrapper;
-            (<any>tooltip).instance.type = WrapperType.Component;
+            (<any>tooltip).instance.type = ContainerType.Component;
             (<any>tooltip).instance.object = this.component;
             this.tooltip.insert(tooltip.hostView);
         }
     }
 
     editField() {
-        if (this.mode == FormQLMode.Edit || this.mode == FormQLMode.LiveEdit)
+        if (this.mode === FormQLMode.Edit)
             this.eventHandlerService.send(InternalEventType.EditingComponent, this.component);
     }
 

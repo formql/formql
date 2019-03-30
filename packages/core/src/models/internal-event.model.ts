@@ -1,6 +1,6 @@
-export class InternalEventHandler {
-    public eventType: InternalEventType;
-    public event: any;
+export interface InternalEventHandler {
+    eventType: InternalEventType;
+    event: any;
 }
 
 export enum InternalEventType {
@@ -15,8 +15,7 @@ export enum InternalEventType {
 
     // Form changes
     DndFormChanged = 8,
-    
-    
+
     // Save event
     SubmitForm = 9
 }

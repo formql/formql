@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { FormWrapper, FormError } from '../models/form-wrapper.model';
+import { FormWindow, FormError, FormState } from '../models/form-window.model';
 import { FormService } from './form.service';
 import { FormComponent } from '../models/form-component.model';
 import { HelperService } from './helper.service';
-import { SelectMultipleControlValueAccessor } from '@angular/forms';
 
 @Injectable({ providedIn: 'root' })
 export class StoreService {
@@ -12,13 +11,15 @@ export class StoreService {
         private formService: FormService
     ) {}
 
-    private readonly _form = new Subject<FormWrapper>();
+    private readonly _form = new Subject<FormWindow>();
 
     private readonly _components = new Subject<FormComponent<any>[]>();
 
     private readonly _data = new Subject<any>();
 
-    getForm(): Observable<FormWrapper> {
+    private formState: FormState;
+
+    getForm(): Observable<FormWindow> {
         return this._form.asObservable();
     }
 
@@ -31,33 +32,34 @@ export class StoreService {
     }
 
     setComponet(component: FormComponent<any>) {
-        this.formService.updateComponent(component).subscribe(res => {
-            this._components.next(res.components);
-            this._data.next(res.data);
+        this.formService.updateComponent(component, this.formState).subscribe(response => {
+            this._components.next(response.components);
+            this._data.next(response.data);
         });
     }
-    
-    getAll(formName:string, ids: Array<string>) {
-        this.formService.getFormAndData(formName, ids).subscribe(res => {
-            this._form.next(res.form);
-            this._components.next(res.components);
-            this._data.next(res.data);
+
+    getAll(formName: string, ids: Array<string>) {
+        this.formService.getFormAndData(formName, ids).subscribe(response => {
+            this.formState = {...response};
+            this._form.next(response.form);
+            this._components.next(response.components);
+            this._data.next(response.data);
         },
         error => {
-            this._form.next(<FormWrapper>{
+            this._form.next(<FormWindow>{
                 error: HelperService.formatError(<FormError>{
-                    title: "Error loading form or data",
+                    title: 'Error loading form or data',
                     error: error
                 })
             })
         });
     }
 
-    saveForm(name:string, form: FormWrapper) {
+    saveForm(name: string, form: FormWindow) {
         this.formService.saveForm(name, form);
     }
 
     saveData() {
-        
+
     }
 }
