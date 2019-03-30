@@ -37,6 +37,10 @@ export class FormService {
     }
 
     populateComponents(form: FormWindow, data: any): FormState {
+        let initiateData = false;
+        if (!data)
+            initiateData = true;
+
         let formState = <FormState>{
             components: new Array<FormComponent<any>>(),
             data: { ...data},
@@ -60,6 +64,9 @@ export class FormService {
 
                             component.value = this.getValue(component.schema, data, component.type);
                             formState.components.push(component);
+
+                            if (initiateData)
+                                formState.data = this.initiateData(formState.data, component.schema);
                         });
                     }
                 });
@@ -67,6 +74,24 @@ export class FormService {
         formState = this.resolveConditions(formState);
         return formState;
     }
+
+    initiateData(data: any, schema: string) {
+        if (schema && schema.indexOf('.') !== -1) {
+            const arr = schema.split('.');
+            let item = data;
+            let key = '';
+            for (let i = 0; i <= arr.length - 2; i++) {
+                key = arr[i];
+                if (!item[key])
+                    item[key] = {};
+
+                if (i !== arr.length - 2)
+                    item = item[key];
+            }
+        }
+        return data;
+    }
+
 
     getValue(schema: string, data: any, type: string) {
         const evaluatedValue = HelperService.evaluateValue(schema, data);

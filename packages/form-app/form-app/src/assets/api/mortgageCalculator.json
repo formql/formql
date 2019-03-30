@@ -31,28 +31,7 @@
                     "type": 1
                 },
                 "componentId": "0af1e87f-19fe-e6e0-80ca-f1d512b889ec",
-                "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "value": null,
                 "style": {
                     "padding": "0px",
@@ -83,16 +62,6 @@
                         "condition": "true",
                         "value": null,
                         "errorMessage": "Please enter first name"
-                    },
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
                     }
                 },
                 "value": null
@@ -109,21 +78,6 @@
                 },
                 "componentId": "0af1e87f-29fe-e6e0-80ca-f1d512b889ec",
                 "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
                     "required": {
                         "key": "required",
                         "condition": "true",
@@ -144,28 +98,7 @@
                 },
                 "componentId": "bb22abb9-0fd0-fa7b-ff0a-50e2c2031970",
                 "conditions": {},
-                "properties": {
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "value": null
             }, {
                 "schema": "contact.email",
@@ -179,28 +112,7 @@
                     "type": 2
                 },
                 "componentId": "776bd62b-b83a-9b67-43b9-03cf7daa2dcb",
-                "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "value": null
             }],
             "position": {
@@ -244,23 +156,7 @@
                     "type": 2
                 },
                 "componentId": "786bd72b-b83a-9b67-43b9-03cf7daa2dcb",
-                "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "value": null,
                 "style": {
                     "float": "right"
@@ -322,23 +218,7 @@
                     "index": 0,
                     "type": 1
                 },
-                "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "style": {
                     "padding": "0px",
                     "margin": "10px",
@@ -355,28 +235,7 @@
                     "index": 5,
                     "type": 2
                 },
-                "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "schema": "contact.mortgagePeriod",
                 "type": "number",
                 "value": null
@@ -389,28 +248,7 @@
                     "index": 4,
                     "type": 2
                 },
-                "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "schema": "contact.mortgageInterestRate",
                 "type": "number",
                 "textMask": {
@@ -442,19 +280,9 @@
                         "condition": "contact.mortgagePeriod*12*contact.mortgageMonthlyPayments",
                         "value": null
                     },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
                     "readonly": {
                         "key": "readonly",
                         "condition": "true",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
                         "value": null
                     }
                 },
@@ -483,28 +311,7 @@
                     "index": 2,
                     "type": 2
                 },
-                "properties": {
-                    "value": {
-                        "key": "value",
-                        "condition": "",
-                        "value": null
-                    },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
-                        "value": null
-                    }
-                },
+                "properties": {},
                 "schema": "contact.mortgageAmount",
                 "type": "number",
                 "textMask": {
@@ -536,19 +343,9 @@
                         "condition": "contact.mortgageAmount*(contact.mortgageInterestRate/100/12)*(Math.pow(1 + (contact.mortgageInterestRate/100/12), (contact.mortgagePeriod*12)))/(Math.pow(1+(contact.mortgageInterestRate/100/12),(contact.mortgagePeriod*12))-1)",
                         "value": null
                     },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
                     "readonly": {
                         "key": "readonly",
                         "condition": "true",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
                         "value": null
                     }
                 },
@@ -583,19 +380,9 @@
                         "condition": "contact.mortgageTotalCost-contact.mortgageAmount",
                         "value": null
                     },
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "",
-                        "value": null
-                    },
                     "readonly": {
                         "key": "readonly",
                         "condition": "true",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "",
                         "value": null
                     }
                 },
