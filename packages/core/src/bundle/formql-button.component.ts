@@ -1,8 +1,8 @@
 
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
-import { FormComponent, ComponentValidator } from '../models/form-component.model';
-import { ActionHandlerService } from '../services/action-handler.service.1';
+import { FormComponent } from '../models/form-component.model';
+import { ActionHandlerService } from '../services/action-handler.service';
 import { ActionType } from '../models/action.model';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Injectable, Component, Type, ComponentFactoryResolver } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { ComponentValidator, FormComponent } from '../models/form-component.model';
-import { FormError } from '../models/form-window.model';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ComponentValidator, FormComponent, ComponentControl } from '../models/form-component.model';
+import { FormError, FormWindow } from '../models/form-window.model';
 import { ComponentFactory } from '@angular/core';
 import { EvalResponse } from '../models/type.model';
 
@@ -141,6 +141,35 @@ export class HelperService {
             });
         }
         return component;
+    }
+
+    public static createReactiveFormStructure(form: FormWindow, getComponents: boolean = false) {
+        const formControls = Array<ComponentControl>();
+        const components = Array<FormComponent<any>>();
+        const pageGroup = new FormGroup({});
+        form.pages.forEach(page => {
+            const sectionGroup: any = {};
+            if (page.sections != null)
+                page.sections.forEach(section => {
+                    const componentGroup: any = {};
+                    if (section.components != null)
+                        section.components.forEach(component => {
+                            if (getComponents)
+                                components.push(component);
+
+                            const singleComponentGroup: any = {};
+                            singleComponentGroup[component.componentId] = new FormControl();
+                            formControls.push(<ComponentControl>{
+                                key: component.componentId,
+                                control: singleComponentGroup[component.componentId]
+                            });
+                            componentGroup[component.componentId] = new FormGroup(singleComponentGroup);
+                        });
+                    sectionGroup[section.sectionId] = new FormGroup(componentGroup);
+                });
+            pageGroup[page.pageId] = new FormGroup(sectionGroup);
+        });
+        return { pageGroup: pageGroup, formControls: formControls, components: components };
     }
 
     public static deepCopy(oldObj: any, ignoreProperty: Array<string> = null) {

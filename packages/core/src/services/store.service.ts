@@ -13,7 +13,7 @@ export class StoreService {
 
     private readonly _form = new Subject<FormWindow>();
 
-    private readonly _components = new Subject<FormComponent<any>[]>();
+    private readonly _components = new Subject<Array<FormComponent<any>>>();
 
     private readonly _data = new Subject<any>();
 
@@ -51,7 +51,7 @@ export class StoreService {
                     title: 'Error loading form or data',
                     error: error
                 })
-            })
+            });
         });
     }
 
@@ -61,5 +61,14 @@ export class StoreService {
 
     saveData() {
 
+    }
+
+    completeAll() {
+        this._data.complete();
+        this._data.unsubscribe();
+        this._form.complete();
+        this._form.unsubscribe();
+        this._components.complete();
+        this._components.unsubscribe();
     }
 }

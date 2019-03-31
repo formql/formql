@@ -37,13 +37,9 @@ export class FormService {
     }
 
     populateComponents(form: FormWindow, data: any): FormState {
-        let initiateData = false;
-        if (!data)
-            initiateData = true;
-
         let formState = <FormState>{
             components: new Array<FormComponent<any>>(),
-            data: { ...data},
+            data: {...data},
             form: form
         };
 
@@ -65,7 +61,7 @@ export class FormService {
                             component.value = this.getValue(component.schema, data, component.type);
                             formState.components.push(component);
 
-                            if (initiateData)
+                            if (!data)
                                 formState.data = this.initiateData(formState.data, component.schema);
                         });
                     }
@@ -136,9 +132,6 @@ export class FormService {
             }));
     }
 
-    /**
-     * Get Forms
-     */
     getForms() {
         return this.service.getForms().pipe(
             map((data: any) => {
@@ -146,10 +139,6 @@ export class FormService {
             }));
     }
 
-    /**
-     * Get Form
-     * @param name
-     */
     getForm(name: string) {
         return this.service.getForm(name).pipe(
             map((data: FormWindow) => {
@@ -157,10 +146,6 @@ export class FormService {
             }));
     }
 
-    /**
-     * Save Form
-     * @param model
-     */
     saveForm(name: string, form: FormWindow) {
         // remove all transactional data
         const updateForm = HelperService.deepCopy(form);
@@ -183,10 +168,6 @@ export class FormService {
             }));
     }
 
-    /**
-     * Save Form
-     * @param model
-     */
     saveData(dataSource: FormDataSource, ids: Array<string>, data: any) {
         return this.service.saveData(dataSource, ids, data).pipe(
             map((result: any) => {

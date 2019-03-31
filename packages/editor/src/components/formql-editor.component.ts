@@ -1,6 +1,6 @@
 import { OnInit, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, Renderer2 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { FormQLMode, HelperService, InternalEventHandlerService, InternalEventHandler, InternalEventType } from '@formql/core';
+import { FormQLMode, HelperService, InternalEventHandlerService, InternalEventHandler, InternalEventType, FormComponent, FormPage, FormSection } from '@formql/core';
 
 @Component({
     selector: 'formql-editor',
@@ -124,7 +124,7 @@ export class FormQLEditorComponent implements OnInit {
 
     editorResponse($event) {
         this.closeEditBar();
-        if ($event) {
+        if ($event)
             if ($event.componentId) {
                 this.formql.instance.refreshComponent($event);
                 this.formql.instance.populateReactiveForm(true, $event.componentId);
@@ -132,7 +132,6 @@ export class FormQLEditorComponent implements OnInit {
                 this.formql.instance.populateReactiveForm(true, $event.sectionId);
             else if ($event.pageId)
                 this.formql.instance.populateReactiveForm(true, $event.pageId);
-        }
 
         if (this.subscription)
             this.subscription.unsubscribe();

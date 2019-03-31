@@ -14,8 +14,5 @@ export enum InternalEventType {
     RemovePage = 7,
 
     // Form changes
-    DndFormChanged = 8,
-
-    // Save event
-    SubmitForm = 9
+    DndFormChanged = 8
 }

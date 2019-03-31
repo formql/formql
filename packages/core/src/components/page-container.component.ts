@@ -7,6 +7,8 @@ import { DndEvent } from '../models/dnd.model';
 import { DndTransfer } from '../models/dnd.model';
 import { FormPage } from '../models/form-page.model';
 import { FormQLMode, ContainerType } from '../models/type.model';
+import { InternalEventHandlerService } from '../services/internal-event-handler.service';
+import { InternalEventType } from '../models/internal-event.model';
 
 
 @Component({
@@ -47,7 +49,8 @@ export class PageContainerComponent implements OnInit {
     public ComponentPositionType = ComponentPositionType;
 
     constructor(
-        private dndService: DndService
+        private dndService: DndService,
+        private eventHandlerService: InternalEventHandlerService
     ) { }
 
     ngOnInit() {
@@ -62,8 +65,8 @@ export class PageContainerComponent implements OnInit {
             targetWrapperId: this.page.pageId,
             targetIndexId: $event.targetIndexId
         };
-        this.dndService.synchronisePageModel(this.page, dndEvent);
-
+        this.page = this.dndService.synchronisePageModel(this.page, dndEvent);
+        this.eventHandlerService.send(InternalEventType.DndFormChanged, this.page);
     }
 
     private findSections(): FormSection[] {

@@ -7,6 +7,8 @@ import { FormPage } from '../models/form-page.model';
 import { DndEvent } from '../models/dnd.model';
 import { DndTransfer } from '../models/dnd.model';
 import { FormQLMode, ContainerType } from '../models/type.model';
+import { InternalEventHandlerService } from '../services/internal-event-handler.service';
+import { InternalEventType } from '../models/internal-event.model';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -54,7 +56,8 @@ export class SectionContainerComponent implements OnInit {
 
     components: FormComponent<any>[] = [];
     constructor(
-        private dndService: DndService
+        private dndService: DndService,
+        private eventHandlerService: InternalEventHandlerService
     ) {}
 
     ngOnInit() {
@@ -70,7 +73,8 @@ export class SectionContainerComponent implements OnInit {
             targetIndexId: $event.targetIndexId,
             positionType: this.positionType
         };
-        this.dndService.synchroniseSectionModel(this.page, dndEvent);
+        this.page = this.dndService.synchroniseSectionModel(this.page, dndEvent);
+        this.eventHandlerService.send(InternalEventType.DndFormChanged, this.page);
     }
 
     private findColumnComponents(): FormComponent<any>[] {
