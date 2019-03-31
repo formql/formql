@@ -1,6 +1,6 @@
 import { OnInit, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, Renderer2 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { FormQLMode, HelperService, InternalEventHandlerService, InternalEventHandler, InternalEventType, FormComponent, FormPage, FormSection } from '@formql/core';
+import { FormQLMode, HelperService, InternalEventHandlerService, InternalEventHandler, InternalEventType } from '@formql/core';
 
 @Component({
     selector: 'formql-editor',
@@ -150,7 +150,7 @@ export class FormQLEditorComponent implements OnInit {
         // if (!this.editMode) {
         // 	this.components.forEach(component => {
         // 		if (component != null) {
-        // 			if (component.properties == null || (component.properties != null && !component.properties.hidden)) {
+        // 			if (component.rules == null || (component.rules != null && !component.rules.hidden)) {
         // 				let componentControl = this.formControls.find(fc => fc.key == component.componentId);
         // 				componentControl.control.markAsTouched({ onlySelf: true });
         // 			}

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { HelperService, FormPage, FormQLMode, ComponentValidator, ComponentProperty } from '@formql/core';
+import { HelperService, FormPage, FormQLMode, FormValidator, FormRule } from '@formql/core';
 
 @Component({
     selector: 'formql-page-editor',
@@ -16,8 +16,8 @@ export class PageEditorComponent implements OnInit {
 
     updatedPage: FormPage;
     disableSaveButton = false;
-    validators: Array<ComponentValidator>;
-    properties: Array<ComponentProperty>;
+    validators: Array<FormValidator>;
+    properties: Array<FormRule>;
 
     ngOnInit() {
         this.updatedPage = <FormPage>{};

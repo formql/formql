@@ -1,9 +1,8 @@
 import { Component, Input, forwardRef, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
-import { FormComponent, ComponentValidator } from '../models/form-component.model';
-import { createNumberMask, createAutoCorrectedDatePipe } from 'text-mask-addons';
-import { HelperService } from '../services/helper.service';
+import { FormComponent } from '../models/form-component.model';
 import { OptionValue, SelectList } from '../models/type.model';
+import { FormValidator } from '../models/rule.model';
 
 
 @Component({
@@ -11,11 +10,11 @@ import { OptionValue, SelectList } from '../models/type.model';
     styleUrls: ['./formql-select.component.scss'],
     template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
         <label [attr.for]="field.componentId"
-               [ngClass]="{'fql-bundle-label-required': field.properties?.required?.value}">{{field.label}}</label>
+               [ngClass]="{'fql-bundle-label-required': field.rules?.required?.value}">{{field.label}}</label>
         <div>
             <select formControlName="{{field.componentId}}" [id]="field.componentId"
                 class="fql-bundle-field-input" [tabIndex]="tabIndex"
-                [attr.disabled]="field.properties?.readonly?.value ? '' : null"
+                [attr.disabled]="field.rules?.readonly?.value ? '' : null"
                 [attr.multiple]="field.type === 'multiple'">
                 <ng-container *ngIf="list">
                     <option *ngFor="let item of list" [value]="item.value">{{item.name}}</option>
@@ -40,7 +39,7 @@ export class FormQLSelectComponent implements ControlValueAccessor, OnInit {
     static componentName = 'FormQLSelectComponent';
     static formQLComponent = true;
     static validators = [
-        <ComponentValidator>{
+        <FormValidator>{
             name: 'Required',
             validator: Validators.required,
             key: 'required'

@@ -1,6 +1,6 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
-import { FormComponent, ComponentValidator } from '../models/form-component.model';
+import { FormComponent } from '../models/form-component.model';
 
 
 @Component({

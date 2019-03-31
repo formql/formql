@@ -31,7 +31,7 @@
                     "type": 1
                 },
                 "componentId": "0af1e87f-19fe-e6e0-80ca-f1d512b889ec",
-                "properties": {},
+                "rules": {},
                 "value": null,
                 "style": {
                     "padding": "0px",
@@ -51,7 +51,7 @@
                     "type": 2
                 },
                 "componentId": "f3ba55e9-20b3-db67-2099-22a9108bcd47",
-                "properties": {
+                "rules": {
                     "readonly": {
                         "key": "readonly",
                         "condition": "  ",
@@ -77,7 +77,7 @@
                     "type": 2
                 },
                 "componentId": "0af1e87f-29fe-e6e0-80ca-f1d512b889ec",
-                "properties": {
+                "rules": {
                     "required": {
                         "key": "required",
                         "condition": "true",
@@ -98,7 +98,7 @@
                 },
                 "componentId": "bb22abb9-0fd0-fa7b-ff0a-50e2c2031970",
                 "conditions": {},
-                "properties": {},
+                "rules": {},
                 "value": null
             }, {
                 "schema": "contact.email",
@@ -112,7 +112,7 @@
                     "type": 2
                 },
                 "componentId": "776bd62b-b83a-9b67-43b9-03cf7daa2dcb",
-                "properties": {},
+                "rules": {},
                 "value": null
             }, {
                 "componentId": "842329ce-9118-8865-f71e-f8f223150a1f",
@@ -123,7 +123,7 @@
                     "index": 0,
                     "type": 2
                 },
-                "properties": {},
+                "rules": {},
                 "value": null,
                 "schema": "contact.addComments"
             }, {
@@ -135,7 +135,7 @@
                     "index": 0,
                     "type": 2
                 },
-                "properties": {
+                "rules": {
                     "hidden": {
                         "key": "hidden",
                         "condition": "contact.addComments !== true",
@@ -186,7 +186,7 @@
                     "type": 1
                 },
                 "componentId": "0af1e87f-09fe-e6e0-80ca-f1d512b889ec",
-                "properties": {},
+                "rules": {},
                 "value": null,
                 "style": {
                     "padding": "0px",
@@ -206,7 +206,7 @@
                     "type": 2
                 },
                 "componentId": "f3bb55e9-20b3-db67-2099-22a9108bcd47",
-                "properties": {
+                "rules": {
                     "hidden": {
                         "key": "hidden",
                         "condition": "contact.fistName === ''",
@@ -240,7 +240,7 @@
                     "type": 2
                 },
                 "componentId": "0af1e87f-09fe-e9e0-80ca-f1d512b889ec",
-                "properties": {},
+                "rules": {},
                 "value": null
             }, {
                 "schema": "contact.addressCity",
@@ -255,7 +255,7 @@
                 },
                 "componentId": "bb22abb9-0fd0-f27b-ff0a-50e2c2031970",
                 "conditions": {},
-                "properties": {},
+                "rules": {},
                 "value": null
             }, {
                 "schema": "contact.addressPostCode",
@@ -269,7 +269,7 @@
                     "type": 2
                 },
                 "componentId": "776bd62b-b83a-ab67-43b9-03cf7daa2dcb",
-                "properties": {},
+                "rules": {},
                 "value": null
             }],
             "position": {
@@ -309,7 +309,7 @@
                     "type": 2
                 },
                 "componentId": "786bd72b-b83a-9b67-43b9-03cf7daa2dcb",
-                "properties": {},
+                "rules": {},
                 "value": null,
                 "style": {
                     "float": "right"

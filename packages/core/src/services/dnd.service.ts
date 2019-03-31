@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormComponent, ComponentPosition } from '../models/form-component.model';
+import { FormComponent } from '../models/form-component.model';
 import { FormSection } from '../models/form-section.model';
 import { FormPage } from '../models/form-page.model';
 import { UUID } from 'angular2-uuid';
@@ -150,7 +150,7 @@ export class DndService {
             componentId: UUID.UUID(),
             label: 'New Component',
             componentName: 'FormQLLabelComponent',
-            position: <ComponentPosition> {
+            position: <GridPosition> {
                 id: '-1',
                 index: 0
             }

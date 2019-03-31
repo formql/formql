@@ -1,6 +1,9 @@
-import { ValidatorFn, FormControl } from '@angular/forms';
+import { FormRules } from './rule.model';
+import { FormActions } from './action.model';
+import { FormControl } from '@angular/forms';
+import { GridPosition } from './style.model';
 
-export interface FormComponent<T>  {
+export interface FormComponent<T> {
     componentId: string;
     componentName: string;
     value: T;
@@ -10,45 +13,16 @@ export interface FormComponent<T>  {
     type: string;
     tabIndex: string;
 
-    properties: ComponentProperties;
+    rules: FormRules;
+    actions: FormActions;
 
-    position: ComponentPosition;
+    position: GridPosition;
 
     style: any;
     configuration: any;
-  }
-
-export interface ComponentPosition {
-  id: string;
-  index: number;
-  type: ComponentPositionType;
-}
-
-export enum ComponentPositionType {
-    Header = 1,
-    Body = 2,
-    Footer = 3
-}
-
-export declare interface ComponentProperties {
-  [key: string]: ComponentProperty;
-}
-
-export interface ComponentProperty {
-  key: string;
-  condition: string;
-  value: boolean;
-  errorMessage: string;
-}
-
-export interface ComponentValidator {
-  name: string;
-  key: string;
-  validator: ValidatorFn;
-  parameters: any;
 }
 
 export interface ComponentControl {
-  key: string;
-  control: FormControl;
+    key: string;
+    control: FormControl;
 }

@@ -3,11 +3,12 @@ import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
 import { FormComponent } from '../models/form-component.model';
 import { ActionHandlerService } from '../services/action-handler.service';
-import { ActionType } from '../models/action.model';
+import { FormAction, ActionType } from '../models/action.model';
 
 @Component({
     selector: 'formql-button',
-    template: `<button style="cursor: pointer" (click)="onClick()">{{field.label}}</button>`,
+    template: `<button style="cursor: pointer" (click)="onClick()"
+                [disabled]="field.rules?.readonly?.value ? true : null">{{field.label}}</button>`,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -25,6 +26,11 @@ export class FormQLButtonComponent implements ControlValueAccessor {
     static componentName = 'FormQLButtonComponent';
     static formQLComponent = true;
     static validators = [];
+    static actions = [
+        <FormAction>{
+            key: ActionType.Submit
+        }
+    ];
 
     @Input() field: FormComponent<any>;
     @Input() reactiveFormGroup: FormGroup;
@@ -38,7 +44,6 @@ export class FormQLButtonComponent implements ControlValueAccessor {
     }
 
     get value(): any {
-
         return this._value;
     }
 
@@ -59,7 +64,16 @@ export class FormQLButtonComponent implements ControlValueAccessor {
     registerOnTouched(fn: any): void { }
 
     onClick() {
-        this.actionHandlerService.send(ActionType.SubmitForm, null);
+        if (this.field.actions) {
+            const arr = Object.keys(this.field.actions);
+            if (arr && arr[0]) {
+                const action = <FormAction>this.field.actions[arr[0]];
+                if (action.key === ActionType.Custom)
+                    this.actionHandlerService.send(action.customkey, action.parameters);
+                else
+                    this.actionHandlerService.send(action.key, action.parameters);
+            }
+        }
     }
 
 }

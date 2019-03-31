@@ -1,8 +1,9 @@
 import { Component, Input, forwardRef, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
-import { FormComponent, ComponentValidator } from '../models/form-component.model';
+import { FormComponent } from '../models/form-component.model';
 import { createNumberMask, createAutoCorrectedDatePipe } from 'text-mask-addons';
 import { HelperService } from '../services/helper.service';
+import { FormValidator } from '../models/rule.model';
 
 
 @Component({
@@ -10,15 +11,15 @@ import { HelperService } from '../services/helper.service';
     styleUrls: ['./formql-input.component.scss'],
     template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
         <label [attr.for]="field.componentId"
-               [ngClass]="{'fql-bundle-label-required': field.properties?.required?.value}">{{field.label}}</label>
+               [ngClass]="{'fql-bundle-label-required': field.rules?.required?.value}">{{field.label}}</label>
         <div>
             <input *ngIf="!mask" [id]="field.componentId" [type]="field.type"
                 formControlName="{{field.componentId}}" class="fql-bundle-field-input" [tabIndex]="tabIndex"
-                [attr.disabled]="field.properties?.readonly?.value ? '' : null">
+                [attr.disabled]="field.rules?.readonly?.value ? '' : null">
             <input *ngIf="mask" [textMask]="{ mask: mask, guide: false}" [id]="field.componentId" type="text"
                 formControlName="{{field.componentId}}"
                 class="fql-bundle-field-input" [tabIndex]="tabIndex"
-                [attr.disabled]="field.properties?.readonly?.value ? '' : null">
+                [attr.disabled]="field.rules?.readonly?.value ? '' : null">
         </div>
         </div>`,
     providers: [
@@ -38,7 +39,7 @@ export class FormQLInputComponent implements ControlValueAccessor, OnInit {
     static componentName = 'FormQLInputComponent';
     static formQLComponent = true;
     static validators = [
-        <ComponentValidator>{
+        <FormValidator>{
             name: 'Required',
             validator: Validators.required,
             key: 'required'

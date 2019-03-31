@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { HelperService, FormQLMode, FormSection, ComponentValidator, ComponentProperty } from '@formql/core';
+import { HelperService, FormQLMode, FormSection, FormValidator, FormRule } from '@formql/core';
 
 @Component({
     selector: 'formql-section-editor',
@@ -16,8 +16,8 @@ export class SectionEditorComponent implements OnInit {
 
     updatedSection: FormSection;
     disableSaveButton = false;
-    validators: Array<ComponentValidator>;
-    properties: Array<ComponentProperty>;
+    validators: Array<FormValidator>;
+    properties: Array<FormRule>;
 
     ngOnInit() {
         this.updatedSection = <FormSection>{};

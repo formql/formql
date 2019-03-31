@@ -153,9 +153,9 @@ export class FormService {
             page.sections.forEach(section => {
                 section.components.forEach(component => {
                     component.value = null;
-                    if (component.properties != null) {
-                        Object.keys(component.properties).forEach(p => {
-                            component.properties[p].value = null;
+                    if (component.rules != null) {
+                        Object.keys(component.rules).forEach(p => {
+                            component.rules[p].value = null;
                         });
                     }
                 });
@@ -189,9 +189,9 @@ export class FormService {
     resolveConditions(formState: FormState, reRun = false): FormState {
         let recalculate = false;
         formState.components.forEach(component => {
-            if (component.properties) {
-                Object.keys(component.properties).forEach(key => {
-                    const property = component.properties[key];
+            if (component.rules) 
+                Object.keys(component.rules).forEach(key => {
+                    const property = component.rules[key];
                     if (property.condition) {
                         let evaluatedValue: any;
                         if (key === 'value')
@@ -209,18 +209,17 @@ export class FormService {
                         }
                         property.value = evaluatedValue.value;
                     } else
-                        delete component.properties[key];
+                        delete component.rules[key];
                 });
-            }
         });
 
         // recalculate the calculated values as they might be dependant from each other
         if (recalculate) {
             recalculate = false;
             formState.components.
-                filter(component => component.properties && component.properties['value'] && component.properties['value'].condition).
+                filter(component => component.rules && component.rules['value'] && component.rules['value'].condition).
                 forEach(component => {
-                    const property = component.properties['value'];
+                    const property = component.rules['value'];
                     const evaluatedValue = HelperService.evaluateValue(property.condition, formState.data);
                     if (!evaluatedValue.error) {
                         const value = HelperService.resolveType(evaluatedValue.value, component.type);

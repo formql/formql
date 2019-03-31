@@ -1,10 +1,11 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
-import { FormComponent, ComponentValidator, InternalEventHandlerService, InternalEventType } from '@formql/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup } from '@angular/forms';
+import { FormComponent } from '@formql/core';
 
 @Component({
     selector: 'formql-mat-button',
-    template: `<button mat-flat-button color="primary" class="float-right" (click)="onClick()">{{field.label}}</button>`,
+    template: `<button mat-flat-button color="primary" class="float-right" (click)="onClick()"
+                [disabled]="field.rules?.readonly?.value ? true : null">{{field.label}}</button>`,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -30,7 +31,7 @@ export class FormQLMatButtonComponent implements ControlValueAccessor {
     private _propagateChange = (_: any) => { };
 
     constructor(
-        private eventHandlerService: InternalEventHandlerService
+
     ) {
     }
 

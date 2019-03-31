@@ -1,5 +1,6 @@
-import { FormComponent, ComponentProperties } from './form-component.model';
+import { FormComponent } from './form-component.model';
 import { GridPosition, GridTemplate } from './style.model';
+import { FormRules } from './rule.model';
 
 export interface FormSection {
     sectionId: string;
@@ -10,7 +11,7 @@ export interface FormSection {
     headerStyle: string;
     sectionStyle: string;
 
-    properties: ComponentProperties;
+    rules: FormRules;
 }
 
 

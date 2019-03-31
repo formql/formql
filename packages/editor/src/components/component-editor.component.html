@@ -47,11 +47,11 @@
                    
                     <div *ngFor="let item of validators; let i=index" class="fql-properties-div">
                         <label class="fql-field-label" [for]="item.name">{{item.name}}</label>
-                        <textarea class="fql-field-textarea"  [name]="item.name" [id]="item.name" [(ngModel)]="properties[i].condition"></textarea>
-                        <ng-container *ngIf="item.name === 'Calculated Field'">Result: {{getEvaluatedValue(properties[i].condition)}}</ng-container>
-                        <ng-container *ngIf="item.name !== 'Calculated Field'">Result: {{getEvaluatedCondition(properties[i].condition)}}</ng-container>
+                        <textarea class="fql-field-textarea"  [name]="item.name" [id]="item.name" [(ngModel)]="rules[i].condition"></textarea>
+                        <ng-container *ngIf="item.name === 'Calculated Field'">Result: {{getEvaluatedValue(rules[i].condition)}}</ng-container>
+                        <ng-container *ngIf="item.name !== 'Calculated Field'">Result: {{getEvaluatedCondition(rules[i].condition)}}</ng-container>
                         <br>
-                        <span style="color:red">{{getError(properties[i].condition)}}</span>
+                        <span style="color:red">{{getError(rules[i].condition)}}</span>
                     </div>
                 </div>
             </div>

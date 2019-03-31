@@ -1,9 +1,9 @@
-import { Injectable, Component, Type, ComponentFactoryResolver } from '@angular/core';
+import { Injectable, Component, Type, ComponentFactoryResolver, ComponentFactory } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ComponentValidator, FormComponent, ComponentControl } from '../models/form-component.model';
+import { FormComponent, ComponentControl } from '../models/form-component.model';
 import { FormError, FormWindow } from '../models/form-window.model';
-import { ComponentFactory } from '@angular/core';
 import { EvalResponse } from '../models/type.model';
+import { FormValidator } from '../models/rule.model';
 
 @Injectable({
     providedIn: 'root'
@@ -117,20 +117,20 @@ export class HelperService {
             return component;
 
         const validators = [];
-        if (component.properties != null) {
-            const componentValidators = <Array<ComponentValidator>>type['validators'];
-            Object.keys(component.properties).forEach(key => {
-                const item = component.properties[key];
+        if (component.rules != null) {
+            const FormValidators = <Array<FormValidator>>type['validators'];
+            Object.keys(component.rules).forEach(key => {
+                const item = component.rules[key];
                 if (item.value && item.key !== 'readonly' && item.key !== 'hidden' && item.key !== 'value') {
-                    const validator = componentValidators.find(x => x.key === item.key);
+                    const validator = FormValidators.find(x => x.key === item.key);
                     if (validator && validator.validator)
                         validators.push(validator.validator);
                 } else if (item.value && item.key === 'readonly' && control.enabled)
                     control.disable();
             });
             if (control.disabled &&
-                (!component.properties || (component.properties && !component.properties.readonly) || 
-                (component.properties && component.properties.readonly && !component.properties.readonly.value)))
+                (!component.rules || (component.rules && !component.rules.readonly) ||
+                (component.rules && component.rules.readonly && !component.rules.readonly.value)))
                 control.enable();
         }
 

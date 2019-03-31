@@ -1,7 +1,8 @@
 import { Component, Input, forwardRef, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
-import { FormComponent, ComponentValidator } from '../models/form-component.model';
+import { FormComponent } from '../models/form-component.model';
 import { OptionValue, SelectList } from '../models/type.model';
+import { FormValidator } from '../models/rule.model';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { OptionValue, SelectList } from '../models/type.model';
     styleUrls: ['./formql-radio.component.scss'],
     template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
         <label [attr.for]="field.componentId"
-               [ngClass]="{'fql-bundle-label-required': field.properties?.required?.value}">{{field.label}}</label>    
+               [ngClass]="{'fql-bundle-label-required': field.rules?.required?.value}">{{field.label}}</label>    
         <div class="fql-bundle-field-input">
             <label *ngFor="let item of list" class="fql-bundle-field-radio">
                 <input type="radio" class="fql-bundle-field-radio" 
@@ -34,7 +35,7 @@ export class FormQLRadioComponent implements ControlValueAccessor, OnInit {
     static componentName = 'FormQLRadioComponent';
     static formQLComponent = true;
     static validators = [
-        <ComponentValidator>{
+        <FormValidator>{
             name: 'Required',
             validator: Validators.required,
             key: 'required'

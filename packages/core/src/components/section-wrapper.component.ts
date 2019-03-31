@@ -4,9 +4,9 @@ import { FormSection } from '../models/form-section.model';
 import { InternalEventHandlerService } from '../services/internal-event-handler.service';
 import { InternalEventType } from '../models/internal-event.model';
 import { FormPage } from '../models/form-page.model';
-import { ComponentPositionType } from '../models/form-component.model';
 import { HelperService } from '../services/helper.service';
 import { FormQLMode, ContainerType } from '../models/type.model';
+import { GridPositionType } from '../models/style.model';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -67,7 +67,7 @@ export class SectionWrapperComponent implements OnInit {
 
     public FormQLMode = FormQLMode;
     public ContainerType = ContainerType;
-    public ComponentPositionType = ComponentPositionType;
+    public ComponentPositionType = GridPositionType;
 
     constructor(
         private internalEventHandlerService: InternalEventHandlerService,

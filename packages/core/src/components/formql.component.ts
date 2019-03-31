@@ -132,7 +132,7 @@ export class FormQLComponent implements OnDestroy, OnInit {
             this.storeService.saveData();
             // this.components.forEach(component => {
             //     if (component != null) {
-            //         if (component.properties == null || (component.properties != null && !component.properties.hidden)) {
+            //         if (component.rules == null || (component.rules != null && !component.rules.hidden)) {
             //             let componentControl = this.formControls.find(fc => fc.key == component.componentId);
             //             componentControl.control.markAsTouched({ onlySelf: true });
             //         }

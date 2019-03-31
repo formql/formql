@@ -1,7 +1,7 @@
 import { Directive, HostListener, ViewContainerRef, Input, Output, EventEmitter, Renderer2 } from '@angular/core';
-import { ComponentPositionType } from '../models/form-component.model';
 import { DndTransfer } from '../models/dnd.model';
 import { ContainerType, FormQLMode } from '../models/type.model';
+import { GridPositionType } from '../models/style.model';
 /*
     Directive to handle the drop and receive the information from the dnd directive
 */
@@ -15,7 +15,7 @@ export class DndDropDirective {
     ) { }
 
     @Input() public type: ContainerType;
-    @Input() public positionType: ComponentPositionType;
+    @Input() public positionType: GridPositionType;
     @Input() public mode: FormQLMode;
 
     @Output() synchronise: EventEmitter<any> = new EventEmitter();

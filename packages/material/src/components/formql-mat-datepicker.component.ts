@@ -1,6 +1,6 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
-import { FormComponent, ComponentValidator } from '@formql/core';
+import { FormComponent, FormValidator } from '@formql/core';
 
 @Component({
     selector: 'formql-mat-datepicker',
@@ -28,7 +28,7 @@ export class FormQLMatDatepickerComponent implements ControlValueAccessor {
     static formQLComponent = true;
 
     static validators = [
-        <ComponentValidator>{
+        <FormValidator>{
             name: 'Required',
             validator: Validators.required,
             key: 'required'

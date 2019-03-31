@@ -9,6 +9,13 @@ export interface GridStyle {
 export interface GridPosition {
     id: string;
     index: number;
+    type: GridPositionType;
+}
+
+export enum GridPositionType {
+    Header = 1,
+    Body = 2,
+    Footer = 3
 }
 
 export interface GridTemplate {

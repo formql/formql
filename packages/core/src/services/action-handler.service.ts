@@ -8,7 +8,7 @@ export class ActionHandlerService {
 
   @Output() action: EventEmitter<any> = new EventEmitter();
 
-  send(actionType: ActionType, action: any) {
+  send(actionType: ActionType | string, action: any) {
     const actionHandler = <ActionHandler> {
         action: action,
         actionType: actionType

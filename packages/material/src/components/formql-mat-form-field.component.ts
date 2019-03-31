@@ -1,8 +1,7 @@
 import { Component, Input, forwardRef, OnInit, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
-import { FormComponent, ComponentValidator } from '@formql/core';
+import { FormComponent, FormValidator } from '@formql/core';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-
 
 @Component({
     selector: 'formql-mat-form-field',
@@ -11,12 +10,12 @@ import createNumberMask from 'text-mask-addons/dist/createNumberMask';
       <input *ngIf="currencyMask" [textMask]="{mask: currencyMask}"
         [id]="field.componentId"
         [type]="field.type == 'number' ? 'text' : field.type" formControlName="{{field.componentId}}" matInput [placeholder]="field.label"
-      [required]="field.properties?.required?.value">
+      [required]="field.rules?.required?.value">
       <input *ngIf="!currencyMask" [id]="field.componentId"
         [type]="field.type" formControlName="{{field.componentId}}" matInput [placeholder]="field.label"
-      [required]="field.properties?.required?.value">
+      [required]="field.rules?.required?.value">
       <mat-error *ngIf="!reactiveFormGroup.controls[field.componentId].valid && reactiveFormGroup.controls[field.componentId].touched">
-        <span *ngIf="reactiveFormGroup.controls[field.componentId].errors?.required">{{ field.properties?.required?.errorMessage }}</span>
+        <span *ngIf="reactiveFormGroup.controls[field.componentId].errors?.required">{{ field.rules?.required?.errorMessage }}</span>
       </mat-error>
     </mat-form-field>
   </div>`,
@@ -38,7 +37,7 @@ export class FormQLMatFormFieldComponent implements OnInit, ControlValueAccessor
     static formQLComponent = true;
 
     static validators = [
-        <ComponentValidator>{
+        <FormValidator>{
             name: 'Required',
             validator: Validators.required,
             key: 'required'
