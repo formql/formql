@@ -6,6 +6,7 @@ import { HelperService } from '../services/helper.service';
 import { FormGroup } from '@angular/forms';
 import { StoreService } from '../services/store.service';
 import { FormQLMode, ContainerType } from '../models/type.model';
+import { Subscription } from 'rxjs';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -35,26 +36,23 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
     @ViewChild('wrapper', { read: ViewContainerRef }) wrapper: ViewContainerRef;
     @ViewChild('tooltip', { read: ViewContainerRef }) tooltip: ViewContainerRef;
 
-    private _value: any;
-
     @Input() component: FormComponent<any>;
     @Input() reactiveSection: FormGroup;
     @Input() sectionId: string;
-    @Input('value')
+    @Input()
     set value(value: any) {
-        this._value = value;
         if (this.reactiveSection && this.component) {
             const control = this.reactiveSection.controls[this.component.componentId].get(this.component.componentId);
-            control.setValue(this.component.value);
+            control.setValue(value);
         }
     }
-    get value() {
-        return this._value;
-    }
+
     @Input() mode: FormQLMode;
 
     public FormQLMode = FormQLMode;
     public ContainerType = ContainerType;
+
+    formSubscription: Subscription;
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -73,15 +71,14 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
 
         this.content.insert(component.hostView);
 
-        this.reactiveSection.controls[this.component.componentId].valueChanges.subscribe((change) => {
+        this.formSubscription = this.reactiveSection.controls[this.component.componentId].valueChanges.subscribe((change) => {
             if (this.component.value !== change[this.component.componentId]) {
                 this.component.value = change[this.component.componentId];
                 this.storeService.setComponet(this.component);
             }
         });
 
-        if (this.mode === FormQLMode.Edit)
-        {
+        if (this.mode === FormQLMode.Edit) {
             const tooltip = this.viewContainerRef.createComponent(
                 HelperService.getFactory(this.componentFactoryResolver, 'TooltipComponent'));
             (<any>tooltip).instance.wrapper = this.wrapper;
@@ -97,7 +94,6 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.reactiveSection.controls[this.component.componentId].valueChanges.subscribe)
-            this.reactiveSection.controls[this.component.componentId].valueChanges.subscribe().unsubscribe();
+        this.formSubscription.unsubscribe();
     }
 }

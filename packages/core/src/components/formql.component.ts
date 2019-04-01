@@ -9,7 +9,8 @@ import { FormPage } from '../models/form-page.model';
 import { StoreService } from '../services/store.service';
 import { FormQLMode } from '../models/type.model';
 import { FormSection } from '../models/form-section.model';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -32,6 +33,8 @@ export class FormQLComponent implements OnDestroy, OnInit {
     @Input() customMetadata: any;
 
     @ViewChild('target', { read: ViewContainerRef }) target: ViewContainerRef;
+
+    private componetDestroyed = new Subject();
 
     loading = true;
     saving = false;
@@ -66,11 +69,11 @@ export class FormQLComponent implements OnDestroy, OnInit {
         this.components$ = this.storeService.getComponents();
         this.data$ = this.storeService.getData();
 
-        this.form$.subscribe(form => {
+        this.form$.pipe(takeUntil(this.componetDestroyed)).subscribe(form => {
             if (form && !form.error) {
                 this.form = form;
 
-                this.components$.subscribe(components => {
+                this.components$.pipe(takeUntil(this.componetDestroyed)).subscribe(components => {
                     if (this.loading)
                         this.populateReactiveForm(false);
 
@@ -85,7 +88,7 @@ export class FormQLComponent implements OnDestroy, OnInit {
                     if (this.loading)
                         this.loadForm();
                 });
-                this.data$.subscribe(data => this.data = data);
+                this.data$.pipe(takeUntil(this.componetDestroyed)).subscribe(data => this.data = data);
             } else
                 this.error = {...form.error};
         });
@@ -93,19 +96,9 @@ export class FormQLComponent implements OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
-        if (this.internalEventHandlerService && this.internalEventHandlerService.event)
-            this.internalEventHandlerService.event.unsubscribe();
-
-        if (this.form$.subscribe)
-            this.form$.subscribe().unsubscribe();
-
-        if (this.components$.subscribe)
-            this.components$.subscribe().unsubscribe();
-
-        if (this.data$.subscribe)
-            this.data$.subscribe().unsubscribe();
-
-        this.storeService.completeAll();
+        this.componetDestroyed.next();
+        this.componetDestroyed.complete();
+        this.storeService.unsubscribeAll();
     }
 
     loadForm() {
@@ -146,7 +139,7 @@ export class FormQLComponent implements OnDestroy, OnInit {
     }
 
     loadInternalEventHandlers() {
-        this.internalEventHandlerService.event.subscribe(res => {
+        this.internalEventHandlerService.event.pipe(takeUntil(this.componetDestroyed)).subscribe(res => {
             const eventHandler = <InternalEventHandler>res;
 
             switch (eventHandler.eventType) {

@@ -1,13 +1,15 @@
-import { OnInit, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, Renderer2 } from '@angular/core';
+import { OnInit, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, Renderer2, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { FormQLMode, HelperService, InternalEventHandlerService, InternalEventHandler, InternalEventType } from '@formql/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'formql-editor',
     templateUrl: './formql-editor.component.html',
     styleUrls: ['./formql-editor.component.scss']
 })
-export class FormQLEditorComponent implements OnInit {
+export class FormQLEditorComponent implements OnInit, OnDestroy {
 
     @Input() formName: string;
     @Input() ids: Array<string>;
@@ -21,11 +23,13 @@ export class FormQLEditorComponent implements OnInit {
     @ViewChild('pusher', { read: ViewContainerRef }) pusher: ViewContainerRef;
     @ViewChild('editor', { read: ViewContainerRef }) editor: ViewContainerRef;
 
-    formql: any
+    formql: any;
     subscription: any;
 
-    saving: boolean = false;
+    saving = false;
     reactiveForm: FormGroup;
+
+    private componetDestroyed = new Subject();
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -115,7 +119,8 @@ export class FormQLEditorComponent implements OnInit {
         (<any>component).instance.mode = this.mode;
 
         this.subscription = (<any>component).instance.action
-            .subscribe(action => { this.editorResponse(action) });
+            .pipe(takeUntil(this.componetDestroyed))
+            .subscribe(action => { this.editorResponse(action); });
 
         this.editor.insert(component.hostView);
 
@@ -168,13 +173,13 @@ export class FormQLEditorComponent implements OnInit {
         if (event === 'saveForm')
             this.saveForm();
         else {
-            //this.rightSidenav.open();
+            // this.rightSidenav.open();
             // this.loadDataSourceEditor(event, this.form.dataSource);
         }
     }
 
     loadEventHandlers() {
-        this.internalEventHandlerService.event.subscribe(res => {
+        this.internalEventHandlerService.event.pipe(takeUntil(this.componetDestroyed)).subscribe(res => {
             const internalEventHandler = <InternalEventHandler>res;
 
             switch (internalEventHandler.eventType) {
@@ -191,4 +196,10 @@ export class FormQLEditorComponent implements OnInit {
             }
         });
     }
+
+    ngOnDestroy(): void {
+        this.componetDestroyed.next();
+        this.componetDestroyed.unsubscribe();
+    }
+
 }

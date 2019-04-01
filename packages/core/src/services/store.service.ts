@@ -4,6 +4,7 @@ import { FormWindow, FormError, FormState } from '../models/form-window.model';
 import { FormService } from './form.service';
 import { FormComponent } from '../models/form-component.model';
 import { HelperService } from './helper.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class StoreService {
@@ -16,6 +17,8 @@ export class StoreService {
     private readonly _components = new Subject<Array<FormComponent<any>>>();
 
     private readonly _data = new Subject<any>();
+
+    private readonly serviceDestroyed = new Subject();
 
     private formState: FormState;
 
@@ -32,14 +35,14 @@ export class StoreService {
     }
 
     setComponet(component: FormComponent<any>) {
-        this.formService.updateComponent(component, this.formState).subscribe(response => {
+        this.formService.updateComponent(component, this.formState).pipe(takeUntil(this.serviceDestroyed)).subscribe(response => {
             this._components.next(response.components);
             this._data.next(response.data);
         });
     }
 
     getAll(formName: string, ids: Array<string>) {
-        this.formService.getFormAndData(formName, ids).subscribe(response => {
+        this.formService.getFormAndData(formName, ids).pipe(takeUntil(this.serviceDestroyed)).subscribe(response => {
             this.formState = {...response};
             this._form.next(response.form);
             this._components.next(response.components);
@@ -63,12 +66,8 @@ export class StoreService {
 
     }
 
-    completeAll() {
-        this._data.complete();
-        this._data.unsubscribe();
-        this._form.complete();
-        this._form.unsubscribe();
-        this._components.complete();
-        this._components.unsubscribe();
+    unsubscribeAll() {
+        this.serviceDestroyed.next();
+        this.serviceDestroyed.complete();
     }
 }
