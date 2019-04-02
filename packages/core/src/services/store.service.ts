@@ -12,15 +12,30 @@ export class StoreService {
         private formService: FormService
     ) {}
 
-    private readonly _form = new Subject<FormWindow>();
+    private _form: Subject<FormWindow>;
 
-    private readonly _components = new Subject<Array<FormComponent<any>>>();
+    private _components: Subject<Array<FormComponent<any>>>;
 
-    private readonly _data = new Subject<any>();
+    private _data: Subject<any>;
 
     private readonly serviceDestroyed = new Subject();
 
     private formState: FormState;
+
+    initialiseStore() {
+        this._form = new Subject<FormWindow>();
+        this._components = new Subject<Array<FormComponent<any>>>();
+        this._data = new Subject<any>();
+    }
+
+    destroyStore() {
+        this._form.complete();
+        this._form.unsubscribe();
+        this._components.complete();
+        this._components.unsubscribe();
+        this._data.complete();
+        this._data.unsubscribe();
+    }
 
     getForm(): Observable<FormWindow> {
         return this._form.asObservable();

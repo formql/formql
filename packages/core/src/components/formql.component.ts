@@ -65,6 +65,8 @@ export class FormQLComponent implements OnDestroy, OnInit {
         if (this.mode === FormQLMode.Edit)
             this.loadInternalEventHandlers();
 
+        this.storeService.initialiseStore();
+
         this.form$ = this.storeService.getForm();
         this.components$ = this.storeService.getComponents();
         this.data$ = this.storeService.getData();
@@ -98,7 +100,7 @@ export class FormQLComponent implements OnDestroy, OnInit {
     ngOnDestroy() {
         this.componetDestroyed.next();
         this.componetDestroyed.complete();
-        this.storeService.unsubscribeAll();
+        this.storeService.destroyStore();
     }
 
     loadForm() {
