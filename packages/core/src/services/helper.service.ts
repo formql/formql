@@ -80,7 +80,7 @@ export class HelperService {
             const evalFunc = new Function(...props);
             response.value = evalFunc(...params);
         } catch (err) {
-            return response.error = err;
+            response.error = err;
         }
         return response;
     }

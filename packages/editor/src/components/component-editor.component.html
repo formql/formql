@@ -56,10 +56,24 @@
                 </div>
             </div>
         </div>
-
         <input class="fql-field-input-tab" type="radio" name="tabs" id="tab3">
         <div class="fql-tab-label-content" id="tab3-content">
-            <label class="fql-tab-label" for="tab3">Advanced</label>
+            <label class="fql-tab-label" for="tab3">Actions</label>
+            <div class="tab-content">
+                <div *ngFor="let item of validators; let i=index" class="fql-properties-div">
+                    <label class="fql-field-label" [for]="item.name">{{item.name}}</label>
+                    <textarea class="fql-field-textarea"  [name]="item.name" [id]="item.name" [(ngModel)]="rules[i].condition"></textarea>
+                    <ng-container *ngIf="item.name === 'Calculated Field'">Result: {{getEvaluatedValue(rules[i].condition)}}</ng-container>
+                    <ng-container *ngIf="item.name !== 'Calculated Field'">Result: {{getEvaluatedCondition(rules[i].condition)}}</ng-container>
+                    <br>
+                    <span style="color:red">{{getError(rules[i].condition)}}</span>
+                </div>
+            </div>
+        </div>
+
+        <input class="fql-field-input-tab" type="radio" name="tabs" id="tab4">
+        <div class="fql-tab-label-content" id="tab4-content">
+            <label class="fql-tab-label" for="tab4">Advanced</label>
             <div class="tab-content">
                 Comming soon... :-)
             </div>

@@ -1,19 +1,20 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { ActionType, ActionHandler } from '../models/action.model';
+import { FormActions, FormAction } from '../models/action.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ActionHandlerService {
 
-  @Output() action: EventEmitter<any> = new EventEmitter();
+    @Output() action: EventEmitter<FormAction> = new EventEmitter();
 
-  send(actionType: ActionType | string, action: any) {
-    const actionHandler = <ActionHandler> {
-        action: action,
-        actionType: actionType
+    send(formActions: FormActions) {
+        if (formActions) {
+            const arr = Object.keys(formActions);
+            if (arr && arr[0]) {
+                const action = <FormAction>formActions[arr[0]];
+                this.action.emit(action);
+            }
+        }
     }
-    this.action.emit(actionHandler);
-  }
-
 }

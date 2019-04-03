@@ -3,7 +3,7 @@ import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
 import { FormComponent } from '../models/form-component.model';
 import { ActionHandlerService } from '../services/action-handler.service';
-import { FormAction, ActionType } from '../models/action.model';
+import { FormAction, FormActionType } from '../models/action.model';
 
 @Component({
     selector: 'formql-button',
@@ -28,7 +28,11 @@ export class FormQLButtonComponent implements ControlValueAccessor {
     static validators = [];
     static actions = [
         <FormAction>{
-            key: ActionType.Submit
+            key: FormActionType.Submit
+        },
+        <FormAction>{
+            key: FormActionType.Custom,
+            customkey: 'DoSomething'
         }
     ];
 
@@ -64,16 +68,8 @@ export class FormQLButtonComponent implements ControlValueAccessor {
     registerOnTouched(fn: any): void { }
 
     onClick() {
-        if (this.field.actions) {
-            const arr = Object.keys(this.field.actions);
-            if (arr && arr[0]) {
-                const action = <FormAction>this.field.actions[arr[0]];
-                if (action.key === ActionType.Custom)
-                    this.actionHandlerService.send(action.customkey, action.parameters);
-                else
-                    this.actionHandlerService.send(action.key, action.parameters);
-            }
-        }
+        if (this.field.actions)
+            this.actionHandlerService.send(this.field.actions);
     }
 
 }

@@ -7,7 +7,7 @@
     font-family: $font-family;
 }
 
-$num-of-tabs: 3;
+$num-of-tabs: 4;
 
 @mixin tabs {
   @for $i from 1 through $num-of-tabs {

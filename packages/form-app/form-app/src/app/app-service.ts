@@ -30,7 +30,9 @@ export class DummyService implements IFormQLService {
         return of(form);
     }
     saveData(dataSource: FormDataSource, ids: string[], data: any) {
-        return of({a:1});
+        let item = ids + '_saved';
+        localStorage.setItem(item, JSON.stringify(data));
+        return of(true);
     }
 
 }

@@ -1,7 +1,8 @@
 import { OnInit, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, Renderer2, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { FormQLMode, HelperService, InternalEventHandlerService, InternalEventHandler, InternalEventType } from '@formql/core';
-import { Subject } from 'rxjs';
+import { FormQLMode, HelperService, InternalEventHandlerService,
+        InternalEventHandler, InternalEventType, FormQLComponent } from '@formql/core';
+import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -23,8 +24,8 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
     @ViewChild('pusher', { read: ViewContainerRef }) pusher: ViewContainerRef;
     @ViewChild('editor', { read: ViewContainerRef }) editor: ViewContainerRef;
 
-    formql: any;
-    subscription: any;
+    formql: FormQLComponent;
+    subscription$: Subscription;
 
     saving = false;
     reactiveForm: FormGroup;
@@ -49,17 +50,20 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
         if (this.ids == null || (this.ids != null && this.ids.length === 0)) {
             this.ids = new Array<string>();
             this.ids.push('0');
-        } else {
+        } else
             if (this.ids.length === 1 && this.ids[0] === undefined)
                 this.ids[0] = '0';
-        }
 
-        this.formql = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, 'FormQLComponent'));
-        this.formql.instance.mode = this.mode;
-        this.formql.instance.formName = this.formName;
-        this.formql.instance.reactiveForm = this.reactiveForm;
+        const formQLRef = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, 'FormQLComponent'));
+        const formql = <any>formQLRef;
 
-        this.target.insert(this.formql.hostView);
+        formql.instance.mode = this.mode;
+        formql.instance.formName = this.formName;
+        formql.instance.reactiveForm = this.reactiveForm;
+
+        this.target.insert(formql.hostView);
+
+        this.formql = <FormQLComponent>formql.instance;
 
     }
 
@@ -93,32 +97,33 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
     loadEditor(name: string, object: any, type: InternalEventType) {
         this.editor.clear();
 
-        const component = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, name));
+        const componentRef = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, name));
+        const component = (<any>componentRef);
 
         switch (type) {
             case InternalEventType.EditingComponent:
-                (<any>component).instance.component = object;
-                (<any>component).instance.data = this.formql.instance.data;
+                component.instance.component = object;
+                component.instance.data = this.formql.data;
                 break;
 
             case InternalEventType.EditingSection:
-                (<any>component).instance.section = object;
+                component.instance.section = object;
                 break;
 
             case InternalEventType.EditingPage:
-                (<any>component).instance.page = this.formql.instance.form.pages[0];
+                component.instance.page = this.formql.form.pages[0];
                 break;
 
             case InternalEventType.EditingForm:
-                (<any>component).instance.form = this.formql.instance.form;
+                component.instance.form = this.formql.form;
                 break;
 
         }
 
-        (<any>component).instance.data = this.formql.instance.data;
-        (<any>component).instance.mode = this.mode;
+        component.instance.data = this.formql.data;
+        component.instance.mode = this.mode;
 
-        this.subscription = (<any>component).instance.action
+        this.subscription$ = component.instance.action
             .pipe(takeUntil(this.componetDestroyed))
             .subscribe(action => { this.editorResponse(action); });
 
@@ -131,15 +136,15 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
         this.closeEditBar();
         if ($event)
             if ($event.componentId) {
-                this.formql.instance.refreshComponent($event);
-                this.formql.instance.populateReactiveForm(true, $event.componentId);
+                this.formql.refreshComponent($event);
+                this.formql.populateReactiveForm(true, $event.componentId);
             } else if ($event.sectionId)
-                this.formql.instance.populateReactiveForm(true, $event.sectionId);
+                this.formql.populateReactiveForm(true, $event.sectionId);
             else if ($event.pageId)
-                this.formql.instance.populateReactiveForm(true, $event.pageId);
+                this.formql.populateReactiveForm(true, $event.pageId);
 
-        if (this.subscription)
-            this.subscription.unsubscribe();
+        if (this.subscription$)
+            this.subscription$.unsubscribe();
 
         const self = this;
         setTimeout(function () {
@@ -148,7 +153,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
     }
 
     saveForm() {
-        this.formql.instance.saveForm();
+        this.formql.saveForm();
     }
 
     saveData() {

@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { elementStart } from '@angular/core/src/render3/instructions';
 
 @Component({
     selector: 'formql-json-field-input',
@@ -21,7 +20,7 @@ export class JsonFieldInputComponent {
 
     get styleValue() {
         if (this.json)
-            return JSON.stringify(this.json,null,2);
+            return JSON.stringify(this.json, null, 2);
         else
             return;
     }

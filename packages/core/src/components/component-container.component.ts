@@ -52,7 +52,7 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
     public FormQLMode = FormQLMode;
     public ContainerType = ContainerType;
 
-    formSubscription: Subscription;
+    formSubscription$: Subscription;
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -71,7 +71,7 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
 
         this.content.insert(component.hostView);
 
-        this.formSubscription = this.reactiveSection.controls[this.component.componentId].valueChanges.subscribe((change) => {
+        this.formSubscription$ = this.reactiveSection.controls[this.component.componentId].valueChanges.subscribe((change) => {
             if (this.component.value !== change[this.component.componentId]) {
                 this.component.value = change[this.component.componentId];
                 this.storeService.setComponet(this.component);
@@ -94,6 +94,6 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.formSubscription.unsubscribe();
+        this.formSubscription$.unsubscribe();
     }
 }

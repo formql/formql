@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { FormWindow, FormError, FormState } from '../models/form-window.model';
 import { FormService } from './form.service';
 import { FormComponent } from '../models/form-component.model';
@@ -77,8 +77,8 @@ export class StoreService {
         this.formService.saveForm(name, form);
     }
 
-    saveData() {
-
+    saveData(ids: Array<string>) {
+        return this.formService.saveData(this.formState.form.dataSource, ids, this.formState.data);
     }
 
     unsubscribeAll() {

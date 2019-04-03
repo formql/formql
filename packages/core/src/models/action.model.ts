@@ -1,13 +1,8 @@
-export interface ActionHandler {
-    actionType: ActionType;
-    action: any;
-}
-
-export enum ActionType {
-    Validate = 1,
-    Submit = 2,
-    Save = 3,
-    Custom = 4
+export enum FormActionType {
+    Validate = 'validate',
+    Submit = 'submit',
+    Save = 'save',
+    Custom = 'custom'
 }
 
 export declare interface FormActions {
@@ -15,7 +10,7 @@ export declare interface FormActions {
 }
 
 export interface FormAction {
-    key: ActionType;
+    key: string;
     customkey: string;
     parameters: any;
 }
