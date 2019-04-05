@@ -1,6 +1,6 @@
 export enum FormActionType {
     Validate = 'validate',
-    Submit = 'submit',
+    ValidateAndSave = 'validateAndSave',
     Save = 'save',
     Custom = 'custom'
 }

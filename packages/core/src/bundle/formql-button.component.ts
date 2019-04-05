@@ -8,7 +8,9 @@ import { FormAction, FormActionType } from '../models/action.model';
 @Component({
     selector: 'formql-button',
     template: `<button style="cursor: pointer" (click)="onClick()"
-                [disabled]="field.rules?.readonly?.value ? true : null">{{field.label}}</button>`,
+                    [type]="field.type"
+                    [disabled]="reactiveFormGroup.disabled ||
+                    (field.type === 'submit' && this.reactiveFormGroup.parent.parent.parent.invalid) ? true : null">{{field.label}}</button>`,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -28,7 +30,13 @@ export class FormQLButtonComponent implements ControlValueAccessor {
     static validators = [];
     static actions = [
         <FormAction>{
-            key: FormActionType.Submit
+            key: FormActionType.Save
+        },
+        <FormAction>{
+            key: FormActionType.Validate
+        },
+        <FormAction>{
+            key: FormActionType.ValidateAndSave
         },
         <FormAction>{
             key: FormActionType.Custom,
@@ -45,6 +53,7 @@ export class FormQLButtonComponent implements ControlValueAccessor {
     constructor(
         private actionHandlerService: ActionHandlerService
     ) {
+
     }
 
     get value(): any {

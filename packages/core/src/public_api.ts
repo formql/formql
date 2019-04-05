@@ -17,4 +17,5 @@ export * from './models/internal-event.model';
 export * from './services/form.service';
 export * from './services/helper.service';
 export * from './services/internal-event-handler.service';
+export * from './services/action-handler.service';
 

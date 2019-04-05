@@ -59,6 +59,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
         formql.instance.mode = this.mode;
         formql.instance.formName = this.formName;
+        formql.instance.ids = this.ids;
         formql.instance.reactiveForm = this.reactiveForm;
 
         this.target.insert(formql.hostView);
@@ -154,24 +155,6 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
     saveForm() {
         this.formql.saveForm();
-    }
-
-    saveData() {
-        // if (!this.editMode) {
-        // 	this.components.forEach(component => {
-        // 		if (component != null) {
-        // 			if (component.rules == null || (component.rules != null && !component.rules.hidden)) {
-        // 				let componentControl = this.formControls.find(fc => fc.key == component.componentId);
-        // 				componentControl.control.markAsTouched({ onlySelf: true });
-        // 			}
-        // 		}
-        // 	});
-
-        //     //if (this.reactiveForm.valid)
-        //         this.formStoreService.dispatchSaveDataAction(this.form.dataSource.mutation, this.ids, this.data );
-        // 	//else
-        // 	//	alert('form not valid');
-        // }
     }
 
     leftSideNavBarActionClick(event) {

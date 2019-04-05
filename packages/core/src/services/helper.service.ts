@@ -110,11 +110,12 @@ export class HelperService {
         return componentFactoryResolver.resolveComponentFactory(type);
     }
 
-    public static setValidators(componentFactoryResolver: ComponentFactoryResolver, component: FormComponent<any>, control: FormControl) {
+    public static setValidators(componentFactoryResolver: ComponentFactoryResolver,
+                                component: FormComponent<any>, control: FormControl): FormControl {
         const factories = Array.from(componentFactoryResolver['_factories'].keys());
         const type = factories.find((x: any) => x.componentName === component.componentName);
         if (type && (!type['validators'] || (type['validators'] && type['validators'].length === 0)))
-            return component;
+            return control;
 
         const validators = [];
         if (component.rules != null) {
@@ -140,7 +141,7 @@ export class HelperService {
                 onlySelf: true
             });
         }
-        return component;
+        return control;
     }
 
     public static createReactiveFormStructure(form: FormWindow, getComponents: boolean = false) {
@@ -242,5 +243,46 @@ export class HelperService {
             });
         }
         return result;
+    }
+
+    public static updateTemplates(form: FormWindow, objectId: string = null): FormWindow {
+        form.pages.forEach(page => {
+            if (page.template.reRender ||
+                (objectId && (page.pageId === objectId || page.sections.find(c => c.sectionId === objectId)))) {
+                page.template.reRender = false;
+                page.template = HelperService.deepCopy(page.template);
+            }
+            page.sections.forEach(section => {
+                if (section.template.reRender ||
+                    (objectId && (section.sectionId === objectId || section.components.find(c => c.componentId === objectId)))) {
+                    section.template.reRender = false;
+                    section.template = HelperService.deepCopy(section.template);
+                }
+            });
+        });
+        return form;
+    }
+
+    public static resetValidators(components: Array<FormComponent<any>>, formControls: Array<ComponentControl>,
+        componentFactoryResolver: ComponentFactoryResolver): Array<ComponentControl>  {
+        if (components && components.length > 0)
+            components.forEach(component => {
+                if (component != null) {
+                    const componentControl = formControls.find(fc => fc.key === component.componentId);
+                    componentControl.control = HelperService.setValidators(componentFactoryResolver,
+                            component, componentControl.control);
+                }
+            });
+        return formControls;
+    }
+
+    public static validateForm(formGroup: FormGroup) {
+        Object.keys(formGroup.controls).forEach(field => {
+            const control = formGroup.get(field);
+            if (control instanceof FormControl)
+                control.markAsTouched({ onlySelf: true });
+            else if (control instanceof FormGroup)
+                this.validateForm(control);
+        });
     }
 }

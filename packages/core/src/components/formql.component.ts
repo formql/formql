@@ -42,7 +42,7 @@ export class FormQLComponent implements OnDestroy, OnInit {
 
     @ViewChild('target', { read: ViewContainerRef }) target: ViewContainerRef;
 
-    private componetDestroyed = new Subject();
+    private componentDestroyed = new Subject();
 
     loading = true;
     saving = false;
@@ -82,20 +82,20 @@ export class FormQLComponent implements OnDestroy, OnInit {
         this.components$ = this.storeService.getComponents();
         this.data$ = this.storeService.getData();
 
-        this.form$.pipe(takeUntil(this.componetDestroyed)).subscribe(form => {
+        this.form$.pipe(takeUntil(this.componentDestroyed)).subscribe(form => {
             if (form && !form.error) {
                 this.form = form;
 
-                this.components$.pipe(takeUntil(this.componetDestroyed)).subscribe(components => {
+                this.components$.pipe(takeUntil(this.componentDestroyed)).subscribe(components => {
                     if (this.loading)
                         this.populateReactiveForm(false);
 
-                    this.resetValidators(components);
+                    this.formControls = HelperService.resetValidators(components, this.formControls, this.componentFactoryResolver);
 
                     if (this.loading)
                         this.loadForm();
                 });
-                this.data$.pipe(takeUntil(this.componetDestroyed)).subscribe(data => this.data = data);
+                this.data$.pipe(takeUntil(this.componentDestroyed)).subscribe(data => this.data = data);
             } else
                 this.error = {...form.error};
         });
@@ -103,8 +103,8 @@ export class FormQLComponent implements OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
-        this.componetDestroyed.next();
-        this.componetDestroyed.complete();
+        this.componentDestroyed.next();
+        this.componentDestroyed.complete();
         this.storeService.destroyStore();
     }
 
@@ -154,7 +154,7 @@ export class FormQLComponent implements OnDestroy, OnInit {
     }
 
     loadInternalEventHandlers() {
-        this.internalEventHandlerService.event.pipe(takeUntil(this.componetDestroyed)).subscribe(response => {
+        this.internalEventHandlerService.event.pipe(takeUntil(this.componentDestroyed)).subscribe(response => {
             const eventHandler = <InternalEventHandler>response;
 
             switch (eventHandler.eventType) {
@@ -200,7 +200,7 @@ export class FormQLComponent implements OnDestroy, OnInit {
     }
 
     loadActionHandlers() {
-        this.actionHandlerService.action.pipe(takeUntil(this.componetDestroyed)).subscribe(response => {
+        this.actionHandlerService.action.pipe(takeUntil(this.componentDestroyed)).subscribe(response => {
             const actionHandler = <FormAction>response;
 
             switch (actionHandler.key) {
@@ -208,26 +208,18 @@ export class FormQLComponent implements OnDestroy, OnInit {
                     this.saveData();
                 break;
 
-                case FormActionType.Submit:
-
+                case FormActionType.Validate:
+                    HelperService.validateForm(this.reactiveForm);
                 break;
 
-                case FormActionType.Validate:
+                case FormActionType.ValidateAndSave:
+                    HelperService.validateForm(this.reactiveForm);
+                    if (this.reactiveForm.valid)
+                        this.saveData();
                 break;
             }
         });
     }
-
-    resetValidators(components) {
-        if (components && components.length > 0)
-            components.forEach(component => {
-                if (component != null) {
-                    const componentControl = this.formControls.find(fc => fc.key === component.componentId);
-                    component = HelperService.setValidators(this.componentFactoryResolver, component, componentControl.control);
-                }
-            });
-    }
-
 
     refreshComponent(component: FormComponent<any>) {
         this.storeService.setComponet(component);
@@ -236,42 +228,20 @@ export class FormQLComponent implements OnDestroy, OnInit {
     populateReactiveForm(update: boolean, objectId: string = null)  {
         if (this.form.pages != null && this.form.pages.length > 0) {
             // get reactive structure -> formControls, pageGroup and components if it's an update
-            const reactiveStructure = HelperService.createReactiveFormStructure(this.form, update);
-            this.formControls = reactiveStructure.formControls;
+            const reactiveFormStructure = HelperService.createReactiveFormStructure(this.form, update);
+            this.formControls = reactiveFormStructure.formControls;
 
-            // if it's an update, refresh reactive form, set all form controls, validators 
+            // if it's an update, refresh reactive form, set all form controls, validators
             if (update) {
                 this.form.pages.forEach(page => {
-                    this.reactiveForm.setControl(page.pageId, reactiveStructure.pageGroup[page.pageId]);
+                    this.reactiveForm.setControl(page.pageId, reactiveFormStructure.pageGroup[page.pageId]);
                 });
-                this.form = this.updateTemplates(this.form, objectId);
-                if (reactiveStructure.components != null && reactiveStructure.components.length > 0)
-                    reactiveStructure.components.forEach(component => {
-                        if (component != null) {
-                            const componentControl = this.formControls.find(fc => fc.key === component.componentId);
-                            component = HelperService.setValidators(this.componentFactoryResolver, component, componentControl.control);
-                        }
-                    });
+                this.form = HelperService.updateTemplates(this.form, objectId);
+                if (reactiveFormStructure.components != null && reactiveFormStructure.components.length > 0)
+                    this.formControls = HelperService.resetValidators(reactiveFormStructure.components,
+                                this.formControls, this.componentFactoryResolver);
             } else
-                this.reactiveForm = this.formBuilder.group(reactiveStructure.pageGroup);
+                this.reactiveForm = this.formBuilder.group(reactiveFormStructure.pageGroup);
         }
-    }
-
-    updateTemplates(form: FormWindow, objectId: string = null) {
-        form.pages.forEach(page => {
-            if (page.template.reRender ||
-                (objectId && (page.pageId === objectId || page.sections.find(c => c.sectionId === objectId)))) {
-                page.template.reRender = false;
-                page.template = HelperService.deepCopy(page.template);
-            }
-            page.sections.forEach(section => {
-                if (section.template.reRender ||
-                    (objectId && (section.sectionId === objectId || section.components.find(c => c.componentId === objectId)))) {
-                    section.template.reRender = false;
-                    section.template = HelperService.deepCopy(section.template);
-                }
-            });
-        });
-        return form;
     }
 }

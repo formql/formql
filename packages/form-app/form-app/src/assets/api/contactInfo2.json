@@ -142,7 +142,8 @@
                         "value": null
                     }
                 },
-                "value": null
+                "value": null,
+                "schema": "contact.comments"
             }],
             "position": {
                 "id": "ID1_1",
@@ -310,6 +311,11 @@
                 },
                 "componentId": "786bd72b-b83a-9b67-43b9-03cf7daa2dcb",
                 "rules": {},
+                "actions": {
+                    "save": {
+                        "key": "save"
+                    }
+                },
                 "value": null,
                 "style": {
                     "float": "right"
@@ -337,47 +343,6 @@
                 "reRender": false
             },
             "sectionName": ""
-        }, {
-            "sectionId": "7ca8cb04-640b-81ac-f372-f90089b06c2d",
-            "sectionName": "New section",
-            "components": [{
-                "componentId": "1db988bd-cb58-2df0-9864-1497a581c985",
-                "label": "Save",
-                "componentName": "FormQLButtonComponent",
-                "position": {
-                    "id": "ID1_1",
-                    "index": 0,
-                    "type": 2
-                },
-                "rules": {},
-                "actions": {
-                    "save" : {
-                        "key": "save"
-                    }
-                },
-                "style": {
-                    "float": "right"
-                },
-                "value": null
-            }],
-            "template": {
-                "header": {
-                    "gridTemplateColumns": "1fr",
-                    "gridTemplateRows": "1fr",
-                    "gridTemplateAreas": "\"ID1_1\"",
-                    "hidden": false
-                },
-                "body": {
-                    "gridTemplateColumns": "1fr",
-                    "gridTemplateRows": "1fr",
-                    "gridTemplateAreas": "\"ID1_1\""
-                },
-                "reRender": false
-            },
-            "position": {
-                "id": "ID2_1",
-                "index": 0
-            }
         }],
         "pageId": "f83c2ca3-1259-aa95-e817-61321a04713d"
     }]

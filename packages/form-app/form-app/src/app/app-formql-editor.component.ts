@@ -6,7 +6,8 @@ import { FormQLMode } from '@formql/core';
     selector: 'app-formql-editor',
     styles: [`.mainDiv { position: absolute; top: 0; left: 0; right: 0;bottom: 0;}`],
     template: `<div class="mainDiv">
-                <formql-editor [mode]="mode" [formName]="formName" [pathOpenViewMode]="'/example/#/form/{0}'"></formql-editor>
+                <formql-editor [mode]="mode" [formName]="formName" [ids]="ids" 
+                        [pathOpenViewMode]="'/example/#/form/{0}'"></formql-editor>
                 </div>`,
 })
 export class AppFormQLEditorComponent implements OnInit {
@@ -14,6 +15,7 @@ export class AppFormQLEditorComponent implements OnInit {
     title = 'app';
     mode: FormQLMode = FormQLMode.View;
     formName: string;
+    ids: Array<string>;
 
     constructor(
         private route: ActivatedRoute
@@ -22,10 +24,12 @@ export class AppFormQLEditorComponent implements OnInit {
         if (this.isEditMode(routeSnap))
             this.mode = FormQLMode.Edit;
         
-        if (this.formName == null)
+        if (routeSnap.params["name"])
             this.formName = routeSnap.params["name"];
-
-            
+        
+        if (routeSnap.params["id"]) {
+            this.ids = [routeSnap.params["id"]];
+        }   
     }
 
     ngOnInit(): void {

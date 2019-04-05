@@ -1,11 +1,13 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup } from '@angular/forms';
-import { FormComponent } from '@formql/core';
+import { FormComponent, FormAction, FormActionType, ActionHandlerService } from '@formql/core';
 
 @Component({
     selector: 'formql-mat-button',
     template: `<button mat-flat-button color="primary" class="float-right" (click)="onClick()"
-                [disabled]="field.rules?.readonly?.value ? true : null">{{field.label}}</button>`,
+                [type]="field.type"
+                [disabled]="reactiveFormGroup.disabled ||
+                    (field.type === 'submit' && reactiveFormGroup.parent.parent.parent.invalid) ? true : null">{{field.label}}</button>`,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -23,6 +25,11 @@ export class FormQLMatButtonComponent implements ControlValueAccessor {
     static componentName = 'FormQLMatButtonComponent';
     static formQLComponent = true;
     static validators = [];
+    static actions = [
+        <FormAction>{
+            key: FormActionType.Save
+        }
+    ];
 
     @Input() field: FormComponent<any>;
     @Input() reactiveFormGroup: FormGroup;
@@ -31,7 +38,7 @@ export class FormQLMatButtonComponent implements ControlValueAccessor {
     private _propagateChange = (_: any) => { };
 
     constructor(
-
+        private actionHandlerService: ActionHandlerService
     ) {
     }
 
@@ -57,7 +64,8 @@ export class FormQLMatButtonComponent implements ControlValueAccessor {
     registerOnTouched(fn: any): void { }
 
     onClick() {
-        // this.eventHandlerService.send(InternalEventType.SaveData, null);
+        if (this.field.actions)
+            this.actionHandlerService.send(this.field.actions);
     }
 
 }

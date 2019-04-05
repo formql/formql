@@ -5,12 +5,13 @@ import { FormQLMode } from '@formql/core';
 
 @Component({
     selector: 'app-formql',
-    template: `<formql [mode]="mode" [formName]="formName"></formql>`,
+    template: `<formql [mode]="mode" [ids]="ids" [formName]="formName"></formql>`,
 })
 export class AppFormQLComponent implements OnInit {
 
     title = 'app';
     mode: FormQLMode = FormQLMode.View;
+    ids: Array<string>;
     formName: string;
 
     constructor(
@@ -22,6 +23,10 @@ export class AppFormQLComponent implements OnInit {
         
         if (this.formName == null)
             this.formName = routeSnap.params["name"];
+
+        if (routeSnap.params["id"]) {
+            this.ids = [routeSnap.params["id"]];
+        }   
 
             
     }

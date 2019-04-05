@@ -14,6 +14,7 @@ export interface FormDataSource {
     type: string;
     query: string;
     mutation: string;
+    deltaMode: boolean;
 }
 
 export interface FormState {

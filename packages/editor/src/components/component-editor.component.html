@@ -28,6 +28,11 @@
                 <label class="fql-field-label" for="type">Type</label>
                 <input class="fql-field-input" type="text" id="type" [(ngModel)]="updatedComponent.type" name="type">
                 
+                <label class="fql-field-label" for="schema">Schema</label>
+                <input class="fql-field-input" type="text" id="schema" [(ngModel)]="updatedComponent.schema" name="schema">
+
+                <formql-json-field-input [label]="'Text Mask'" [(json)]="updatedComponent.textMask"></formql-json-field-input>
+                
                 <formql-json-field-input [label]="'Configuration'" [(json)]="updatedComponent.configuration"></formql-json-field-input>
                 
                 <formql-json-field-input [label]="'Style'" [(json)]="updatedComponent.style"></formql-json-field-input>
@@ -40,11 +45,6 @@
             <label class="fql-tab-label" for="tab2">Rules</label>
             <div class="tab-content">
                 <div>
-                    <label class="fql-field-label" for="schema">Schema</label>
-                    <input class="fql-field-input" type="text" id="schema" [(ngModel)]="updatedComponent.schema" name="schema">
-
-                    <formql-json-field-input [label]="'Text Mask'" [(json)]="updatedComponent.textMask"></formql-json-field-input>
-                   
                     <div *ngFor="let item of validators; let i=index" class="fql-properties-div">
                         <label class="fql-field-label" [for]="item.name">{{item.name}}</label>
                         <textarea class="fql-field-textarea"  [name]="item.name" [id]="item.name" [(ngModel)]="rules[i].condition"></textarea>

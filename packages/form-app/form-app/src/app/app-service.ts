@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
-
 import { IFormQLService, FormWindow, FormDataSource } from "@formql/core";
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 
 
@@ -11,7 +10,14 @@ export class DummyService implements IFormQLService {
     constructor(private http: HttpClient) {
 
     }
-    getData(dataSource: FormDataSource, ids: string[]) {
+    getData(dataSource: FormDataSource, ids: Array<string>) {
+        if (!ids)
+            throwError('no ids provided!');
+
+        let item = localStorage.getItem(ids[0]);
+        if (item)
+            return of(JSON.parse(item));
+        
         return of({});
     }    
 
@@ -29,10 +35,12 @@ export class DummyService implements IFormQLService {
         localStorage.setItem(name, JSON.stringify(form));
         return of(form);
     }
-    saveData(dataSource: FormDataSource, ids: string[], data: any) {
-        let item = ids + '_saved';
-        localStorage.setItem(item, JSON.stringify(data));
-        return of(true);
+    saveData(dataSource: FormDataSource, ids: Array<string>, data: any) {
+        if (!ids)
+            throwError('no ids provided!');
+
+        localStorage.setItem(ids[0], JSON.stringify(data));
+        return of(data);
     }
 
 }
