@@ -1,5 +1,5 @@
 import { Component, Input, forwardRef, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validators, FormControl } from '@angular/forms';
 import { FormComponent } from '../models/form-component.model';
 import { createNumberMask, createAutoCorrectedDatePipe } from 'text-mask-addons';
 import { HelperService } from '../services/helper.service';
@@ -9,15 +9,15 @@ import { FormValidator } from '../models/rule.model';
 @Component({
     selector: 'formql-input',
     styleUrls: ['./formql-input.component.scss'],
-    template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
+    template: `<div *ngIf="formControl!=null">
         <label [attr.for]="field.componentId"
                [ngClass]="{'fql-bundle-label-required': field.rules?.required?.value}">{{field.label}}</label>
         <div>
             <input *ngIf="!mask" [id]="field.componentId" [type]="field.type"
-                formControlName="{{field.componentId}}" class="fql-bundle-field-input" [tabIndex]="tabIndex"
+                [formControl]="formControl" class="fql-bundle-field-input" [tabIndex]="tabIndex"
                 [attr.disabled]="field.rules?.readonly?.value ? '' : null">
             <input *ngIf="mask" [textMask]="{ mask: mask, guide: false}" [id]="field.componentId" type="text"
-                formControlName="{{field.componentId}}"
+                [formControl]="formControl"
                 class="fql-bundle-field-input" [tabIndex]="tabIndex"
                 [attr.disabled]="field.rules?.readonly?.value ? '' : null">
         </div>
@@ -47,7 +47,7 @@ export class FormQLInputComponent implements ControlValueAccessor, OnInit {
     ];
 
     @Input() field: FormComponent<any>;
-    @Input() reactiveFormGroup: FormGroup;
+    @Input() formControl: FormControl;
     @Input() tabIndex: string;
 
     private _value: string;

@@ -1,12 +1,12 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators, FormControl } from '@angular/forms';
 import { FormComponent, FormValidator } from '@formql/core';
 
 @Component({
     selector: 'formql-mat-checkbox',
-    template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
-  <mat-checkbox [id]="field.componentId" formControlName="{{field.componentId}}">{{field.label}}</mat-checkbox>
-  <mat-error *ngIf="!reactiveFormGroup.controls[field.componentId].valid && reactiveFormGroup.controls[field.componentId].touched">
+    template: `<div *ngIf="formControl!=null">
+  <mat-checkbox [id]="field.componentId" [formControl]="formControl">{{field.label}}</mat-checkbox>
+  <mat-error *ngIf="!formControl.valid && formControl.touched">
    </mat-error>
 </div>`,
     providers: [
@@ -34,7 +34,7 @@ export class FormQLMatCheckboxComponent implements ControlValueAccessor {
     ];
 
     @Input() field: FormComponent<any>;
-    @Input() reactiveFormGroup: FormGroup;
+    @Input() formControl: FormControl;
 
     private _value: string;
     private _propagateChange = (_: any) => { };

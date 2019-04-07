@@ -1,5 +1,5 @@
 import { FormRules } from './rule.model';
-import { FormActions } from './action.model';
+import { FormAction } from './action.model';
 import { FormControl } from '@angular/forms';
 import { GridPosition } from './style.model';
 
@@ -14,7 +14,7 @@ export interface FormComponent<T> {
     tabIndex: string;
 
     rules: FormRules;
-    actions: FormActions;
+    action: FormAction;
 
     position: GridPosition;
 

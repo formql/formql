@@ -1,12 +1,12 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validators, FormControl } from '@angular/forms';
 import { FormComponent, FormValidator } from '@formql/core';
 
 @Component({
     selector: 'formql-mat-datepicker',
-    template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
+    template: `<div *ngIf="formControl!=null">
   <mat-form-field>
-    <input [id]="field.componentId" matInput [matDatepicker]="picker" formControlName="{{field.componentId}}" [placeholder]="field.label" >
+    <input [id]="field.componentId" matInput [matDatepicker]="picker" [formControl]="formControl" [placeholder]="field.label" >
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
@@ -36,7 +36,7 @@ export class FormQLMatDatepickerComponent implements ControlValueAccessor {
     ];
 
     @Input() field: FormComponent<any>;
-    @Input() reactiveFormGroup: FormGroup;
+    @Input() formControl: FormControl;
 
     private _value: string;
     private _propagateChange = (_: any) => { };

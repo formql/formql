@@ -1,21 +1,21 @@
-import { Component, Input, forwardRef, OnInit, AfterViewInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, forwardRef, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators, FormControl } from '@angular/forms';
 import { FormComponent, FormValidator } from '@formql/core';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
 @Component({
     selector: 'formql-mat-form-field',
-    template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
+    template: `<div *ngIf="formControl!=null">
     <mat-form-field style="width:100%">
       <input *ngIf="currencyMask" [textMask]="{mask: currencyMask}"
         [id]="field.componentId"
-        [type]="field.type == 'number' ? 'text' : field.type" formControlName="{{field.componentId}}" matInput [placeholder]="field.label"
+        [type]="field.type == 'number' ? 'text' : field.type" [formControl]="formControl" matInput [placeholder]="field.label"
       [required]="field.rules?.required?.value">
       <input *ngIf="!currencyMask" [id]="field.componentId"
-        [type]="field.type" formControlName="{{field.componentId}}" matInput [placeholder]="field.label"
+        [type]="field.type" [formControl]="formControl" matInput [placeholder]="field.label"
       [required]="field.rules?.required?.value">
-      <mat-error *ngIf="!reactiveFormGroup.controls[field.componentId].valid && reactiveFormGroup.controls[field.componentId].touched">
-        <span *ngIf="reactiveFormGroup.controls[field.componentId].errors?.required">{{ field.rules?.required?.errorMessage }}</span>
+      <mat-error *ngIf="!formControl.valid && formControl.touched">
+        <span *ngIf="formControl.errors?.required">{{ field.rules?.required?.errorMessage }}</span>
       </mat-error>
     </mat-form-field>
   </div>`,
@@ -45,7 +45,7 @@ export class FormQLMatFormFieldComponent implements OnInit, ControlValueAccessor
     ];
 
     @Input() field: FormComponent<any>;
-    @Input() reactiveFormGroup: FormGroup;
+    @Input() formControl: FormControl;
 
     private _value: string;
     currencyMask: any;

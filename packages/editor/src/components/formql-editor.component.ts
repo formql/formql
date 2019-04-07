@@ -47,13 +47,6 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
         this.reactiveForm = this.formBuilder.group([]);
 
-        if (this.ids == null || (this.ids != null && this.ids.length === 0)) {
-            this.ids = new Array<string>();
-            this.ids.push('0');
-        } else
-            if (this.ids.length === 1 && this.ids[0] === undefined)
-                this.ids[0] = '0';
-
         const formQLRef = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, 'FormQLComponent'));
         const formql = <any>formQLRef;
 
@@ -89,10 +82,12 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
         if (!relativePath)
             relativePath = '/#/form/{0}';
 
-        relativePath = relativePath.replace('{0}', this.formName);
+        if (this.ids && this.ids.length > 0)
+            relativePath = `${relativePath.replace('{0}', this.formName)}/${this.ids[0]}`;
+        else
+            relativePath = `${relativePath.replace('{0}', this.formName)}`;
 
         window.open(window.location.origin + relativePath);
-
     }
 
     loadEditor(name: string, object: any, type: InternalEventType) {
@@ -160,10 +155,6 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
     leftSideNavBarActionClick(event) {
         if (event === 'saveForm')
             this.saveForm();
-        else {
-            // this.rightSidenav.open();
-            // this.loadDataSourceEditor(event, this.form.dataSource);
-        }
     }
 
     loadEventHandlers() {

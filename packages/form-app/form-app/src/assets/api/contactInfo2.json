@@ -311,10 +311,8 @@
                 },
                 "componentId": "786bd72b-b83a-9b67-43b9-03cf7daa2dcb",
                 "rules": {},
-                "actions": {
-                    "save": {
-                        "key": "save"
-                    }
+                "action": {
+                    "key": "save"
                 },
                 "value": null,
                 "style": {

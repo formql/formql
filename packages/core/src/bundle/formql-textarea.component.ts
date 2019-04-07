@@ -1,5 +1,5 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators, FormControl } from '@angular/forms';
 import { FormComponent } from '../models/form-component.model';
 import { FormValidator } from '../models/rule.model';
 
@@ -7,11 +7,11 @@ import { FormValidator } from '../models/rule.model';
 @Component({
     selector: 'formql-textbox',
     styleUrls: ['./formql-textarea.component.scss'],
-    template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
+    template: `<div *ngIf="formControl!=null">
         <label [attr.for]="field.componentId"
                [ngClass]="{'fql-bundle-label-required': field.rules?.required?.value}">{{field.label}}</label>
         <div>
-            <textarea [id]="field.componentId" formControlName="{{field.componentId}}" class="fql-bundle-field-input"
+            <textarea [id]="field.componentId" [formControl]="formControl" class="fql-bundle-field-input"
             [tabIndex]="tabIndex" [attr.disabled]="field.rules?.readonly?.value ? '' : null">
             </textarea>
         </div>
@@ -40,7 +40,7 @@ export class FormQLTextareaComponent implements ControlValueAccessor {
     ];
 
     @Input() field: FormComponent<any>;
-    @Input() reactiveFormGroup: FormGroup;
+    @Input() formControl: FormControl;
     @Input() tabIndex: string;
 
     private _value: string;

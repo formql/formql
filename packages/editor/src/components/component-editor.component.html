@@ -21,7 +21,7 @@
                 <input class="fql-field-input" type="text" id="label" [(ngModel)]="updatedComponent.label" name="label">
 
                 <label class="fql-field-label" for="componentName">Component Name</label>
-                <select class="fql-field-select" [(ngModel)]="updatedComponent.componentName">
+                <select class="fql-field-select" [(ngModel)]="updatedComponent.componentName" (change)="componentChanged($event.target.value)">
                     <option *ngFor="let option of componentList" [ngValue]="option">{{option}}</option>
                 </select>
 
@@ -32,11 +32,11 @@
                 <input class="fql-field-input" type="text" id="schema" [(ngModel)]="updatedComponent.schema" name="schema">
 
                 <formql-json-field-input [label]="'Text Mask'" [(json)]="updatedComponent.textMask"></formql-json-field-input>
-                
+                <br>
                 <formql-json-field-input [label]="'Configuration'" [(json)]="updatedComponent.configuration"></formql-json-field-input>
-                
+                <br>
                 <formql-json-field-input [label]="'Style'" [(json)]="updatedComponent.style"></formql-json-field-input>
-
+                <br>
             </div>
         </div>
 
@@ -60,14 +60,21 @@
         <div class="fql-tab-label-content" id="tab3-content">
             <label class="fql-tab-label" for="tab3">Actions</label>
             <div class="tab-content">
-                <div *ngFor="let item of validators; let i=index" class="fql-properties-div">
-                    <label class="fql-field-label" [for]="item.name">{{item.name}}</label>
-                    <textarea class="fql-field-textarea"  [name]="item.name" [id]="item.name" [(ngModel)]="rules[i].condition"></textarea>
-                    <ng-container *ngIf="item.name === 'Calculated Field'">Result: {{getEvaluatedValue(rules[i].condition)}}</ng-container>
-                    <ng-container *ngIf="item.name !== 'Calculated Field'">Result: {{getEvaluatedCondition(rules[i].condition)}}</ng-container>
-                    <br>
-                    <span style="color:red">{{getError(rules[i].condition)}}</span>
+                <div *ngIf="actionList">
+                    <label class="fql-field-label" for="actionName">Action Name</label>
+                    <select class="fql-field-select" [(ngModel)]="updatedComponent.action.key">
+                        <option *ngFor="let action of actionList" [ngValue]="action.key">{{action.key}}</option>
+                    </select>
+                    <div *ngIf="updatedComponent.action && updatedComponent.action.key === FormActionType.Custom">
+                        <label class="fql-field-label" for="customKey">Custom Key</label>
+                        <input class="fql-field-input" type="text" id="customKey" [(ngModel)]="updatedComponent.action.customKey" name="customKey">
+        
+                        <formql-json-field-input [label]="'Parameter'" [(json)]="updatedComponent.action.parameters"></formql-json-field-input>
+                    </div>
                 </div>
+                <span *ngIf="!actionList">
+                    This component doesn't contain any action
+                </span>
             </div>
         </div>
 
@@ -75,7 +82,7 @@
         <div class="fql-tab-label-content" id="tab4-content">
             <label class="fql-tab-label" for="tab4">Advanced</label>
             <div class="tab-content">
-                Comming soon... :-)
+                Not implemented 
             </div>
         </div>
         <div class="slide"></div>

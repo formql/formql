@@ -1,6 +1,6 @@
 
 import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl } from '@angular/forms';
 import { FormComponent } from '../models/form-component.model';
 import { ActionHandlerService } from '../services/action-handler.service';
 import { FormAction, FormActionType } from '../models/action.model';
@@ -9,8 +9,9 @@ import { FormAction, FormActionType } from '../models/action.model';
     selector: 'formql-button',
     template: `<button style="cursor: pointer" (click)="onClick()"
                     [type]="field.type"
-                    [disabled]="reactiveFormGroup.disabled ||
-                    (field.type === 'submit' && this.reactiveFormGroup.parent.parent.parent.invalid) ? true : null">{{field.label}}</button>`,
+                    [disabled]="formControl.disabled ||
+                    (field.type === 'submit' &&
+                    this.formControl.parent.parent.parent.invalid) ? true : null">{{field.label}}</button>`,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -39,13 +40,12 @@ export class FormQLButtonComponent implements ControlValueAccessor {
             key: FormActionType.ValidateAndSave
         },
         <FormAction>{
-            key: FormActionType.Custom,
-            customkey: 'DoSomething'
+            key: FormActionType.Custom
         }
     ];
 
     @Input() field: FormComponent<any>;
-    @Input() reactiveFormGroup: FormGroup;
+    @Input() formControl: FormControl;
 
     private _value: string;
     private _propagateChange = (_: any) => { };
@@ -77,8 +77,8 @@ export class FormQLButtonComponent implements ControlValueAccessor {
     registerOnTouched(fn: any): void { }
 
     onClick() {
-        if (this.field.actions)
-            this.actionHandlerService.send(this.field.actions);
+        if (this.field.action)
+            this.actionHandlerService.send(this.field.action);
     }
 
 }

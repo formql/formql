@@ -1,13 +1,13 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validators, FormControl } from '@angular/forms';
 import { FormComponent, FormValidator } from '@formql/core';
 
 @Component({
     selector: 'formql-mat-textarea',
-    template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
+    template: `<div *ngIf="formControl!=null">
   <mat-form-field style="width: 100%">
     <textarea [id]="field.componentId"
-        [type]="field.type" formControlName="{{field.componentId}}" matInput [placeholder]="field.label"></textarea>
+        [type]="field.type" [formControl]="formControl" matInput [placeholder]="field.label"></textarea>
   </mat-form-field>
 </div>`,
     providers: [
@@ -35,7 +35,7 @@ export class FormQLMatTextareaComponent implements ControlValueAccessor {
     ];
 
     @Input() field: FormComponent<any>;
-    @Input() reactiveFormGroup: FormGroup;
+    @Input() formControl: FormControl;
 
     private _value: string;
     private _propagateChange = (_: any) => { };

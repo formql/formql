@@ -41,10 +41,8 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
     @Input() sectionId: string;
     @Input()
     set value(value: any) {
-        if (this.reactiveSection && this.component) {
-            const control = this.reactiveSection.controls[this.component.componentId].get(this.component.componentId);
-            control.setValue(value);
-        }
+        if (this.reactiveSection && this.component && this.reactiveSection.controls[this.component.componentId].value !== value)
+            this.reactiveSection.controls[this.component.componentId].setValue(value);
     }
 
     @Input() mode: FormQLMode;
@@ -65,15 +63,15 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
         const component = this.viewContainerRef.createComponent(
             HelperService.getFactory(this.componentFactoryResolver, this.component.componentName));
         (<any>component).instance.field = this.component;
-        (<any>component).instance.reactiveFormGroup = this.reactiveSection.controls[this.component.componentId];
+        (<any>component).instance.formControl = this.reactiveSection.controls[this.component.componentId];
         if (this.component.tabIndex != null)
             (<any>component).instance.tabIndex = this.component.tabIndex;
 
         this.content.insert(component.hostView);
 
         this.formSubscription$ = this.reactiveSection.controls[this.component.componentId].valueChanges.subscribe((change) => {
-            if (this.component.value !== change[this.component.componentId]) {
-                this.component.value = change[this.component.componentId];
+            if (this.component.value !== change) {
+                this.component.value = change;
                 this.storeService.setComponet(this.component);
             }
         });

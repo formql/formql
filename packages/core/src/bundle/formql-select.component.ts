@@ -1,5 +1,5 @@
 import { Component, Input, forwardRef, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators, FormControl } from '@angular/forms';
 import { FormComponent } from '../models/form-component.model';
 import { OptionValue, SelectList } from '../models/type.model';
 import { FormValidator } from '../models/rule.model';
@@ -8,11 +8,11 @@ import { FormValidator } from '../models/rule.model';
 @Component({
     selector: 'formql-select',
     styleUrls: ['./formql-select.component.scss'],
-    template: `<div *ngIf="reactiveFormGroup!=null" [formGroup]="reactiveFormGroup">
+    template: `<div *ngIf="formControl!=null">
         <label [attr.for]="field.componentId"
                [ngClass]="{'fql-bundle-label-required': field.rules?.required?.value}">{{field.label}}</label>
         <div>
-            <select formControlName="{{field.componentId}}" [id]="field.componentId"
+            <select [formControl]="formControl" [id]="field.componentId"
                 class="fql-bundle-field-input" [tabIndex]="tabIndex"
                 [attr.disabled]="field.rules?.readonly?.value ? '' : null"
                 [attr.multiple]="field.type === 'multiple'">
@@ -47,7 +47,7 @@ export class FormQLSelectComponent implements ControlValueAccessor, OnInit {
     ];
 
     @Input() field: FormComponent<any>;
-    @Input() reactiveFormGroup: FormGroup;
+    @Input() formControl: FormControl;
     @Input() tabIndex: string;
 
     private _value: string;

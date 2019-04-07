@@ -5,12 +5,8 @@ export enum FormActionType {
     Custom = 'custom'
 }
 
-export declare interface FormActions {
-    [key: string]: FormAction;
-}
-
 export interface FormAction {
-    key: string;
+    key: FormActionType;
     customkey: string;
     parameters: any;
 }

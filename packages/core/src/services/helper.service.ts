@@ -158,13 +158,13 @@ export class HelperService {
                             if (getComponents)
                                 components.push(component);
 
-                            const singleComponentGroup: any = {};
-                            singleComponentGroup[component.componentId] = new FormControl();
+                            //const singleComponentGroup: any = {};
+                            const singleComponentGroup = new FormControl();
                             formControls.push(<ComponentControl>{
                                 key: component.componentId,
-                                control: singleComponentGroup[component.componentId]
+                                control: singleComponentGroup
                             });
-                            componentGroup[component.componentId] = new FormGroup(singleComponentGroup);
+                            componentGroup[component.componentId] = singleComponentGroup;
                         });
                     sectionGroup[section.sectionId] = new FormGroup(componentGroup);
                 });
