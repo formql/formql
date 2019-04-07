@@ -1,4 +1,4 @@
-<p align="center"><a href="https://formql.io"><img src="https://formql.io/assets/formql-logo-github.png" alt="Loona" height="70px"></a></p>
+<p align="center"><a href="https://formql.io"><img src="https://formql.io/assets/formql-logo-github.png" alt="FormQL - A framework for bulding dynamic forms"></a></p>
 
 FormQL is a framework for building dynamic forms in Angular. It comes with an editor with a drag and drop functionality to make it easier for a non technical person to maintain the form but still allow developers to extend the functionlity with custom components. 
 
