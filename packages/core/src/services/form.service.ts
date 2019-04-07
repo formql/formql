@@ -53,7 +53,7 @@ export class FormService {
                     if (!section.sectionId)
                         section.sectionId = UUID.UUID();
 
-                    if (section.components != null) {
+                    if (section.components != null)
                         section.components.forEach(component => {
                             if (!component.componentId)
                                 component.componentId = UUID.UUID();
@@ -64,7 +64,6 @@ export class FormService {
                             if (!data)
                                 formState.data = this.initiateData(formState.data, component.schema);
                         });
-                    }
                 });
         });
         formState = this.resolveConditions(formState);
@@ -153,11 +152,10 @@ export class FormService {
             page.sections.forEach(section => {
                 section.components.forEach(component => {
                     component.value = null;
-                    if (component.rules != null) {
+                    if (component.rules != null)
                         Object.keys(component.rules).forEach(p => {
                             component.rules[p].value = null;
                         });
-                    }
                 });
             });
         });
@@ -189,7 +187,7 @@ export class FormService {
     resolveConditions(formState: FormState, reRun = false): FormState {
         let recalculate = false;
         formState.components.forEach(component => {
-            if (component.rules) 
+            if (component.rules)
                 Object.keys(component.rules).forEach(key => {
                     const property = component.rules[key];
                     if (property.condition) {
