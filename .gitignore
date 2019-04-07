@@ -1,3 +1,6 @@
+# VS folder
+.vs/
+
 # compiled output
 /dist
 /dist/**.*
