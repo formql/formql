@@ -1,6 +1,6 @@
 {
   "name": "formql",
-  "verion": "0.2.9",
+  "verion": "0.3.0",
   "description": "The form framework to rule them all",
   "private": true,
   "scripts": {
@@ -33,9 +33,9 @@
     "@angular/platform-browser": "^6.0.7",
     "@angular/platform-browser-dynamic": "^6.0.7",
     "@angular/router": "^6.0.7",
-    "@formql/core": "file:dist/formql/formql-core-0.2.9.tgz",
-    "@formql/editor": "file:dist/formql-editor/formql-editor-0.2.9.tgz",
-    "@formql/material": "file:dist/formql-material/formql-material-0.2.9.tgz",
+    "@formql/core": "file:dist/formql/formql-core-0.3.0.tgz",
+    "@formql/editor": "file:dist/formql-editor/formql-editor-0.3.0.tgz",
+    "@formql/material": "file:dist/formql-material/formql-material-0.3.0.tgz",
     "angular2-text-mask": "^9.0.0",
     "angular2-uuid": "^1.1.1",
     "classlist.js": "^1.1.20150312",
