@@ -1,8 +1,8 @@
-<p align="center"><a href="https://formql.io"><img src="https://formql.io/assets/formql-logo-github.png" alt="FormQL - A framework for bulding dynamic forms"></a></p>
+<p align="center"><a href="https://formql.io"><img src="https://formql.io/assets/formql-logo-github.png" alt="FormQL - A framework for bulding dynamic forms" style="max-width:400px;"></a></p>
 
-FormQL is a framework for building dynamic forms in Angular. It comes with an editor with a drag and drop functionality to make it easier for a non technical person to maintain the form but still allow developers to extend the functionlity with custom components. 
+FormQL is a framework for building dynamic forms in Angular. It comes with an editor that offers a drag and drop functionality to make it easier for non technical users to maintain the forms but still allowing developers to extend the functionlity with custom components. 
 
-It comes with the following features: 
+FormQL comes with the following features: 
 
 - **CSS grid templating**: define the structure of your form with CSS grid standards
 - **Dynamic validation**: add rules to dynamically make fields mandatory, read only or hidden
@@ -14,8 +14,16 @@ It comes with the following features:
 - Stackblitz: https://stackblitz.com/edit/formql-example
 
 # Documentation
+https://github.com/formql/formql/wiki
 
 # Libraries
+
+Core libraries
+- [`@formql/core`](https://www.npmjs.com/package/@formql/core)
+- [`@formql/editor`](https://www.npmjs.com/package/@formql/editor)
+
+Bundles
+- [`@formql/material`](https://www.npmjs.com/package/@formql/material)
 
 # How to run this repo
 
@@ -31,4 +39,4 @@ Edit mode: http://localhost:4200/form/contactInfo/edit
 ```
 
 # Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+
