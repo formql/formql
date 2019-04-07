@@ -8,7 +8,7 @@ FormQL comes with the following features:
 - **Dynamic validation**: add rules to dynamically make fields mandatory, read only or hidden.
 - **Calculated fields**: add logic to perform calculation based on the values in other fields.
 - **Field formatting with Text-Mask**: includes the ability to format fields such as currencies and dates.
-- **Extensible**: abilituy to extend the forms with your own custom components.
+- **Extensible**: ability to extend the forms with your own custom components.
 
 # Demo
 - Formql.io: https://formql.io/example/#/form/contactInfo/edit
