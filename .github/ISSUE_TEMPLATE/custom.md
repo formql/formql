@@ -1,6 +1,6 @@
 ---
-name: Custom issue template
-about: Describe this issue template's purpose here.
+name: Bug/Feature template
+about: Template to log a bug or request a feature in FormQL
 title: ''
 labels: ''
 assignees: ''
