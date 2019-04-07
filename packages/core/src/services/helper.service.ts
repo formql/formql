@@ -134,13 +134,9 @@ export class HelperService {
                 (component.rules && component.rules.readonly && !component.rules.readonly.value)))
                 control.enable();
         }
-
-        if (validators.length > 0) {
+        if (validators.length > 0)
             control.setValidators(validators);
-            control.updateValueAndValidity({
-                onlySelf: true
-            });
-        }
+
         return control;
     }
 
@@ -158,7 +154,6 @@ export class HelperService {
                             if (getComponents)
                                 components.push(component);
 
-                            //const singleComponentGroup: any = {};
                             const singleComponentGroup = new FormControl();
                             formControls.push(<ComponentControl>{
                                 key: component.componentId,

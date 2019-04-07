@@ -23,15 +23,15 @@ import { DndDropDirective } from './directives/dnd-drop.directive';
 import { FormQLTextareaComponent } from './bundle/formql-textarea.component';
 import { FormQLSelectComponent } from './bundle/formql-select.component';
 import { FormQLRadioComponent } from './bundle/formql-radio.component';
+import { ActionHandlerService } from './services/action-handler.service';
 
 @NgModule({
   imports: [
     CommonModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     TextMaskModule
   ],
   declarations: [
-    
     // components
     PlainLayoutComponent,
     PageWrapperComponent,
@@ -69,7 +69,6 @@ import { FormQLRadioComponent } from './bundle/formql-radio.component';
     FormQLSelectComponent,
     FormQLRadioComponent
   ],
-  providers: [FormService],
   exports: [
       FormQLComponent
   ]

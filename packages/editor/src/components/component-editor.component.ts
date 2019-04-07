@@ -82,11 +82,11 @@ export class ComponentEditorComponent implements OnInit {
     }
 
     componentChanged() {
-        this.loadValidators(this.updatedComponent.componentName);
-        this.loadActions(this.updatedComponent.componentName);
+        this.loadValidators(this.updatedComponent.componentName, true);
+        this.loadActions(this.updatedComponent.componentName, true);
     }
 
-    loadValidators(componentName: string) {
+    loadValidators(componentName: string, reset = false) {
         this.validators = Array<FormValidator>();
         this.validators.push(<FormValidator>{ name: 'Calculated Field', key: 'value', validator: null });
         this.validators.push(<FormValidator>{ name: 'Hidden Condition', key: 'hidden', validator: null });
@@ -113,10 +113,11 @@ export class ComponentEditorComponent implements OnInit {
                 this.rules.push(item);
         });
 
-        this.updatedComponent.rules = HelperService.deepCopy(this.component.rules);
+        if (reset)
+            this.updatedComponent.rules = HelperService.deepCopy(this.component.rules);
     }
 
-    loadActions(componentName: string) {
+    loadActions(componentName: string, reset = false) {
         const componentRef = this.factories.find((x: any) => x.componentName === componentName);
         if (componentRef['actions'] && componentRef['actions'].length > 0) {
             if (!this.updatedComponent.action)
@@ -132,9 +133,10 @@ export class ComponentEditorComponent implements OnInit {
                     return 1;
                 return 0;
             });
-        } else {
+        } else
             this.actionList = null;
+
+        if (reset)
             this.updatedComponent.action = HelperService.deepCopy(this.component.action);
-        }
     }
 }
