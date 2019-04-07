@@ -1,29 +1,39 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+<div style="max-width: 70px; display: inline-block;font-family: 'Poppins', sans-serif;">
+    <a href="https://formql.io">
+        <img src="https://formql.io/assets/formql-logo.png" alt="FormQL - A framework for bulding dynamic forms" />
+    </a>
+    FormQL
+</div>
 
-# Getting Started
+FormQL is a framework for building dynamic forms in Angular. It comes with an editor with a drag and drop functionality to make it easier for a non technical person to maintain the form but still allow developers to extend the functionlity with custom components. 
 
-1) git clone https://github.com/formql/formql.git
-2) cd formql
-3) npm install
-4) npm run package_all
-5) npm start
-6) View mode: http://localhost:4200/form/contactInfo
-7) Edit mode: http://localhost:4200/form/contactInfo/edit
+It comes with the following features: 
 
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+- **CSS grid templating**: define the structure of your form with CSS grid standards
+- **Dynamic validation**: add rules to dynamically make fields mandatory, read only or hidden
+- **Calculated fields**: add logic to perform calculation based on the values in other fields
+- **Field formatting with Text-Mask**: includes the ability to format fields such as currencies, dates and 
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+# Demo
+- Formql.io: https://formql.io/example/#/form/contactInfo/edit
+- Stackblitz: https://stackblitz.com/edit/formql-example
+
+# Documentation
+
+# Libraries
+
+# How to run this repo
+
+```bash
+git clone https://github.com/formql/formql.git
+cd formql
+npm install
+npm run package_all
+npm start
+
+View mode: http://localhost:4200/form/contactInfo
+Edit mode: http://localhost:4200/form/contactInfo/edit
+```
 
 # Contribute
 TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://www.visualstudio.com/en-us/docs/git/create-a-readme). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
