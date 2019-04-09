@@ -1,6 +1,6 @@
 {
     "name": "@formql/editor",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "FormQL - A framework for building dynamic forms",
     "license": "MIT",
     "author": "Juan Stoppa",
@@ -13,7 +13,7 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "peerDependencies": {
-        "@formql/core": "^0.3.0"
+        "@formql/core": "^0.3.1"
     },
     "bugs": {
         "url": "https://github.com/formql/formql/issues"

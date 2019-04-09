@@ -1,7 +1,11 @@
 {
-  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/formql-editor",
-  "lib": {
-    "entryFile": "src/public_api.ts"
-  }
+    "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+    "dest": "../../dist/formql-editor",
+    "lib": {
+        "entryFile": "src/public_api.ts",
+        "umdModuleIds": {
+            "@formql/core": "@formql/core",
+            "angular2-text-mask": "angular2TextMask"
+        }
+    }
 }

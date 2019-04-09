@@ -1,7 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, concatMap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 import { FormWindow, FormState, FormDataSource } from '../models/form-window.model';
 import { FormComponent } from '../models/form-component.model';
 import { UUID } from 'angular2-uuid';

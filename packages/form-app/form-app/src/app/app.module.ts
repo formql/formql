@@ -33,7 +33,7 @@ import { TextMaskModule } from 'angular2-text-mask';
     HttpClientModule,
     TextMaskModule
   ],
-  providers: [DummyService, {provide: "FormQLService", useClass: DummyService }],
+  providers: [DummyService, {provide: 'FormQLService', useClass: DummyService }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

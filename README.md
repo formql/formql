@@ -1,6 +1,6 @@
 <p align="center"><a href="https://formql.io"><img src="https://formql.io/assets/formql-logo-github.png" alt="FormQL - A framework for bulding dynamic forms" style="height:200px"></a></p>
 
-FormQL is a framework for building dynamic forms in Angular. It comes with an editor that offers a drag and drop functionality to make it easier for non technical users to maintain the forms as well as  extensible APIs for allowing developers to extend the functionlity with custom components. 
+FormQL is a framework for building dynamic forms in Angular. It comes with an editor that offers a drag and drop functionality to make it easier for non technical users to maintain the forms as well as  extensible APIs for allowing developers to extend the functionality with custom components. 
 
 FormQL comes with the following features: 
 
@@ -18,7 +18,6 @@ FormQL comes with the following features:
 https://github.com/formql/formql/wiki
 
 # Libraries
-
 Core libraries
 - [`@formql/core`](https://www.npmjs.com/package/@formql/core)
 - [`@formql/editor`](https://www.npmjs.com/package/@formql/editor)
@@ -27,7 +26,6 @@ Bundles
 - [`@formql/material`](https://www.npmjs.com/package/@formql/material)
 
 # How to run this repo
-
 ```bash
 git clone https://github.com/formql/formql.git
 cd formql
@@ -39,11 +37,9 @@ npm start
 - View mode: http://localhost:4200/#/form/contactInfo
 
 ## Contact us
-
 - Website - [https://formql.io](https://formql.io/)
 - Twitter - [@formql_io](https://twitter.com/formql_io)
 
 ## License
-
 FormQL is [MIT licensed](LICENSE).
 

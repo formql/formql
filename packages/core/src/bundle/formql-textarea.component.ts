@@ -12,7 +12,7 @@ import { FormValidator } from '../models/rule.model';
                [ngClass]="{'fql-bundle-label-required': field.rules?.required?.value}">{{field.label}}</label>
         <div>
             <textarea [id]="field.componentId" [formControl]="formControl" class="fql-bundle-field-input"
-            [tabIndex]="tabIndex" [attr.disabled]="field.rules?.readonly?.value ? '' : null">
+            [tabIndex]="tabIndex" [attr.disabled]="formControl.disabled ? '' : null">
             </textarea>
         </div>
         </div>`,

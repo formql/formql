@@ -1,27 +1,45 @@
-# FormApp
+<p align="center"><a href="https://formql.io"><img src="https://formql.io/assets/formql-logo-github.png" alt="FormQL - A framework for bulding dynamic forms" style="height:200px"></a></p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.7.
+FormQL is a framework for building dynamic forms in Angular. It comes with an editor that offers a drag and drop functionality to make it easier for non technical users to maintain the forms as well as  extensible APIs for allowing developers to extend the functionality with custom components. 
 
-## Development server
+FormQL comes with the following features: 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- **CSS grid templating**: define the structure of your form with CSS grid standards.
+- **Dynamic validation**: add rules to dynamically make fields mandatory, read only or hidden.
+- **Calculated fields**: add logic to perform calculation based on the values in other fields.
+- **Field formatting with Text-Mask**: includes the ability to format fields such as currencies and dates.
+- **Extensible**: ability to extend the forms with your own custom components.
 
-## Code scaffolding
+# Demo
+- Formql.io: https://formql.io/example/#/form/contactInfo/edit
+- Stackblitz: https://stackblitz.com/edit/formql-example
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# Documentation
+https://github.com/formql/formql/wiki
 
-## Build
+# Libraries
+Core libraries
+- [`@formql/core`](https://www.npmjs.com/package/@formql/core)
+- [`@formql/editor`](https://www.npmjs.com/package/@formql/editor)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Bundles
+- [`@formql/material`](https://www.npmjs.com/package/@formql/material)
 
-## Running unit tests
+# How to run this repo
+```bash
+git clone https://github.com/formql/formql.git
+cd formql
+npm install
+npm run package_all
+npm start
+```
+- Edit mode: http://localhost:4200/#/form/contactInfo/edit
+- View mode: http://localhost:4200/#/form/contactInfo
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Contact us
+- Website - [https://formql.io](https://formql.io/)
+- Twitter - [@formql_io](https://twitter.com/formql_io)
 
-## Running end-to-end tests
+## License
+FormQL is [MIT licensed](LICENSE).
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

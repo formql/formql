@@ -15,11 +15,11 @@ import { FormValidator } from '../models/rule.model';
         <div>
             <input *ngIf="!mask" [id]="field.componentId" [type]="field.type"
                 [formControl]="formControl" class="fql-bundle-field-input" [tabIndex]="tabIndex"
-                [attr.disabled]="field.rules?.readonly?.value ? '' : null">
+                [attr.disabled]="formControl.disabled ? '' : null">
             <input *ngIf="mask" [textMask]="{ mask: mask, guide: false}" [id]="field.componentId" type="text"
                 [formControl]="formControl"
                 class="fql-bundle-field-input" [tabIndex]="tabIndex"
-                [attr.disabled]="field.rules?.readonly?.value ? '' : null">
+                [attr.disabled]="formControl.disabled ? '' : null">
         </div>
         </div>`,
     providers: [
