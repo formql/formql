@@ -40,8 +40,6 @@
     "angular2-uuid": "^1.1.1",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.5.4",
-    "monaco-editor": "^0.16.2",
-    "monaco-editor-webpack-plugin": "^1.7.0",
     "rxjs": "^6.2.1",
     "rxjs-compat": "^6.2.1",
     "text-mask-addons": "^3.8.0",

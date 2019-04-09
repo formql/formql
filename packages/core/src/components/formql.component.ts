@@ -138,19 +138,6 @@ export class FormQLComponent implements OnDestroy, OnInit {
         error => {
             this.formError.emit(error);
         });
-            // this.components.forEach(component => {
-            //     if (component != null) {
-            //         if (component.rules == null || (component.rules != null && !component.rules.hidden)) {
-            //             let componentControl = this.formControls.find(fc => fc.key == component.componentId);
-            //             componentControl.control.markAsTouched({ onlySelf: true });
-            //         }
-            //     }
-            // });
-
-            // if (this.reactiveForm.valid)
-            // this.formStoreService.dispatchSaveDataAction(this.form.dataSource.mutation, this.ids, this.data);
-            // else
-            // alert('form not valid');
     }
 
     loadInternalEventHandlers() {
