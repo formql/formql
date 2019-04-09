@@ -17,24 +17,10 @@ FormQL comes with the following features:
 # Documentation
 https://github.com/formql/formql/wiki
 
-# Libraries
-Core libraries
-- [`@formql/core`](https://www.npmjs.com/package/@formql/core)
-- [`@formql/editor`](https://www.npmjs.com/package/@formql/editor)
-
-Bundles
-- [`@formql/material`](https://www.npmjs.com/package/@formql/material)
-
-# How to run this repo
+# Getting Started
 ```bash
-git clone https://github.com/formql/formql.git
-cd formql
-npm install
-npm run package_all
-npm start
+npm install @formql/material --save
 ```
-- Edit mode: http://localhost:4200/#/form/contactInfo/edit
-- View mode: http://localhost:4200/#/form/contactInfo
 
 ## Contact us
 - Website - [https://formql.io](https://formql.io/)

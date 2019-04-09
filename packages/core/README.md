@@ -23,10 +23,8 @@ npm install @formql/core --save
 ```
 
 ## Contact us
-
 - Website - [https://formql.io](https://formql.io/)
 - Twitter - [@formql_io](https://twitter.com/formql_io)
 
 ## License
-
 FormQL is [MIT licensed](LICENSE).
