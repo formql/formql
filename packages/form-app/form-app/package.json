@@ -1,6 +1,6 @@
 {
   "name": "form-app",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -25,8 +25,8 @@
     "core-js": "^2.5.4",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26",
-    "@formql/core": "^0.3.0",
-    "@formql/editor" : "^0.3.0"
+    "@formql/core": "^0.3.1",
+    "@formql/editor" : "^0.3.1"
   },
   "devDependencies": {
     "@angular/compiler-cli": "~7.2.0",
