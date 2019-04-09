@@ -1,6 +1,5 @@
 import { FormWindow, FormDataSource } from '../models/form-window.model';
-import { Observable } from 'rxjs/Observable';
-
+import { Observable } from 'rxjs';
 
 export interface IFormQLService {
     getData(dataSource: FormDataSource, ids: Array<string>): Observable<any>;

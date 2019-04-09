@@ -5,6 +5,13 @@
     -moz-box-sizing: border-box;
 }
 
+.fql-bundle-checkbox-input { 
+    cursor: pointer;
+    box-sizing: border-box; 
+    -webkit-box-sizing:border-box; 
+    -moz-box-sizing: border-box;
+}
+
 .fql-bundle-label-required:after { 
     content:" *"; 
     color:red;

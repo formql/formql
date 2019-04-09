@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-import { FormService } from './services/form.service';
 import { PlainLayoutComponent } from './components/layouts/plain-layout.component';
 import { PageWrapperComponent } from './components/page-wrapper.component';
 import { PageContainerComponent } from './components/page-container.component';
@@ -23,7 +22,7 @@ import { DndDropDirective } from './directives/dnd-drop.directive';
 import { FormQLTextareaComponent } from './bundle/formql-textarea.component';
 import { FormQLSelectComponent } from './bundle/formql-select.component';
 import { FormQLRadioComponent } from './bundle/formql-radio.component';
-import { ActionHandlerService } from './services/action-handler.service';
+import { FormQLCheckboxComponent } from './bundle/formql-checkbox.component';
 
 @NgModule({
   imports: [
@@ -52,7 +51,8 @@ import { ActionHandlerService } from './services/action-handler.service';
     FormQLLabelComponent,
     FormQLTextareaComponent,
     FormQLSelectComponent,
-    FormQLRadioComponent
+    FormQLRadioComponent,
+    FormQLCheckboxComponent
   ],
   entryComponents: [
     // formql
@@ -67,7 +67,8 @@ import { ActionHandlerService } from './services/action-handler.service';
     FormQLLabelComponent,
     FormQLTextareaComponent,
     FormQLSelectComponent,
-    FormQLRadioComponent
+    FormQLRadioComponent,
+    FormQLCheckboxComponent
   ],
   exports: [
       FormQLComponent

@@ -1,35 +1,37 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validators, FormControl } from '@angular/forms';
 import { FormComponent } from '../models/form-component.model';
 import { FormValidator } from '../models/rule.model';
 
 
 @Component({
-    selector: 'formql-textbox',
-    styleUrls: ['./formql-textarea.component.scss'],
+    selector: 'formql-checkbox',
+    styleUrls: ['./formql-checkbox.component.scss'],
     template: `<div *ngIf="formControl!=null">
         <label [attr.for]="field.componentId"
                [ngClass]="{'fql-bundle-label-required': field.rules?.required?.value}">{{field.label}}</label>
-        <div>
-            <textarea [id]="field.componentId" [formControl]="formControl" class="fql-bundle-field-input"
-            [tabIndex]="tabIndex" [attr.disabled]="formControl.disabled ? '' : null">
-            </textarea>
-        </div>
+            <div>
+                <input [id]="field.componentId" type="checkbox"
+                    [formControl]="formControl"
+                    class="fql-bundle-checkbox-input" [tabIndex]="tabIndex"
+                    [attr.disabled]="formControl.disabled ? '' : null">
+            </div>
         </div>`,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => FormQLTextareaComponent),
+            useExisting: forwardRef(() => FormQLCheckboxComponent),
             multi: true
         },
         {
             provide: NG_VALIDATORS,
-            useExisting: forwardRef(() => FormQLTextareaComponent),
+            useExisting: forwardRef(() => FormQLCheckboxComponent),
             multi: true
         }]
 })
-export class FormQLTextareaComponent implements ControlValueAccessor {
-    static componentName = 'FormQLTextareaComponent';
+export class FormQLCheckboxComponent implements ControlValueAccessor {
+
+    static componentName = 'FormQLCheckboxComponent';
     static formQLComponent = true;
     static validators = [
         <FormValidator>{
@@ -39,26 +41,25 @@ export class FormQLTextareaComponent implements ControlValueAccessor {
         }
     ];
 
-    @Input() field: FormComponent<any>;
+    @Input() field: FormComponent<boolean>;
     @Input() formControl: FormControl;
     @Input() tabIndex: string;
 
-    private _value: string;
-    private _propagateChange = (_: any) => { };
+    private _value: boolean;
 
-    constructor() {
-    }
+    private _propagateChange = (_: boolean) => { };
 
-    get value(): any {
+    get value(): boolean {
+
         return this._value;
     }
 
-    set value(value: any) {
+    set value(value: boolean) {
         this._value = value;
         this._propagateChange(this._value);
     }
 
-    writeValue(value: string): void {
+    writeValue(value: boolean): void {
         if (value)
             this._value = value;
     }
