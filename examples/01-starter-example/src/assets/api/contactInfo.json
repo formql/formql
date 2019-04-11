@@ -117,7 +117,7 @@
             }, {
                 "componentId": "842329ce-9118-8865-f71e-f8f223150a1f",
                 "label": "Add comments",
-                "componentName": "FormQLInputComponent",
+                "componentName": "FormQLCheckboxComponent",
                 "position": {
                     "id": "ID3_1",
                     "index": 0,

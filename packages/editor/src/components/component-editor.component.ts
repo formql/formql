@@ -137,6 +137,9 @@ export class ComponentEditorComponent implements OnInit {
             this.actionList = null;
 
         if (reset)
-            this.updatedComponent.action = HelperService.deepCopy(this.component.action);
+            if (this.actionList && this.component.action)
+                this.updatedComponent.action = HelperService.deepCopy(this.component.action);
+            else if (!this.actionList)
+                this.updatedComponent.action = null;
     }
 }

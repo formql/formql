@@ -5,7 +5,7 @@ import { AppFormQLComponent } from './app-formql.component';
 import { AppFormQLEditorComponent } from './app-formql-editor.component';
 
 const appRoutes: Routes = [
-    { path: '', redirectTo: '/form/contactInfo/edit', pathMatch: 'full' },
+    { path: '', redirectTo: '/form/contactInfo/123/edit', pathMatch: 'full' },
     { path: 'form/:name', component: AppFormQLComponent },
     { path: 'form/:name/edit', component: AppFormQLEditorComponent },
     { path: 'form/:name/:id', component: AppFormQLComponent },
