@@ -1,6 +1,6 @@
 {
     "name": "@formql/core",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "FormQL - A framework for building dynamic forms",
     "license": "MIT",
     "author": "Juan Stoppa",
@@ -25,7 +25,7 @@
     "bugs": {
         "url": "https://github.com/formql/formql/issues"
     },
-    "homepage": "https://github.com/formql/formql#readme",
+    "homepage": "https://formql.io",
     "keywords": [
         "formql",
         "angular",
