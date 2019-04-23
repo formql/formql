@@ -1,5 +1,5 @@
 import { Component, Input, ViewContainerRef, Renderer2 } from '@angular/core';
-import { ContainerType, StoreService, InternalEventHandlerService, InternalEventType } from '@formql/core';
+import { ContainerType, InternalEventHandlerService, InternalEventType } from '@formql/core';
 
 @Component({
     selector: 'formql-tooltip',
