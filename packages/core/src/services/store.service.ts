@@ -1,88 +1,159 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject, of } from 'rxjs';
-import { FormWindow, FormError, FormState } from '../models/form-window.model';
+import { Injectable, ComponentFactoryResolver } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { FormError, FormState } from '../models/form-window.model';
 import { FormService } from './form.service';
-import { FormComponent } from '../models/form-component.model';
+import { FormComponent, ComponentControl } from '../models/form-component.model';
 import { HelperService } from './helper.service';
 import { takeUntil } from 'rxjs/operators';
+import { FormBuilder } from '@angular/forms';
+import { InternalEventType } from '../models/internal-event.model';
+import { FormPage } from '../models/form-page.model';
+import { FormSection } from '../models/form-section.model';
 
 @Injectable({ providedIn: 'root' })
 export class StoreService {
     constructor(
-        private formService: FormService
-    ) {}
+        private formService: FormService,
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private formBuilder: FormBuilder
+    ) { }
 
-    private _form: Subject<FormWindow>;
+    private data$ = new Subject<any>();
 
-    private _components: Subject<Array<FormComponent<any>>>;
-
-    private _data: Subject<any>;
+    private formState$ = new Subject<FormState>();
 
     private readonly serviceDestroyed = new Subject();
 
     private formState: FormState;
 
-    initialiseStore() {
-        this._form = new Subject<FormWindow>();
-        this._components = new Subject<Array<FormComponent<any>>>();
-        this._data = new Subject<any>();
-    }
+    private formControls: ComponentControl[];
+
 
     destroyStore() {
-        this._form.complete();
-        this._form.unsubscribe();
-        this._components.complete();
-        this._components.unsubscribe();
-        this._data.complete();
-        this._data.unsubscribe();
-    }
-
-    getForm(): Observable<FormWindow> {
-        return this._form.asObservable();
-    }
-
-    getComponents(): Observable<FormComponent<any>[]> {
-        return this._components.asObservable();
+        this.data$.complete();
+        this.data$.unsubscribe();
     }
 
     getData(): Observable<FormComponent<any>[]> {
-        return this._data.asObservable();
+        return this.data$.asObservable();
+    }
+
+    getFormState(): Observable<FormState> {
+        return this.formState$.asObservable();
     }
 
     setComponet(component: FormComponent<any>) {
         this.formService.updateComponent(component, this.formState).pipe(takeUntil(this.serviceDestroyed)).subscribe(response => {
-            this._components.next(response.components);
-            this._data.next(response.data);
+            this.formControls = HelperService.resetValidators(response.components, this.formControls, this.componentFactoryResolver);
+            this.data$.next(response.data);
         });
     }
 
     getAll(formName: string, ids: Array<string>) {
         this.formService.getFormAndData(formName, ids).pipe(takeUntil(this.serviceDestroyed)).subscribe(response => {
             this.formState = {...response};
-            this._form.next(response.form);
-            this._components.next(response.components);
-            this._data.next(response.data);
+            this.formState.ids = ids;
+            if (this.formState.form.pages != null && this.formState.form.pages.length > 0) {
+                const reactiveFormStructure = HelperService.createReactiveFormStructure(this.formState.form);
+                this.formControls = reactiveFormStructure.formControls;
+                this.formState.reactiveForm =  this.formBuilder.group(reactiveFormStructure.pageGroup);
+                this.formState$.next(this.formState);
+            }
+            this.data$.next(response.data);
         },
         error => {
-            this._form.next(<FormWindow>{
-                error: HelperService.formatError(<FormError>{
+            this.formState$.next(<FormState> {
+                form: {
+                    error: HelperService.formatError(<FormError>{
                     title: 'Error loading form or data',
                     error: error
-                })
+                    })
+                }
             });
         });
     }
 
-    saveForm(name: string, form: FormWindow) {
-        this.formService.saveForm(name, form);
+    saveForm() {
+        this.formService.saveForm(this.formState.form.formName, this.formState.form);
     }
 
-    saveData(ids: Array<string>) {
-        return this.formService.saveData(this.formState.form.dataSource, ids, this.formState.data);
+    saveData() {
+        return this.formService.saveData(this.formState.form.dataSource, this.formState.ids, this.formState.data);
+    }
+
+    validateForm() {
+        HelperService.validateForm(this.formState.reactiveForm);
+    }
+
+    isFormValid() {
+        return this.formState.reactiveForm.valid;
     }
 
     unsubscribeAll() {
         this.serviceDestroyed.next();
         this.serviceDestroyed.complete();
+    }
+
+    reSetForm(eventType: InternalEventType, event: any) {
+        switch (eventType) {
+            case InternalEventType.EditingForm:
+                this.populateReactiveForm(event);
+            break;
+
+            case InternalEventType.DndFormChanged:
+                const pageId = (<FormPage>event).pageId;
+                const indexDnd = this.formState.form.pages.findIndex(p => p.pageId === pageId);
+
+                if (indexDnd >= 0)
+                    this.formState.form.pages[indexDnd] = event;
+
+                this.populateReactiveForm(pageId);
+            break;
+
+            case InternalEventType.RemoveComponent:
+                const componentId = (<FormComponent<any>>event).componentId;
+                let updateSectionId = '';
+                this.formState.form.pages.forEach(page => {
+                    page.sections.forEach(section => {
+                        const indexComponent = section.components.findIndex(c => c.componentId === componentId);
+                        if (indexComponent >= 0) {
+                            section.components.splice(indexComponent, 1);
+                            updateSectionId = section.sectionId;
+                        }
+                    });
+                });
+                this.populateReactiveForm(updateSectionId);
+            break;
+
+            case InternalEventType.RemoveSection:
+                const sectionId = (<FormSection>event).sectionId;
+                let updatePageId = '';
+                this.formState.form.pages.forEach(page => {
+                    const indexSection = page.sections.findIndex(c => c.sectionId === sectionId);
+                    if (indexSection >= 0) {
+                        page.sections.splice(indexSection, 1);
+                        updatePageId = page.pageId;
+                    }
+                });
+                this.populateReactiveForm(updatePageId);
+            break;
+        }
+    }
+
+    private populateReactiveForm(objectId: string = null)  {
+        if (this.formState.form.pages != null && this.formState.form.pages.length > 0) {
+            // get reactive structure -> formControls, pageGroup and components if it's an update
+            const reactiveFormStructure = HelperService.createReactiveFormStructure(this.formState.form, true);
+            this.formControls = reactiveFormStructure.formControls;
+
+            // if it's an update, refresh reactive form, set all form controls, validators
+            this.formState.form.pages.forEach(page => {
+                this.formState.reactiveForm.setControl(page.pageId, reactiveFormStructure.pageGroup[page.pageId]);
+            });
+            this.formState.form = HelperService.updateTemplates(this.formState.form, objectId);
+            if (reactiveFormStructure.components != null && reactiveFormStructure.components.length > 0)
+                this.formControls = HelperService.resetValidators(reactiveFormStructure.components,
+                            this.formControls, this.componentFactoryResolver);
+        }
     }
 }

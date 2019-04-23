@@ -9,7 +9,7 @@ import { FormQLMode, ContainerType } from '../models/type.model';
 import { InternalEventHandlerService } from '../services/internal-event-handler.service';
 import { InternalEventType } from '../models/internal-event.model';
 import { GridPositionType } from '../models/style.model';
-
+import { StoreService } from '../services/store.service';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -50,6 +50,7 @@ export class PageContainerComponent implements OnInit {
 
     constructor(
         private dndService: DndService,
+        private storeService: StoreService,
         private eventHandlerService: InternalEventHandlerService
     ) { }
 
@@ -66,7 +67,8 @@ export class PageContainerComponent implements OnInit {
             targetIndexId: $event.targetIndexId
         };
         this.page = this.dndService.synchronisePageModel(this.page, dndEvent);
-        this.eventHandlerService.send(InternalEventType.DndFormChanged, this.page);
+        this.storeService.reSetForm(InternalEventType.DndFormChanged, this.page);
+        // this.eventHandlerService.send(InternalEventType.DndFormChanged, this.page);
     }
 
     private findSections(): FormSection[] {

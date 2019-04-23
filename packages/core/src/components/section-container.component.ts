@@ -10,6 +10,7 @@ import { FormQLMode, ContainerType } from '../models/type.model';
 import { InternalEventHandlerService } from '../services/internal-event-handler.service';
 import { InternalEventType } from '../models/internal-event.model';
 import { GridPositionType } from '../models/style.model';
+import { StoreService } from '../services/store.service';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -58,6 +59,7 @@ export class SectionContainerComponent implements OnInit {
     components: FormComponent<any>[] = [];
     constructor(
         private dndService: DndService,
+        private storeService: StoreService,
         private eventHandlerService: InternalEventHandlerService
     ) {}
 
@@ -75,7 +77,7 @@ export class SectionContainerComponent implements OnInit {
             positionType: this.positionType
         };
         this.page = this.dndService.synchroniseSectionModel(this.page, dndEvent);
-        this.eventHandlerService.send(InternalEventType.DndFormChanged, this.page);
+        this.storeService.reSetForm(InternalEventType.DndFormChanged, this.page);
     }
 
     private findColumnComponents(): FormComponent<any>[] {

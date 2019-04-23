@@ -1,5 +1,6 @@
 import { FormPage } from './form-page.model';
 import { FormComponent } from './form-component.model';
+import { FormGroup } from '@angular/forms';
 
 export interface FormWindow {
     error: FormError;
@@ -20,7 +21,9 @@ export interface FormDataSource {
 export interface FormState {
     data: any;
     form: FormWindow;
+    reactiveForm: FormGroup;
     components: FormComponent<any>[];
+    ids: Array<string>;
     isLoading: boolean;
     error: any;
 }
