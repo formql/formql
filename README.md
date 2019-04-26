@@ -12,7 +12,7 @@ FormQL comes with the following features:
 
 # Demo
 - Formql.io: https://formql.io/example/#/form/contactInfo/edit
-- Stackblitz: https://stackblitz.com/edit/formql-example
+- Stackblitz: https://stackblitz.com/edit/formql-example-material
 
 # Documentation
 https://github.com/formql/formql/wiki
@@ -34,9 +34,9 @@ npm start
 ```
 if you want to use the libraries from your local environemnt, replace the @formql instances with the following in your package.json...
 ```json
-"@formql/core": "file:dist/formql/formql-core-0.3.1.tgz",
-"@formql/editor": "file:dist/formql-editor/formql-editor-0.3.1.tgz",
-"@formql/material": "file:dist/formql-material/formql-material-0.3.1.tgz",
+"@formql/core": "file:dist/formql/formql-core-0.3.3.tgz",
+"@formql/editor": "file:dist/formql-editor/formql-editor-0.3.3.tgz",
+"@formql/material": "file:dist/formql-material/formql-material-0.3.3.tgz",
 ```
 ...and then run the commands
 ```bash

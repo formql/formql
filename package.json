@@ -1,6 +1,6 @@
 {
   "name": "formql",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "FormQL - A framework for building dynamic forms",
   "license": "MIT",
   "author": "Juan Stoppa",
@@ -35,6 +35,9 @@
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
+    "@formql/core": "~0.3.3",
+    "@formql/editor": "~0.3.3",
+    "@formql/material": "~0.3.3",
     "angular2-text-mask": "^9.0.0",
     "angular2-uuid": "^1.1.1",
     "classlist.js": "^1.1.20150312",
@@ -42,10 +45,7 @@
     "rxjs": "~6.3.3",
     "text-mask-addons": "^3.8.0",
     "web-animations-js": "^2.3.1",
-    "zone.js": "^0.8.26",
-    "@formql/core": "~0.3.2",
-    "@formql/editor": "~0.3.2",
-    "@formql/material": "~0.3.2"
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular/compiler-cli": "~7.2.0",

@@ -133,11 +133,11 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
         if ($event)
             if ($event.componentId) {
                 this.formql.refreshComponent($event);
-                this.formql.populateReactiveForm(true, $event.componentId);
+                this.formql.resetForm($event.componentId);
             } else if ($event.sectionId)
-                this.formql.populateReactiveForm(true, $event.sectionId);
+                this.formql.resetForm($event.sectionId);
             else if ($event.pageId)
-                this.formql.populateReactiveForm(true, $event.pageId);
+                this.formql.resetForm($event.pageId);
 
         if (this.subscription$)
             this.subscription$.unsubscribe();
