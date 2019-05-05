@@ -1,0 +1,392 @@
+{
+    "layoutComponentName": "PlainLayoutComponent",
+    "formName": "contactInfo",
+    "class": "container",
+    "dataSource": {
+        "type": "GraphQL",
+        "query": "{ contact(id: $id) { id firstName lastName email mobile addressLine1 addressLine2 addressCity addressPostCode } } ",
+        "mutation": "mutation { updateContact(contact: ${contact}) { id: id firstName: firstName lastName: lastName email: email mobile: mobile addressPostCode:addressPostCode addressLine1:addressLine1 addressLine2:addressLine2 addressCity:addressCity  } }"
+    },
+    "pages": [{
+        "structure": "12",
+        "template": {
+            "title": "header",
+            "body": {
+                "gridTemplateColumns": " 1fr  1fr",
+                "gridTemplateRows": null,
+                "gridTemplateAreas": "\"ID1_2 ID1_2\" \"ID3_1 ID3_2\" \"ID4_1 ID4_1\""
+            },
+            "reRender": false
+        },
+        "sections": [{
+            "components": [{
+                "label": "Save",
+                "componentName": "FormQLMatButtonComponent",
+                "type": "text",
+                "order": 1,
+                "position": {
+                    "id": "ID1_3",
+                    "index": 0,
+                    "type": 2
+                },
+                "componentId": "786bd72b-b83a-9b67-43b9-03cf7daa2dcb",
+                "rules": {},
+                "value": null,
+                "style": {
+                    "float": "right"
+                }
+            }],
+            "structure": "12",
+            "position": {
+                "id": "ID2_1",
+                "index": 0
+            },
+            "sectionId": "3d3fcbe3-a029-ca5e-4791-9666155fff0f",
+            "headerStyle": null,
+            "template": {
+                "title": "header",
+                "header": {
+                    "gridTemplateColumns": "1fr",
+                    "gridTemplateAreas": "\"ID1_1\"",
+                    "hidden": false
+                },
+                "body": {
+                    "gridTemplateColumns": "1fr",
+                    "gridTemplateRows": "1fr",
+                    "gridTemplateAreas": "\"ID1_3\""
+                },
+                "reRender": false
+            },
+            "sectionName": ""
+        }, {
+            "sectionId": "7ca8cb04-640b-81ac-f372-f90089b06c2d",
+            "sectionName": "New section",
+            "components": [],
+            "template": {
+                "header": {
+                    "gridTemplateColumns": "1fr",
+                    "gridTemplateRows": "1fr",
+                    "gridTemplateAreas": "\"ID1_1\"",
+                    "hidden": true
+                },
+                "body": {
+                    "gridTemplateColumns": "1fr",
+                    "gridTemplateRows": "1fr",
+                    "gridTemplateAreas": "\"ID1_1\""
+                },
+                "reRender": false
+            },
+            "position": {
+                "id": "ID2_1",
+                "index": 1
+            }
+        }, {
+            "sectionId": "1414b87a-16b2-4770-ea9b-855267a3f7ff",
+            "sectionName": "New section",
+            "components": [{
+                "componentId": "7bda3ba3-5714-e194-8f2b-456404994e97",
+                "label": "Mortgage - Monthly cost",
+                "componentName": "FormQLLabelComponent",
+                "position": {
+                    "id": "ID1_1",
+                    "index": 0,
+                    "type": 1
+                },
+                "rules": {},
+                "style": {
+                    "padding": "0px",
+                    "margin": "10px",
+                    "border-bottom": "3px solid",
+                    "font-family": "Roboto,'Helvetica Neue',sans-serif"
+                },
+                "value": null
+            }, {
+                "componentId": "d6eb28a4-2e0e-e0fc-3011-9a6538da2954",
+                "label": "Mortgage period (years)",
+                "componentName": "FormQLMatFormFieldComponent",
+                "position": {
+                    "id": "ID1_1",
+                    "index": 5,
+                    "type": 2
+                },
+                "rules": {},
+                "schema": "contact.mortgagePeriod",
+                "type": "number",
+                "value": null
+            }, {
+                "componentId": "e41ea798-014d-bb44-005f-782961833879",
+                "label": "Interest rate (%)",
+                "componentName": "FormQLMatFormFieldComponent",
+                "position": {
+                    "id": "ID1_1",
+                    "index": 4,
+                    "type": 2
+                },
+                "rules": {},
+                "schema": "contact.mortgageInterestRate",
+                "type": "number",
+                "textMask": {
+                    "prefix": "",
+                    "suffix": "%",
+                    "includeThousandsSeparator": true,
+                    "thousandsSeparatorSymbol": ",",
+                    "allowDecimal": true,
+                    "decimalSymbol": ".",
+                    "decimalLimit": 2,
+                    "integerLimit": null,
+                    "requireDecimal": false,
+                    "allowNegative": false,
+                    "allowLeadingZeroes": false
+                },
+                "value": null
+            }, {
+                "componentId": "18bf310f-d940-f19b-d800-64ed3de1a039",
+                "label": "Total cost of mortgage",
+                "componentName": "FormQLMatFormFieldComponent",
+                "position": {
+                    "id": "ID1_2",
+                    "index": 1,
+                    "type": 2
+                },
+                "rules": {
+                    "value": {
+                        "key": "value",
+                        "condition": "contact.mortgagePeriod*12*contact.mortgageMonthlyPayments",
+                        "value": null
+                    },
+                    "readonly": {
+                        "key": "readonly",
+                        "condition": "true",
+                        "value": null
+                    }
+                },
+                "schema": "contact.mortgageTotalCost",
+                "type": "number",
+                "value": null,
+                "textMask": {
+                    "prefix": "£",
+                    "suffix": "",
+                    "includeThousandsSeparator": true,
+                    "thousandsSeparatorSymbol": ",",
+                    "allowDecimal": true,
+                    "decimalSymbol": ".",
+                    "decimalLimit": 2,
+                    "integerLimit": null,
+                    "requireDecimal": false,
+                    "allowNegative": false,
+                    "allowLeadingZeroes": false
+                }
+            }, {
+                "componentId": "6349d4ef-dcfc-376e-4eab-d6382cc48bc7",
+                "label": "Mortgage amount",
+                "componentName": "FormQLMatFormFieldComponent",
+                "position": {
+                    "id": "ID1_1",
+                    "index": 2,
+                    "type": 2
+                },
+                "rules": {},
+                "schema": "contact.mortgageAmount",
+                "type": "number",
+                "textMask": {
+                    "prefix": "£",
+                    "suffix": "",
+                    "includeThousandsSeparator": true,
+                    "thousandsSeparatorSymbol": ",",
+                    "allowDecimal": true,
+                    "decimalSymbol": ".",
+                    "decimalLimit": 2,
+                    "integerLimit": null,
+                    "requireDecimal": false,
+                    "allowNegative": false,
+                    "allowLeadingZeroes": false
+                },
+                "value": null
+            }, {
+                "componentId": "e7450d71-d1b7-e450-08ea-0c3591b75a39",
+                "label": "Monthly payment",
+                "componentName": "FormQLMatFormFieldComponent",
+                "position": {
+                    "id": "ID1_2",
+                    "index": 0,
+                    "type": 2
+                },
+                "rules": {
+                    "value": {
+                        "key": "value",
+                        "condition": "contact.mortgageAmount*(contact.mortgageInterestRate/100/12)*(Math.pow(1 + (contact.mortgageInterestRate/100/12), (contact.mortgagePeriod*12)))/(Math.pow(1+(contact.mortgageInterestRate/100/12),(contact.mortgagePeriod*12))-1)",
+                        "value": null
+                    },
+                    "readonly": {
+                        "key": "readonly",
+                        "condition": "true",
+                        "value": null
+                    }
+                },
+                "schema": "contact.mortgageMonthlyPayments",
+                "textMask": {
+                    "prefix": "£",
+                    "suffix": "",
+                    "includeThousandsSeparator": true,
+                    "thousandsSeparatorSymbol": ",",
+                    "allowDecimal": true,
+                    "decimalSymbol": ".",
+                    "decimalLimit": 2,
+                    "integerLimit": null,
+                    "requireDecimal": false,
+                    "allowNegative": false,
+                    "allowLeadingZeroes": false
+                },
+                "type": "number",
+                "value": null
+            }, {
+                "componentId": "23b8e5b4-222c-7212-c72b-7e93b3445993",
+                "label": "Total payments",
+                "componentName": "FormQLMatFormFieldComponent",
+                "position": {
+                    "id": "ID1_3",
+                    "index": 0,
+                    "type": 2
+                },
+                "rules": {
+                    "value": {
+                        "key": "value",
+                        "condition": "contact.mortgageTotalCost-contact.mortgageAmount",
+                        "value": null
+                    },
+                    "readonly": {
+                        "key": "readonly",
+                        "condition": "true",
+                        "value": null
+                    }
+                },
+                "schema": "contact.mortgageTotalPayments",
+                "type": "number",
+                "textMask": {
+                    "prefix": "£",
+                    "suffix": "",
+                    "includeThousandsSeparator": true,
+                    "thousandsSeparatorSymbol": ",",
+                    "allowDecimal": true,
+                    "decimalSymbol": ".",
+                    "decimalLimit": 2,
+                    "integerLimit": null,
+                    "requireDecimal": false,
+                    "allowNegative": false,
+                    "allowLeadingZeroes": false
+                },
+                "value": null
+            }],
+            "template": {
+                "header": {
+                    "gridTemplateColumns": "1fr",
+                    "gridTemplateRows": "1fr",
+                    "gridTemplateAreas": "\"ID1_1\""
+                },
+                "body": {
+                    "gridTemplateColumns": "1fr 1fr 1fr",
+                    "gridTemplateRows": "1fr",
+                    "gridTemplateAreas": "\"ID1_1 ID1_2 ID1_3\""
+                },
+                "reRender": false
+            },
+            "position": {
+                "id": "ID1_2",
+                "index": 0
+            }
+        }, {
+            "sectionId": "5939c868-5560-5e2a-b72a-d7e3cf68bd6f",
+            "sectionName": "New section",
+            "components": [{
+                "componentId": "d3f0556a-65ac-acde-752f-11e2e7ea9007",
+                "label": "Save",
+                "componentName": "FormQLMatButtonComponent",
+                "position": {
+                    "id": "ID1_1",
+                    "index": 0,
+                    "type": 2
+                },
+                "rules": {},
+                "action": {
+                    "key": "save",
+                    "customkey": null,
+                    "parameters": null
+                },
+                "style": {
+                    "float": "right"
+                },
+                "value": null
+            }],
+            "template": {
+                "header": {
+                    "gridTemplateColumns": "1fr",
+                    "gridTemplateRows": "1fr",
+                    "gridTemplateAreas": "\"ID1_1\""
+                },
+                "body": {
+                    "gridTemplateColumns": "1fr",
+                    "gridTemplateRows": "1fr",
+                    "gridTemplateAreas": "\"ID1_1\""
+                },
+                "reRender": false
+            },
+            "position": {
+                "id": "ID4_1",
+                "index": 0
+            }
+        }, {
+            "sectionId": "da0cc06c-b50d-5575-21cf-8deb5a9869ef",
+            "sectionName": "New section",
+            "components": [{
+                "componentId": "9bc1a629-fa13-e4d2-e293-5b143e4559db",
+                "label": "New Component",
+                "componentName": "AppFormQLChartComponent",
+                "position": {
+                    "id": "ID1_1",
+                    "index": 0,
+                    "type": 2
+                },
+                "action": null,
+                "value": null
+            }],
+            "template": {
+                "header": {
+                    "gridTemplateColumns": "1fr",
+                    "gridTemplateRows": "1fr",
+                    "gridTemplateAreas": "\"ID1_1\""
+                },
+                "body": {
+                    "gridTemplateColumns": "1fr",
+                    "gridTemplateRows": "1fr",
+                    "gridTemplateAreas": "\"ID1_1\""
+                },
+                "reRender": false
+            },
+            "position": {
+                "id": "ID3_1",
+                "index": 0
+            }
+        }, {
+            "sectionId": "b088aaf4-82bb-8ce0-c153-adb177236460",
+            "sectionName": "New section",
+            "components": [],
+            "template": {
+                "header": {
+                    "gridTemplateColumns": "1fr",
+                    "gridTemplateRows": "1fr",
+                    "gridTemplateAreas": "\"ID1_1\""
+                },
+                "body": {
+                    "gridTemplateColumns": "1fr",
+                    "gridTemplateRows": "1fr",
+                    "gridTemplateAreas": "\"ID1_1\""
+                }
+            },
+            "position": {
+                "id": "ID3_2",
+                "index": 0
+            }
+        }],
+        "pageId": "f83c2ca3-1259-aa95-e817-61321a04713d"
+    }]
+}

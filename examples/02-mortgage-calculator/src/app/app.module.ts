@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormQLModule } from '@formql/core';
 import { FormQLEditorModule } from '@formql/editor';
+import { FormQLMaterialModule } from '@formql/material';
 
 import { DummyService } from './app-service';
 
@@ -13,21 +14,28 @@ import { AppFormQLComponent } from './app-formql.component';
 
 import { AppFormQLEditorComponent } from './app-formql-editor.component';
 import { TextMaskModule } from 'angular2-text-mask';
+import { AppFormQLChartComponent } from './app-formql-chart.component';
+
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
     AppComponent,
     AppFormQLComponent,
-    AppFormQLEditorComponent
+    AppFormQLEditorComponent,
+    AppFormQLChartComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormQLModule,
     FormQLEditorModule,
+    FormQLMaterialModule,
     HttpClientModule,
-    TextMaskModule
+    TextMaskModule,
+    ChartsModule
   ],
+  entryComponents: [AppFormQLChartComponent],
   providers: [DummyService, {provide: 'FormQLService', useClass: DummyService }],
   bootstrap: [AppComponent]
 })
