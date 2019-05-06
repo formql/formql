@@ -5,10 +5,10 @@ import { FormValidator, FormComponent } from '@formql/core';
 @Component({
     selector: 'app-formql-chart',
     template: `<div id="chart-container">
-                    <canvas *ngIf="chartData && !noData"  baseChart 
+                    <canvas *ngIf="chartData && chartLabels && !noData"  baseChart
                         [chartType]="'doughnut'"
                         [data]="chartData"
-                        [labels]="chartConfig.ChartLabels"
+                        [labels]="chartLabels"
                         >
                 </canvas>
                 </div>
@@ -44,6 +44,8 @@ export class AppFormQLChartComponent implements OnInit, ControlValueAccessor {
     public mask: any;
     public chartConfig: ChartConfiguration;
     public chartData: any;
+    public chartLabels: any;
+
     public noData = true;
 
     private _propagateChange = (_: any) => { };
@@ -71,15 +73,27 @@ export class AppFormQLChartComponent implements OnInit, ControlValueAccessor {
     registerOnTouched(fn: any): void { }
 
     ngOnInit() {
-        if (this.field && this.field.configuration)
+        if (this.field && this.field.configuration) {
             this.chartConfig = <ChartConfiguration>this.field.configuration;
+            if (typeof this.chartConfig.ChartLabels === 'object') {
+                const iterate = Object.keys(this.chartConfig.ChartLabels);
+                this.chartLabels = [];
+                iterate.forEach((key, index) => {
+                    this.chartLabels.push(this.chartConfig.ChartLabels[key]);
+                });
+            }
+        }
 
-        this.formControl.parent.parent.valueChanges.subscribe(val => {
+        this.formControl.valueChanges.subscribe(val => {
             if (this.chartConfig && this.chartConfig.ChartValueMap) {
                 this.chartData = [];
-                this.noData = false;
-                this.chartConfig.ChartValueMap.forEach((valueMap, index)=> {
+                let iterate = this.chartConfig.ChartValueMap;
+                if (typeof iterate === 'object')
+                    iterate = Object.keys(this.chartConfig.ChartValueMap);
+
+                iterate.forEach((key, index) => {
                     let value = 0;
+                    const valueMap = this.chartConfig.ChartValueMap[key];
                     if (this.field.value && this.field.value[valueMap])
                         value = this.field.value[valueMap];
 
@@ -91,6 +105,7 @@ export class AppFormQLChartComponent implements OnInit, ControlValueAccessor {
                     if (value <= 0)
                         this.noData = true;
                 });
+                this.noData = false;
             }
         });
 

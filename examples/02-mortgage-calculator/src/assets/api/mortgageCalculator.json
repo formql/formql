@@ -1,6 +1,6 @@
 {
     "layoutComponentName": "PlainLayoutComponent",
-    "formName": "contactInfo",
+    "formName": "mortgageCalculator",
     "class": "container",
     "dataSource": {
         "type": "GraphQL",
@@ -347,7 +347,22 @@
                     "type": 2
                 },
                 "action": null,
-                "value": null
+                "value": null,
+                "rules": {},
+                "schema": "contact",
+                "configuration": {
+                    "ChartLabels": {
+                        "0": "Principal",
+                        "1": "Interest"
+                    },
+                    "ChartValueMap": {
+                        "0": "mortgageAmount",
+                        "1": "mortgageTotalPayments"
+                    }
+                },
+                "style": {
+                    "width": "500px"
+                }
             }],
             "template": {
                 "header": {
