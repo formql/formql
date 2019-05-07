@@ -175,11 +175,11 @@ export class FormService {
     updateComponent(component: FormComponent<any>, formState: FormState) {
         const value = HelperService.resolveType(component.value, component.type);
         formState.data = this.setValue(component.schema, value, formState.data);
+        formState = this.resolveConditions(formState);
         formState.components.forEach((c: FormComponent<any>) => {
             if (c.schema === component.schema || (c.schema && c.schema.indexOf('.') === -1))
                 c.value = this.getValue(c.schema, formState.data, c.type);
         });
-        formState = this.resolveConditions(formState);
         return of(formState);
     }
 

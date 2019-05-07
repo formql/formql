@@ -41,10 +41,10 @@ export class AppFormQLChartComponent implements OnInit, ControlValueAccessor {
     @Input() tabIndex: string;
 
     private _value: string;
-    public mask: any;
     public chartConfig: ChartConfiguration;
     public chartData: any;
-    public chartLabels: any;
+    public chartLabels: Array<string>;
+    public chartFields: Array<string>;
 
     public noData = true;
 
@@ -75,40 +75,51 @@ export class AppFormQLChartComponent implements OnInit, ControlValueAccessor {
     ngOnInit() {
         if (this.field && this.field.configuration) {
             this.chartConfig = <ChartConfiguration>this.field.configuration;
-            if (typeof this.chartConfig.ChartLabels === 'object') {
-                const iterate = Object.keys(this.chartConfig.ChartLabels);
-                this.chartLabels = [];
-                iterate.forEach((key, index) => {
-                    this.chartLabels.push(this.chartConfig.ChartLabels[key]);
-                });
-            }
+
+            if (!this.chartConfig)
+                return;
+
+            if (this.chartConfig.ChartLabels && typeof this.chartConfig.ChartLabels === 'object')
+                this.chartLabels = Object.values(this.chartConfig.ChartLabels);
+
+            if (this.chartConfig.ChartValueMap && typeof this.chartConfig.ChartValueMap === 'object')
+                this.chartFields = Object.values(this.chartConfig.ChartValueMap);
         }
 
-        this.formControl.valueChanges.subscribe(val => {
-            if (this.chartConfig && this.chartConfig.ChartValueMap) {
-                this.chartData = [];
-                let iterate = this.chartConfig.ChartValueMap;
-                if (typeof iterate === 'object')
-                    iterate = Object.keys(this.chartConfig.ChartValueMap);
-
-                iterate.forEach((key, index) => {
+        if (this.chartFields)
+            this.formControl.valueChanges.subscribe(val => {
+                const newChartData = [];
+                this.chartFields.forEach((key, index) => {
                     let value = 0;
-                    const valueMap = this.chartConfig.ChartValueMap[key];
-                    if (this.field.value && this.field.value[valueMap])
-                        value = this.field.value[valueMap];
+                    if (this.field.value && this.field.value[key])
+                        value = this.field.value[key];
 
-                    if (this.chartData[index] != null )
-                        this.chartData[index] = value;
+                    if (newChartData[index] != null )
+                        newChartData[index] = value;
                     else
-                        this.chartData.push(value);
+                        newChartData.push(value);
 
                     if (value <= 0)
                         this.noData = true;
                 });
-                this.noData = false;
-            }
-        });
+                if (!this.diffArrays(newChartData, this.chartData))
+                    this.chartData = [...newChartData];
 
+                this.noData = false;
+            });
+    }
+
+    diffArrays(arr1: Array<string>, arr2: Array<string>) {
+        if ((arr1 && !arr2) || (!arr1 && arr2))
+            return false;
+
+        if (arr1.length !== arr2.length)
+            return false;
+        for (let i = arr1.length; i--;) {
+            if (arr1[i] !== arr2[i])
+                return false;
+        }
+        return true;
     }
 }
 
