@@ -4,7 +4,7 @@ import { FormValidator, FormComponent } from '@formql/core';
 
 @Component({
     selector: 'app-formql-chart',
-    template: `<div id="chart-container">
+    template: `<div id="chart-container" style="margin: 0px auto; width: 500px">
                     <canvas *ngIf="chartData && chartLabels && !noData"  baseChart
                         [chartType]="'doughnut'"
                         [data]="chartData"
@@ -80,10 +80,10 @@ export class AppFormQLChartComponent implements OnInit, ControlValueAccessor {
                 return;
 
             if (this.chartConfig.ChartLabels && typeof this.chartConfig.ChartLabels === 'object')
-                this.chartLabels = Object.values(this.chartConfig.ChartLabels);
+                this.chartLabels = Object.keys(this.chartConfig.ChartLabels).map(key => this.chartConfig.ChartLabels[key]);
 
             if (this.chartConfig.ChartValueMap && typeof this.chartConfig.ChartValueMap === 'object')
-                this.chartFields = Object.values(this.chartConfig.ChartValueMap);
+                this.chartFields = Object.keys(this.chartConfig.ChartValueMap).map(key => this.chartConfig.ChartValueMap[key]);
         }
 
         if (this.chartFields)

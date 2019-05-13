@@ -17,13 +17,15 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { AppFormQLChartComponent } from './app-formql-chart.component';
 
 import { ChartsModule } from 'ng2-charts';
+import { AppFormQLMortgageScheduleComponent } from './app-formql-mortgage-schedule.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AppFormQLComponent,
     AppFormQLEditorComponent,
-    AppFormQLChartComponent
+    AppFormQLChartComponent,
+    AppFormQLMortgageScheduleComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,7 @@ import { ChartsModule } from 'ng2-charts';
     TextMaskModule,
     ChartsModule
   ],
-  entryComponents: [AppFormQLChartComponent],
+  entryComponents: [AppFormQLChartComponent, AppFormQLMortgageScheduleComponent],
   providers: [DummyService, {provide: 'FormQLService', useClass: DummyService }],
   bootstrap: [AppComponent]
 })

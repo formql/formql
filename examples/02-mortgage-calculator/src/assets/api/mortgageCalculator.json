@@ -360,9 +360,24 @@
                         "1": "mortgageTotalPayments"
                     }
                 },
+                "style": null
+            }, {
+                "componentId": "3b17ca94-9182-cfa6-7517-e2bf374a4a56",
+                "label": "Payment Breakdown",
+                "componentName": "FormQLLabelComponent",
+                "position": {
+                    "id": "ID1_1",
+                    "index": 1,
+                    "type": 1
+                },
+                "rules": {},
                 "style": {
-                    "width": "500px"
-                }
+                    "padding": "0px",
+                    "margin": "10px",
+                    "border-bottom": "3px solid",
+                    "font-family": "Roboto,'Helvetica Neue',sans-serif"
+                },
+                "value": null
             }],
             "template": {
                 "header": {
@@ -384,7 +399,48 @@
         }, {
             "sectionId": "b088aaf4-82bb-8ce0-c153-adb177236460",
             "sectionName": "New section",
-            "components": [],
+            "components": [{
+                "componentId": "5b609608-23da-9d4b-d2f7-ef7d25ad2712",
+                "label": "Mortgage Amortisation",
+                "componentName": "FormQLLabelComponent",
+                "position": {
+                    "id": "ID1_1",
+                    "index": 0,
+                    "type": 1
+                },
+                "rules": {},
+                "style": {
+                    "padding": "0px",
+                    "margin": "10px",
+                    "border-bottom": "3px solid",
+                    "font-family": "Roboto,'Helvetica Neue',sans-serif"
+                },
+                "value": null
+            }, {
+                "componentId": "8443a05c-6677-a3fb-4544-941ffe9e8181",
+                "label": "New Component",
+                "componentName": "AppFormQLMortgageScheduleComponent",
+                "position": {
+                    "id": "ID1_1",
+                    "index": 1,
+                    "type": 2
+                },
+                "rules": {},
+                "action": null,
+                "configuration": {
+                    "ChartLabels": {
+                        "0": "Mortgage amount",
+                        "1": "Total Payments"
+                    },
+                    "ChartValueMap": {
+                        "0": "mortgageAmount",
+                        "1": "mortgageInterestRate",
+                        "2": "mortgagePeriod"
+                    }
+                },
+                "value": null,
+                "schema": "contact"
+            }],
             "template": {
                 "header": {
                     "gridTemplateColumns": "1fr",
@@ -395,7 +451,8 @@
                     "gridTemplateColumns": "1fr",
                     "gridTemplateRows": "1fr",
                     "gridTemplateAreas": "\"ID1_1\""
-                }
+                },
+                "reRender": false
             },
             "position": {
                 "id": "ID3_2",

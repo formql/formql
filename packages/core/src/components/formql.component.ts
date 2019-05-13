@@ -75,7 +75,6 @@ export class FormQLComponent implements OnDestroy, OnInit {
     ngOnDestroy() {
         this.componentDestroyed.next();
         this.componentDestroyed.complete();
-        this.storeService.destroyStore();
     }
 
     loadForm(formState: FormState) {

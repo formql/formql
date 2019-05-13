@@ -1,4 +1,4 @@
-import { Injectable, ComponentFactoryResolver } from '@angular/core';
+import { Injectable, ComponentFactoryResolver, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { FormError, FormState } from '../models/form-window.model';
 import { FormService } from './form.service';
@@ -11,7 +11,7 @@ import { FormPage } from '../models/form-page.model';
 import { FormSection } from '../models/form-section.model';
 
 @Injectable({ providedIn: 'root' })
-export class StoreService {
+export class StoreService implements OnDestroy {
     constructor(
         private formService: FormService,
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -29,7 +29,7 @@ export class StoreService {
     private formControls: ComponentControl[];
 
 
-    destroyStore() {
+    ngOnDestroy(): void {
         this.data$.complete();
         this.data$.unsubscribe();
     }
