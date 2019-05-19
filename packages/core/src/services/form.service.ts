@@ -180,7 +180,7 @@ export class FormService {
             if (c.schema === component.schema || (c.schema && c.schema.indexOf('.') === -1))
                 c.value = this.getValue(c.schema, formState.data, c.type);
         });
-        return of(formState);
+        return formState;
     }
 
     resolveConditions(formState: FormState, reRun = false): FormState {

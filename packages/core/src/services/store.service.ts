@@ -43,10 +43,9 @@ export class StoreService implements OnDestroy {
     }
 
     setComponet(component: FormComponent<any>) {
-        this.formService.updateComponent(component, this.formState).pipe(takeUntil(this.serviceDestroyed)).subscribe(response => {
-            this.formControls = HelperService.resetValidators(response.components, this.formControls, this.componentFactoryResolver);
-            this.data$.next(response.data);
-        });
+        this.formState = this.formService.updateComponent(component, this.formState);
+        this.formControls = HelperService.resetValidators(this.formState.components, this.formControls, this.componentFactoryResolver);
+        this.data$.next(this.formState.data);
     }
 
     getAll(formName: string, ids: Array<string>) {
