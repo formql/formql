@@ -18,14 +18,15 @@ export class AppFormQLComponent implements OnInit {
         private route: ActivatedRoute
     ) {
         const routeSnap = this.route.snapshot;
-        if (this.isEditMode(routeSnap)) 
+        if (this.isEditMode(routeSnap))
             this.mode = FormQLMode.Edit;
 
-        if (this.formName == null)
+            if (this.formName == null)
             this.formName = routeSnap.params['name'];
 
-        if (routeSnap.params['id'])
+        if (routeSnap.params['id']) {
             this.ids = [routeSnap.params['id']];
+        }
     }
 
     ngOnInit(): void {
@@ -34,7 +35,7 @@ export class AppFormQLComponent implements OnInit {
 
     private isEditMode(routeSnap) {
         return (routeSnap.url.join('/').indexOf('/edit') !== -1 ||
-        (routeSnap.parent != null && routeSnap.parent.url.join('/').indexOf('/edit') !== -1));
+            (routeSnap.parent != null && routeSnap.parent.url.join('/').indexOf('/edit') !== -1));
     }
 
 }

@@ -77,8 +77,7 @@ export class SectionWrapperComponent implements OnInit {
 
     ngOnInit() {
 
-        if (this.mode === FormQLMode.Edit)
-        {
+        if (this.mode === FormQLMode.Edit) {
             const tooltip = this.viewContainerRef.createComponent(
                 HelperService.getFactory(this.componentFactoryResolver, 'TooltipComponent'));
             (<any>tooltip).instance.wrapper = this.wrapper;

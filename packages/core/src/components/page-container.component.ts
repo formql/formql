@@ -20,7 +20,7 @@ import { StoreService } from '../services/store.service';
         [mode]="mode"
         [ngClass]="{'fql-page-container': (mode === FormQLMode.Edit)}"
         (synchronise)="synchroniseModel($event)">
-        <ng-container *ngFor="let section of sections">
+        <ng-container *ngFor="let section of sections; trackBy: trackByFn">
             <div [formGroup]="reactivePage">
                 <div formql-section-wrapper
                     [page]="page"
@@ -68,7 +68,10 @@ export class PageContainerComponent implements OnInit {
         };
         this.page = this.dndService.synchronisePageModel(this.page, dndEvent);
         this.storeService.reSetForm(InternalEventType.DndFormChanged, this.page);
-        // this.eventHandlerService.send(InternalEventType.DndFormChanged, this.page);
+    }
+
+    trackByFn(index, item) {
+        return item.id;
     }
 
     private findSections(): FormSection[] {

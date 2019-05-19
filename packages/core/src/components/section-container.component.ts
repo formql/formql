@@ -21,7 +21,7 @@ import { StoreService } from '../services/store.service';
         [positionType]="positionType"
         *ngIf="(mode === FormQLMode.Edit)" class="fql-section-container"
         (synchronise)="synchroniseModel($event)">
-        <ng-container *ngFor="let component of components">
+        <ng-container *ngFor="let component of components; trackBy: trackByFn">
             <div formql-component-container
                 [ngClass]="{'fql-component-container-hidden': component.rules?.hidden?.value}"
                 [component]="component"
@@ -32,7 +32,7 @@ import { StoreService } from '../services/store.service';
         </ng-container>
     </div>
     <div *ngIf="!(mode === FormQLMode.Edit)">
-        <ng-container *ngFor="let component of components">
+        <ng-container *ngFor="let component of components; trackBy: trackByFn">
             <div formql-component-container *ngIf="!component.rules?.hidden?.value"
                 [component]="component"
                 [sectionId]="section.sectionId"
@@ -78,6 +78,10 @@ export class SectionContainerComponent implements OnInit {
         };
         this.page = this.dndService.synchroniseSectionModel(this.page, dndEvent);
         this.storeService.reSetForm(InternalEventType.DndFormChanged, this.page);
+    }
+
+    trackByFn(index, item) {
+        return item.id;
     }
 
     private findColumnComponents(): FormComponent<any>[] {
