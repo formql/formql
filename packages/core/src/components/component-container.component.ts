@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ComponentFactoryResolver, ViewContainerRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ComponentFactoryResolver, ViewContainerRef, ViewChild, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormComponent } from '../models/form-component.model';
 import { InternalEventHandlerService } from '../services/internal-event-handler.service';
 import { InternalEventType } from '../models/internal-event.model';
@@ -27,7 +27,8 @@ import { Subscription } from 'rxjs';
             <ng-container #content></ng-container>
         </div>
     </div>`,
-    styleUrls: ['./component-container.component.scss']
+    styleUrls: ['./component-container.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 
 })
 export class ComponentContainerComponent implements OnInit, OnDestroy {

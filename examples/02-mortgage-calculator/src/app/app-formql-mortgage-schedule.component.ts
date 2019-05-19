@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, OnInit } from '@angular/core';
+import { Component, Input, forwardRef, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validators, FormControl } from '@angular/forms';
 import { FormValidator, FormComponent } from '@formql/core';
 
@@ -50,6 +50,10 @@ export class AppFormQLMortgageScheduleComponent implements OnInit, ControlValueA
         responsive: true
     };
 
+    public mortgageAmountField: string;
+    public mortgageInterestRateField: string;
+    public mortgagePeriodField: string;
+
     private _value: string;
     private _propagateChange = (_: any) => { };
 
@@ -58,38 +62,43 @@ export class AppFormQLMortgageScheduleComponent implements OnInit, ControlValueA
     }
 
     ngOnInit() {
-        if (this.field && this.field.configuration)
+        if (this.field && this.field.configuration) {
             this.chartConfig = <ChartConfiguration>this.field.configuration;
 
-            this.formControl.valueChanges.subscribe(val => {
             if (this.chartConfig && this.chartConfig.ChartValueMap) {
-                this.chartData = [];
+                this.mortgageAmountField = this.chartConfig.ChartValueMap[0];
+                this.mortgageInterestRateField = this.chartConfig.ChartValueMap[1];
+                this.mortgagePeriodField = this.chartConfig.ChartValueMap[2];
 
-                const mortgageAmountField = this.chartConfig.ChartValueMap[0];
-                const mortgageInterestRateField = this.chartConfig.ChartValueMap[1];
-                const mortgagePeriodField = this.chartConfig.ChartValueMap[2];
-
-                let mortgageAmount, mortgageInterestRate, mortgagePeriod = null;
-
-                if (this.field.value) {
-                    if (this.field.value[mortgageAmountField])
-                        mortgageAmount = this.field.value[mortgageAmountField];
-
-                    if (this.field.value[mortgageInterestRateField])
-                        mortgageInterestRate = this.field.value[mortgageInterestRateField];
-
-                    if (this.field.value[mortgagePeriodField])
-                        mortgagePeriod = this.field.value[mortgagePeriodField];
-                }
-
-                if (mortgageAmount != null && mortgageInterestRate != null && mortgagePeriod != null && mortgagePeriod < 100) {
-                    this.paymentSchedule(mortgageAmount, mortgageInterestRate, mortgagePeriod);
-                    this.noData = false;
-                } else
-                    this.noData = true;
+                this.formControl.valueChanges.subscribe(val => {
+                    this.drawGraph(val);
+                });
+                this.drawGraph(this.field.value);
             }
-        });
+        }
+    }
 
+    drawGraph(val) {
+        this.chartData = [];
+
+        let mortgageAmount, mortgageInterestRate, mortgagePeriod = null;
+
+        if (val) {
+            if (val[this.mortgageAmountField])
+                mortgageAmount = val[this.mortgageAmountField];
+
+            if (val[this.mortgageInterestRateField])
+                mortgageInterestRate = val[this.mortgageInterestRateField];
+
+            if (val[this.mortgagePeriodField])
+                mortgagePeriod = val[this.mortgagePeriodField];
+        }
+
+        if (mortgageAmount != null && mortgageInterestRate != null && mortgagePeriod != null && mortgagePeriod < 100) {
+            this.paymentSchedule(mortgageAmount, mortgageInterestRate, mortgagePeriod);
+            this.noData = false;
+        } else
+            this.noData = true;
     }
 
     get value(): any {
@@ -121,7 +130,6 @@ export class AppFormQLMortgageScheduleComponent implements OnInit, ControlValueA
             for (let t = 0; t < termInYears; t++)
                 this.lineChartLabels.push(t.toString());
         }
-
 
         this.lineChartData = [
             { data: new Array<number>(), label: 'Payment' },

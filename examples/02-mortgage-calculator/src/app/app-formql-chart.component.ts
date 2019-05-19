@@ -86,27 +86,34 @@ export class AppFormQLChartComponent implements OnInit, ControlValueAccessor {
                 this.chartFields = Object.keys(this.chartConfig.ChartValueMap).map(key => this.chartConfig.ChartValueMap[key]);
         }
 
-        if (this.chartFields)
+        if (this.chartFields) {
             this.formControl.valueChanges.subscribe(val => {
-                const newChartData = [];
-                this.chartFields.forEach((key, index) => {
-                    let value = 0;
-                    if (this.field.value && this.field.value[key])
-                        value = this.field.value[key];
-
-                    if (newChartData[index] != null )
-                        newChartData[index] = value;
-                    else
-                        newChartData.push(value);
-
-                    if (value <= 0)
-                        this.noData = true;
-                });
-                if (!this.diffArrays(newChartData, this.chartData))
-                    this.chartData = [...newChartData];
-
-                this.noData = false;
+                this.drawGraph(val);
             });
+
+            this.drawGraph(this.field.value);
+        }
+    }
+
+    drawGraph(val) {
+        const newChartData = [];
+        this.chartFields.forEach((key, index) => {
+            let value = 0;
+            if (val && val[key])
+                value = val[key];
+
+            if (newChartData[index] != null )
+                newChartData[index] = value;
+            else
+                newChartData.push(value);
+
+            if (value <= 0)
+                this.noData = true;
+        });
+        if (!this.diffArrays(newChartData, this.chartData))
+            this.chartData = [...newChartData];
+
+        this.noData = false;
     }
 
     diffArrays(arr1: Array<string>, arr2: Array<string>) {
