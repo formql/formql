@@ -7,9 +7,8 @@ import { HttpClient } from "@angular/common/http";
 @Injectable()
 export class DummyService implements IFormQLService {
 
-    constructor(private http: HttpClient) {
-
-    }
+    constructor(private http: HttpClient) {}
+    
     getData(dataSource: FormDataSource, ids: Array<string>) {
         if (!ids)
             throwError('no ids provided!');
@@ -28,13 +27,16 @@ export class DummyService implements IFormQLService {
         else
             return this.http.get(`assets/api/${name}.json`);
     }
+
     getForms() {
         return of(new Array<FormWindow>());
     }
+
     saveForm(name: string, form: FormWindow) {
         localStorage.setItem(name, JSON.stringify(form));
         return of(form);
     }
+
     saveData(dataSource: FormDataSource, ids: Array<string>, data: any) {
         if (!ids)
             throwError('no ids provided!');
