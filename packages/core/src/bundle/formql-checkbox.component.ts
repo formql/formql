@@ -13,7 +13,7 @@ import { FormValidator } from '../models/rule.model';
             <div>
                 <input [id]="field.componentId" type="checkbox"
                     [formControl]="formControl"
-                    class="fql-bundle-checkbox-input" [tabIndex]="tabIndex"
+                    class="fql-bundle-checkbox-input" [tabIndex]="field.tabIndex"
                     [attr.disabled]="formControl.disabled ? '' : null">
             </div>
         </div>`,
@@ -43,7 +43,6 @@ export class FormQLCheckboxComponent implements ControlValueAccessor {
 
     @Input() field: FormComponent<boolean>;
     @Input() formControl: FormControl;
-    @Input() tabIndex: string;
 
     private _value: boolean;
 

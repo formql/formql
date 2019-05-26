@@ -14,11 +14,11 @@ import { FormValidator } from '../models/rule.model';
                [ngClass]="{'fql-bundle-label-required': field.rules?.required?.value}">{{field.label}}</label>
         <div>
             <input *ngIf="!mask" [id]="field.componentId" [type]="field.type"
-                [formControl]="formControl" class="fql-bundle-field-input" [tabIndex]="tabIndex"
+                [formControl]="formControl" class="fql-bundle-field-input" [tabIndex]="field.tabIndex"
                 [attr.disabled]="formControl.disabled ? '' : null">
             <input *ngIf="mask" [textMask]="{ mask: mask, guide: false}" [id]="field.componentId" type="text"
                 [formControl]="formControl"
-                class="fql-bundle-field-input" [tabIndex]="tabIndex"
+                class="fql-bundle-field-input" [tabIndex]="field.tabIndex"
                 [attr.disabled]="formControl.disabled ? '' : null">
         </div>
         </div>`,
@@ -48,12 +48,10 @@ export class FormQLInputComponent implements ControlValueAccessor, OnInit {
 
     @Input() field: FormComponent<any>;
     @Input() formControl: FormControl;
-    @Input() tabIndex: string;
 
     private _value: string;
     public mask: any;
 
-    private _propagateChange = (_: any) => { };
 
     ngOnInit() {
         if (this.field && this.field.textMask && this.field.type) {
@@ -80,7 +78,6 @@ export class FormQLInputComponent implements ControlValueAccessor, OnInit {
 
     set value(value: any) {
         this._value = value;
-        this._propagateChange(this._value);
     }
 
     writeValue(value: string): void {
@@ -88,9 +85,7 @@ export class FormQLInputComponent implements ControlValueAccessor, OnInit {
             this._value = value;
     }
 
-    registerOnChange(fn: any): void {
-        this._propagateChange = fn;
-    }
+    registerOnChange(fn: any): void {}
 
     registerOnTouched(fn: any): void { }
 }

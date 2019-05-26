@@ -13,7 +13,7 @@ import { FormValidator } from '../models/rule.model';
                [ngClass]="{'fql-bundle-label-required': field.rules?.required?.value}">{{field.label}}</label>
         <div>
             <select [formControl]="formControl" [id]="field.componentId"
-                class="fql-bundle-field-input" [tabIndex]="tabIndex"
+                class="fql-bundle-field-input" [tabIndex]="field.tabIndex"
                 [attr.disabled]="field.rules?.readonly?.value ? '' : null"
                 [attr.multiple]="field.type === 'multiple'">
                 <ng-container *ngIf="list">
@@ -48,7 +48,6 @@ export class FormQLSelectComponent implements ControlValueAccessor, OnInit {
 
     @Input() field: FormComponent<any>;
     @Input() formControl: FormControl;
-    @Input() tabIndex: string;
 
     private _value: string;
     list: Array<OptionValue>;

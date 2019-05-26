@@ -65,8 +65,6 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
             HelperService.getFactory(this.componentFactoryResolver, this.component.componentName));
         (<any>component).instance.field = this.component;
         (<any>component).instance.formControl = this.reactiveSection.controls[this.component.componentId];
-        if (this.component.tabIndex != null)
-            (<any>component).instance.tabIndex = this.component.tabIndex;
 
         this.content.insert(component.hostView);
 

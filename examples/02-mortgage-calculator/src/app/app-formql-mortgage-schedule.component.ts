@@ -55,7 +55,6 @@ export class AppFormQLMortgageScheduleComponent implements OnInit, ControlValueA
     public mortgagePeriodField: string;
 
     private _value: string;
-    private _propagateChange = (_: any) => { };
 
     constructor() {
 
@@ -108,7 +107,6 @@ export class AppFormQLMortgageScheduleComponent implements OnInit, ControlValueA
 
     set value(value: any) {
         this._value = value;
-        this._propagateChange(this._value);
     }
 
     writeValue(value: string): void {
@@ -116,9 +114,7 @@ export class AppFormQLMortgageScheduleComponent implements OnInit, ControlValueA
             this._value = value;
     }
 
-    registerOnChange(fn: any): void {
-        this._propagateChange = fn;
-    }
+    registerOnChange(fn: any): void {}
 
     registerOnTouched(fn: any): void { }
 
@@ -224,5 +220,3 @@ export class LineChartData {
     public data: Array<number>;
     public label: string;
 }
-
-
