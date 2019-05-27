@@ -96,7 +96,7 @@ export class StoreService implements OnDestroy {
     reSetForm(eventType: InternalEventType, event: any) {
         switch (eventType) {
             case InternalEventType.EditingForm:
-                this.populateReactiveForm(event);
+                this.populateReactiveForm();
             break;
 
             case InternalEventType.DndFormChanged:
@@ -106,7 +106,7 @@ export class StoreService implements OnDestroy {
                 if (indexDnd >= 0)
                     this.formState.form.pages[indexDnd] = event;
 
-                this.populateReactiveForm(pageId);
+                this.populateReactiveForm();
             break;
 
             case InternalEventType.RemoveComponent:
@@ -121,7 +121,7 @@ export class StoreService implements OnDestroy {
                         }
                     });
                 });
-                this.populateReactiveForm(updateSectionId);
+                this.populateReactiveForm();
             break;
 
             case InternalEventType.RemoveSection:
@@ -134,12 +134,12 @@ export class StoreService implements OnDestroy {
                         updatePageId = page.pageId;
                     }
                 });
-                this.populateReactiveForm(updatePageId);
+                this.populateReactiveForm();
             break;
         }
     }
 
-    private populateReactiveForm(objectId: string = null)  {
+    private populateReactiveForm()  {
         if (this.formState.form.pages != null && this.formState.form.pages.length > 0) {
             // get reactive structure -> formControls, pageGroup and components if it's an update
             const reactiveFormStructure = HelperService.createReactiveFormStructure(this.formState.form, true);
@@ -149,7 +149,7 @@ export class StoreService implements OnDestroy {
             this.formState.form.pages.forEach(page => {
                 this.formState.reactiveForm.setControl(page.pageId, reactiveFormStructure.pageGroup[page.pageId]);
             });
-            this.formState.form = HelperService.updateTemplates(this.formState.form, objectId);
+            this.formState.form = HelperService.updateTemplates(this.formState.form);
             if (reactiveFormStructure.components != null && reactiveFormStructure.components.length > 0)
                 this.formControls = HelperService.resetValidators(reactiveFormStructure.components,
                             this.formControls, this.componentFactoryResolver);
