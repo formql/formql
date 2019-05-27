@@ -12,7 +12,7 @@ import { FormValidator } from '../models/rule.model';
                [ngClass]="{'fql-bundle-label-required': field.rules?.required?.value}">{{field.label}}</label>
         <div>
             <textarea [id]="field.componentId" [formControl]="formControl" class="fql-bundle-field-input"
-            [tabIndex]="tabIndex" [attr.disabled]="formControl.disabled ? '' : null">
+            [tabIndex]="field.tabIndex" [attr.disabled]="formControl.disabled ? '' : null">
             </textarea>
         </div>
         </div>`,
@@ -41,7 +41,6 @@ export class FormQLTextareaComponent implements ControlValueAccessor {
 
     @Input() field: FormComponent<any>;
     @Input() formControl: FormControl;
-    @Input() tabIndex: string;
 
     private _value: string;
     private _propagateChange = (_: any) => { };

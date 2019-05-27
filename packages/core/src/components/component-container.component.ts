@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, ComponentFactoryResolver, ViewContainerRef, ViewChild, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ComponentFactoryResolver, ViewContainerRef, 
+    ViewChild, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormComponent } from '../models/form-component.model';
 import { InternalEventHandlerService } from '../services/internal-event-handler.service';
 import { InternalEventType } from '../models/internal-event.model';
@@ -65,8 +66,6 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
             HelperService.getFactory(this.componentFactoryResolver, this.component.componentName));
         (<any>component).instance.field = this.component;
         (<any>component).instance.formControl = this.reactiveSection.controls[this.component.componentId];
-        if (this.component.tabIndex != null)
-            (<any>component).instance.tabIndex = this.component.tabIndex;
 
         this.content.insert(component.hostView);
 

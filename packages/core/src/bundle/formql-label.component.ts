@@ -27,7 +27,6 @@ export class FormQLLabelComponent implements ControlValueAccessor {
 
     @Input() field: FormComponent<any>;
     @Input() formControl: FormControl;
-    @Input() tabIndex: string;
 
     private _value: string;
     private _propagateChange = (_: any) => { };

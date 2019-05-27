@@ -10,7 +10,7 @@ import { FormValidator } from '../models/rule.model';
     styleUrls: ['./formql-radio.component.scss'],
     template: `<div *ngIf="formControl!=null">
         <label [attr.for]="field.componentId"
-               [ngClass]="{'fql-bundle-label-required': field.rules?.required?.value}">{{field.label}}</label>    
+               [ngClass]="{'fql-bundle-label-required': field.rules?.required?.value}">{{field.label}}</label>
         <div class="fql-bundle-field-input">
             <label *ngFor="let item of list" class="fql-bundle-field-radio">
                 <input type="radio" class="fql-bundle-field-radio"
@@ -44,7 +44,6 @@ export class FormQLRadioComponent implements ControlValueAccessor, OnInit {
 
     @Input() field: FormComponent<any>;
     @Input() formControl: FormControl;
-    @Input() tabIndex: string;
 
     private _value: string;
     list: Array<OptionValue>;

@@ -38,7 +38,6 @@ export class AppFormQLChartComponent implements OnInit, ControlValueAccessor {
 
     @Input() field: FormComponent<any>;
     @Input() formControl: FormControl;
-    @Input() tabIndex: string;
 
     private _value: string;
     public chartConfig: ChartConfiguration;
@@ -48,8 +47,6 @@ export class AppFormQLChartComponent implements OnInit, ControlValueAccessor {
 
     public noData = true;
 
-    private _propagateChange = (_: any) => { };
-
 
     get value(): any {
 
@@ -58,7 +55,6 @@ export class AppFormQLChartComponent implements OnInit, ControlValueAccessor {
 
     set value(value: any) {
         this._value = value;
-        this._propagateChange(this._value);
     }
 
     writeValue(value: string): void {
@@ -66,9 +62,7 @@ export class AppFormQLChartComponent implements OnInit, ControlValueAccessor {
             this._value = value;
     }
 
-    registerOnChange(fn: any): void {
-        this._propagateChange = fn;
-    }
+    registerOnChange(fn: any): void { }
 
     registerOnTouched(fn: any): void { }
 
@@ -88,14 +82,14 @@ export class AppFormQLChartComponent implements OnInit, ControlValueAccessor {
 
         if (this.chartFields) {
             this.formControl.valueChanges.subscribe(val => {
-                this.drawGraph(val);
+                this.drawChart(val);
             });
 
-            this.drawGraph(this.field.value);
+            this.drawChart(this.field.value);
         }
     }
 
-    drawGraph(val) {
+    drawChart(val) {
         const newChartData = [];
         this.chartFields.forEach((key, index) => {
             let value = 0;
@@ -134,6 +128,3 @@ export class ChartConfiguration {
     public ChartLabels: Array<string>;
     public ChartValueMap: Array<string>;
 }
-
-
-

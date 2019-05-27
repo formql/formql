@@ -240,19 +240,13 @@ export class HelperService {
         return result;
     }
 
-    public static updateTemplates(form: FormWindow, objectId: string = null): FormWindow {
+    public static updateTemplates(form: FormWindow): FormWindow {
         form.pages.forEach(page => {
-            if (page.template.reRender ||
-                (objectId && (page.pageId === objectId || page.sections.find(c => c.sectionId === objectId)))) {
-                page.template.reRender = false;
-                page.template = HelperService.deepCopy(page.template);
-            }
+            page.template.reRender = false;
+            page.template = HelperService.deepCopy(page.template);
             page.sections.forEach(section => {
-                if (section.template.reRender ||
-                    (objectId && (section.sectionId === objectId || section.components.find(c => c.componentId === objectId)))) {
                     section.template.reRender = false;
                     section.template = HelperService.deepCopy(section.template);
-                }
             });
         });
         return form;

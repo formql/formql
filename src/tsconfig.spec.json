@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "types": [
+            "jest"
+        ],
+        "experimentalDecorators": true
+    }
+}
