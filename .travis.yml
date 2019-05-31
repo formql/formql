@@ -12,7 +12,5 @@ before_install:
 install:
   - npm ci
   - npm run build
-script:
-  - npm test
   
  
