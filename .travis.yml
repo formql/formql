@@ -1,7 +1,6 @@
-sudo: required
 language: node_js
 node_js:
-  - "11"
+  - "10"
 branches:
   only:
   - master
