@@ -9,6 +9,6 @@ before_install:
   - npm install -g @angular/cli@7.3.8
 install:
   - npm ci
-  - npm run build
+  - npm run npm_build_library
   
  
