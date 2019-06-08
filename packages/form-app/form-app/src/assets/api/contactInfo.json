@@ -120,7 +120,7 @@
                 "componentName": "FormQLMatCheckboxComponent",
                 "position": {
                     "id": "ID3_1",
-                    "index": 0,
+                    "index": 1,
                     "type": 2
                 },
                 "rules": {},
@@ -144,6 +144,30 @@
                 },
                 "value": null,
                 "schema": "contact.comments"
+            }, {
+                "componentId": "4b206429-58d0-7a41-8bfc-040cdaf81677",
+                "label": "Full Name",
+                "componentName": "FormQLMatFormFieldComponent",
+                "position": {
+                    "id": "ID3_1",
+                    "index": 0,
+                    "type": 2
+                },
+                "rules": {
+                    "readonly": {
+                        "key": "readonly",
+                        "condition": "true",
+                        "value": null
+                    },
+                    "value": {
+                        "key": "value",
+                        "condition": "(contact.firstName ? contact.firstName : '') + ' ' + (contact.lastName ? contact.lastName : '')",
+                        "value": null
+                    }
+                },
+                "action": null,
+                "schema": "contact.fullname",
+                "value": null
             }],
             "position": {
                 "id": "ID1_1",
