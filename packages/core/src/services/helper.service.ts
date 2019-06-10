@@ -258,7 +258,8 @@ export class HelperService {
             components.forEach(component => {
                 if (component != null) {
                     const componentControl = formControls.find(fc => fc.key === component.componentId);
-                    componentControl.control = HelperService.setValidators(componentFactoryResolver,
+                    if (componentControl)
+                        componentControl.control = HelperService.setValidators(componentFactoryResolver,
                             component, componentControl.control);
                 }
             });
