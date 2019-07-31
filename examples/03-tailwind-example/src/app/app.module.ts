@@ -4,11 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormQLModule } from '@formql/core';
-// import { FormQLModule } from '../../../../core/src/formql.module';
 import { FormQLEditorModule } from '@formql/editor';
-// import { FormQLEditorModule } from '../../../../editor/src/formql-editor.module';
-import { FormQLMaterialModule } from '@formql/material'
-// import { FormQLMaterialModule } from '../../../../material/src/formql-material.module';
 
 import { DummyService } from './app-service';
 
@@ -17,23 +13,36 @@ import { AppFormQLComponent } from './app-formql.component';
 
 import { AppFormQLEditorComponent } from './app-formql-editor.component';
 import { TextMaskModule } from 'angular2-text-mask';
+import { AppTailwindTextFieldComponent } from './app-tailwind-text-field.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AppTailwindLabelComponent } from './app-tailwind-label.component';
+import { AppTailwindHeaderComponent } from './app-tailwind-header.component';
+import { AppTailwindSelectFieldComponent } from './app-tailwind-select-field.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         AppFormQLComponent,
-        AppFormQLEditorComponent
+        AppFormQLEditorComponent,
+        AppTailwindTextFieldComponent,
+        AppTailwindLabelComponent,
+        AppTailwindHeaderComponent,
+        AppTailwindSelectFieldComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         FormQLModule,
         FormQLEditorModule,
-        FormQLMaterialModule,
         HttpClientModule,
         TextMaskModule,
         ReactiveFormsModule
+    ],
+    entryComponents: [
+        AppTailwindTextFieldComponent,
+        AppTailwindLabelComponent,
+        AppTailwindHeaderComponent,
+        AppTailwindSelectFieldComponent
     ],
     providers: [DummyService, { provide: 'FormQLService', useClass: DummyService }],
     bootstrap: [AppComponent]

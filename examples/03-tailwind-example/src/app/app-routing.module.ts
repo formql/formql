@@ -10,6 +10,7 @@ const appRoutes: Routes = [
     { path: 'form/:name/edit', component: AppFormQLEditorComponent },
     { path: 'form/:name/:id', component: AppFormQLComponent },
     { path: 'form/:name/:id/edit', component: AppFormQLEditorComponent }
+
 ];
 
 @NgModule({
