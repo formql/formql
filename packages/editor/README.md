@@ -12,7 +12,7 @@ FormQL comes with the following features:
 
 # Demo
 - Formql.io: https://formql.io/example/#/form/contactInfo/edit
-- Stackblitz: https://stackblitz.com/edit/formql-example
+- Stackblitz: https://stackblitz.com/edit/formql-example-material
 
 # Documentation
 https://github.com/formql/formql/wiki

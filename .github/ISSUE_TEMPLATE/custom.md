@@ -24,7 +24,7 @@ assignees: ''
 
 
 * **If the current behavior is a bug, please provide the steps to reproduce and if possible a minimal demo of the problem** via
-https://stackblitz.com or similar (you can use this template as a starting point: https://stackblitz.com/edit/formql-example).
+https://stackblitz.com or similar (you can use this template as a starting point: https://stackblitz.com/edit/formql-example-material).
 
 
 
