@@ -37,9 +37,9 @@ npm start
 ```
 if you want to use the libraries from your local environemnt, replace the @formql instances with the following in your package.json...
 ```json
-"@formql/core": "file:dist/formql/formql-core-0.3.6.tgz",
-"@formql/editor": "file:dist/formql-editor/formql-editor-0.3.6.tgz",
-"@formql/material": "file:dist/formql-material/formql-material-0.3.6.tgz",
+"@formql/core": "file:dist/formql/formql-core-0.3.7.tgz",
+"@formql/editor": "file:dist/formql-editor/formql-editor-0.3.7.tgz",
+"@formql/material": "file:dist/formql-material/formql-material-0.3.7.tgz",
 ```
 ...and then run the commands
 ```bash

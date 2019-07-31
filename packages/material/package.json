@@ -1,6 +1,6 @@
 {
     "name": "@formql/material",
-    "version": "0.3.6",
+    "version": "0.3.7",
     "description": "FormQL - A framework for building dynamic forms",
     "license": "MIT",
     "author": "Juan Stoppa",
@@ -24,7 +24,7 @@
         "@angular/platform-browser": "^7.2.0",
         "@angular/cdk": "^7.2.0",
         "@angular/material": "^7.2.0",
-        "@formql/core": "^0.3.6"
+        "@formql/core": "^0.3.7"
     },
     "bugs": {
         "url": "https://github.com/formql/formql/issues"
