@@ -7,7 +7,8 @@
   "homepage": "https://formql.io",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve & ngtw watch",
+    "start": "ng serve --port=4203 & ngtw watch",
+    "start-prod": "ng serve --prod --port=4203 & ngtw watch",
     "build": "ngtw build && ng build",
     "test": "ng test",
     "lint": "ng lint",

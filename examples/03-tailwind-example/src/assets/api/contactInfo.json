@@ -1,237 +1,215 @@
 {
-    "layoutComponentName": "PlainLayoutComponent",
-    "formName": "contactInfo",
-    "class": "container",
-    "dataSource": {
-        "type": "GraphQL",
-        "query": "{ contact(id: $id) { id firstName lastName email mobile addressLine1 addressLine2 addressCity addressPostCode } } ",
-        "mutation": "mutation { updateContact(contact: ${contact}) { id: id firstName: firstName lastName: lastName email: email mobile: mobile addressPostCode:addressPostCode addressLine1:addressLine1 addressLine2:addressLine2 addressCity:addressCity  } }"
+  "layoutComponentName": "PlainLayoutComponent",
+  "formName": "contactInfo",
+  "class": "container",
+  "dataSource": {
+    "type": "GraphQL",
+    "query": "{ contact(id: $id) { id firstName lastName email mobile addressLine1 addressLine2 addressCity addressPostCode } } ",
+    "mutation": "mutation { updateContact(contact: ${contact}) { id: id firstName: firstName lastName: lastName email: email mobile: mobile addressPostCode:addressPostCode addressLine1:addressLine1 addressLine2:addressLine2 addressCity:addressCity  } }"
+  },
+  "pages": [{
+    "structure": "12",
+    "template": {
+      "title": "header",
+      "body": {
+        "gridTemplateColumns": "0.5fr 2fr 0.5fr",
+        "gridTemplateRows": "",
+        "gridTemplateAreas": "\"left-margin middle right-margin\"",
+        "style": {
+          "background-color": "#F5F7FA"
+        }
+      },
+      "reRender": false
     },
-    "pages": [{
-        "structure": "12",
-        "template": {
-            "title": "header",
-            "body": {
-                "gridTemplateColumns": "0.5fr 2fr 0.5fr",
-                "gridTemplateRows": "",
-                "gridTemplateAreas": "\"left-margin middle right-margin\"",
-                "style": {
-                    "background-color": "#F5F7FA"
-                }
-            },
-            "reRender": false
+    "sections": [{
+      "sectionId": "3e4420e4-e0ef-78b3-cd43-e9d8fb08ab0b",
+      "sectionName": "New section",
+      "components": [{
+        "componentId": "9df3763b-dc55-f97f-81ab-877263b82cfc",
+        "label": "Email Address",
+        "componentName": "AppTailwindTextFieldComponent",
+        "position": {
+          "id": "right",
+          "index": 0,
+          "type": 2
         },
-        "sections": [{
-            "sectionId": "3e4420e4-e0ef-78b3-cd43-e9d8fb08ab0b",
-            "sectionName": "New section",
-            "components": [{
-                "componentId": "9df3763b-dc55-f97f-81ab-877263b82cfc",
-                "label": "Email Address",
-                "componentName": "AppTailwindTextFieldComponent",
-                "position": {
-                    "id": "right",
-                    "index": 0,
-                    "type": 2
-                },
-                "action": null,
-                "value": null,
-                "type": "text",
-                "rules": {}
-            }, {
-                "componentId": "d296bc1b-ed35-847f-4c5e-b4806c709e5f",
-                "label": "Account Settings",
-                "componentName": "AppTailwindHeaderComponent",
-                "position": {
-                    "id": "top",
-                    "index": 0,
-                    "type": 1
-                },
-                "rules": {},
-                "action": null,
-                "style": {
-                    "padding": "0px",
-                    "margin": "10px",
-                    "border-bottom": "1px solid #CED8E3",
-                    "font-family": "Roboto,'Helvetica Neue',sans-serif"
-                },
-                "value": null
-            }, {
-                "componentId": "9abdcc3f-6717-1075-9ed5-98b02014a0c6",
-                "label": "Basics",
-                "componentName": "FormQLLabelComponent",
-                "position": {
-                    "id": "left",
-                    "index": 0,
-                    "type": 2
-                },
-                "rules": {},
-                "configuration": null,
-                "style": null,
-                "value": null
-            }, {
-                "componentId": "6731fbbd-ace9-3c41-169b-fd8bcb359514",
-                "label": "Country",
-                "componentName": "AppTailwindSelectFieldComponent",
-                "position": {
-                    "id": "right",
-                    "index": 3,
-                    "type": 2
-                },
-                "rules": {},
-                "action": null,
-                "value": null
-            }, {
-                "componentId": "68819fe4-936a-6ef8-f5a2-36d7e1bbb1e4",
-                "label": "Having an up-to-date email address attached to your account is a great step toward improved account security.",
-                "componentName": "AppTailwindLabelComponent",
-                "position": {
-                    "id": "left",
-                    "index": 1,
-                    "type": 2
-                },
-                "rules": {},
-                "action": null,
-                "style": {
-                    "font-size": "14px",
-                    "margin-top": "0px",
-                    "padding-top": "0px",
-                    "color": "#55729A"
-                },
-                "value": null
-            }, {
-                "componentId": "e5f43e47-e821-10ba-aa7d-203ca293f1a8",
-                "label": "Language",
-                "componentName": "AppTailwindSelectFieldComponent",
-                "position": {
-                    "id": "right",
-                    "index": 2,
-                    "type": 2
-                },
-                "action": null,
-                "value": null,
-                "rules": {}
-            }, {
-                "componentId": "f47e0ef4-15d2-2db6-d2a7-039503143686",
-                "label": "Password",
-                "componentName": "AppTailwindTextFieldComponent",
-                "position": {
-                    "id": "right",
-                    "index": 1,
-                    "type": 2
-                },
-                "rules": {},
-                "action": null,
-                "value": null,
-                "type": "password"
-            }],
-            "template": {
-                "header": {
-                    "gridTemplateColumns": "1fr",
-                    "gridTemplateRows": "1fr",
-                    "gridTemplateAreas": "\"top\""
-                },
-                "body": {
-                    "gridTemplateColumns": "1fr 3fr",
-                    "gridTemplateRows": "1fr",
-                    "gridTemplateAreas": "\"left right\""
-                },
-                "reRender": false
-            },
-            "position": {
-                "id": "middle",
-                "index": 0
-            }
-        }, {
-            "sectionId": "6885019c-63c9-11ca-b9a4-fab11235249e",
-            "sectionName": "New section",
-            "components": [{
-                "componentId": "b587db44-2eaf-bb99-bc4a-f334df719b5c",
-                "label": "",
-                "componentName": "AppTailwindHeaderComponent",
-                "position": {
-                    "id": "ID1_1",
-                    "index": 0,
-                    "type": 1
-                },
-                "value": null,
-                "rules": {},
-                "style": {
-                    "border-top": "1px solid #CED8E3",
-                    "padding": "0px",
-                    "margin": "10px",
-                    "font-family": "Roboto,'Helvetica Neue',sans-serif"
-                },
-                "action": null
-            }, {
-                "componentId": "0dd5eae1-dd37-a5c4-647e-39c54cc6d449",
-                "label": "Profile",
-                "componentName": "FormQLLabelComponent",
-                "position": {
-                    "id": "left",
-                    "index": 0,
-                    "type": 2
-                },
-                "rules": {},
-                "value": null
-            }, {
-                "componentId": "176ebd1c-e1df-44ac-503f-a687769ba9b2",
-                "label": "This information will be shown publicly so be careful what information you provide.",
-                "componentName": "FormQLLabelComponent",
-                "position": {
-                    "id": "left",
-                    "index": 1,
-                    "type": 2
-                },
-                "rules": {},
-                "style": {
-                    "font-size": "14px",
-                    "margin-top": "0px",
-                    "padding-top": "0px",
-                    "color": "#55729A"
-                },
-                "value": null
-            }, {
-                "componentId": "71107a5e-4d1e-2d4e-d736-8787a1588f00",
-                "label": "First Name",
-                "componentName": "AppTailwindTextFieldComponent",
-                "position": {
-                    "id": "right-1",
-                    "index": 0,
-                    "type": 2
-                },
-                "action": null,
-                "value": null
-            }, {
-                "componentId": "c9052afa-7c73-c882-b5a4-37b03a552522",
-                "label": "Last Name",
-                "componentName": "AppTailwindTextFieldComponent",
-                "position": {
-                    "id": "right-2",
-                    "index": 0,
-                    "type": 2
-                },
-                "action": null,
-                "value": null
-            }],
-            "template": {
-                "header": {
-                    "gridTemplateColumns": "3fr",
-                    "gridTemplateRows": "1px",
-                    "gridTemplateAreas": "\"ID1_1\"",
-                    "hidden": false
-                },
-                "body": {
-                    "gridTemplateColumns": "1fr 1.5fr 1.5fr",
-                    "gridTemplateRows": "200px",
-                    "gridTemplateAreas": "\"left right-1 right-2\""
-                },
-                "reRender": false
-            },
-            "position": {
-                "id": "middle",
-                "index": 2
-            }
-        }],
-        "pageId": "f83c2ca3-1259-aa95-e817-61321a04713d"
-    }]
+        "action": null,
+        "value": null,
+        "type": "text",
+        "rules": {}
+      }, {
+        "componentId": "d296bc1b-ed35-847f-4c5e-b4806c709e5f",
+        "label": "Account Settings",
+        "componentName": "AppTailwindHeaderComponent",
+        "position": {
+          "id": "top",
+          "index": 0,
+          "type": 1
+        },
+        "rules": {},
+        "action": null,
+        "style": {
+          "padding": "0px",
+          "margin": "10px",
+          "border-bottom": "1px solid #CED8E3",
+          "font-family": "Roboto,'Helvetica Neue',sans-serif"
+        },
+        "value": null
+      }, {
+        "componentId": "9abdcc3f-6717-1075-9ed5-98b02014a0c6",
+        "label": "Basics",
+        "componentName": "FormQLLabelComponent",
+        "position": {
+          "id": "left",
+          "index": 0,
+          "type": 2
+        },
+        "rules": {},
+        "configuration": null,
+        "style": null,
+        "value": null
+      }, {
+        "componentId": "6731fbbd-ace9-3c41-169b-fd8bcb359514",
+        "label": "Country",
+        "componentName": "AppTailwindSelectFieldComponent",
+        "position": {
+          "id": "right",
+          "index": 3,
+          "type": 2
+        },
+        "rules": {},
+        "action": null,
+        "value": null
+      }, {
+        "componentId": "68819fe4-936a-6ef8-f5a2-36d7e1bbb1e4",
+        "label": "Having an up-to-date email address attached to your account is a great step toward improved account security.",
+        "componentName": "AppTailwindLabelComponent",
+        "position": {
+          "id": "left",
+          "index": 1,
+          "type": 2
+        },
+        "rules": {},
+        "action": null,
+        "style": {
+          "font-size": "14px",
+          "margin-top": "0px",
+          "padding-top": "0px",
+          "color": "#55729A"
+        },
+        "value": null
+      }, {
+        "componentId": "e5f43e47-e821-10ba-aa7d-203ca293f1a8",
+        "label": "Language",
+        "componentName": "AppTailwindSelectFieldComponent",
+        "position": {
+          "id": "right",
+          "index": 2,
+          "type": 2
+        },
+        "action": null,
+        "value": null,
+        "rules": {}
+      }, {
+        "componentId": "f47e0ef4-15d2-2db6-d2a7-039503143686",
+        "label": "Password",
+        "componentName": "AppTailwindTextFieldComponent",
+        "position": {
+          "id": "right",
+          "index": 1,
+          "type": 2
+        },
+        "rules": {},
+        "action": null,
+        "value": null,
+        "type": "password"
+      }],
+      "template": {
+        "header": {
+          "gridTemplateColumns": "1fr",
+          "gridTemplateRows": "1fr",
+          "gridTemplateAreas": "\"top\""
+        },
+        "body": {
+          "gridTemplateColumns": "1fr 3fr",
+          "gridTemplateRows": "1fr",
+          "gridTemplateAreas": "\"left right\""
+        },
+        "reRender": false
+      },
+      "position": {
+        "id": "middle",
+        "index": 0
+      }
+    }, {
+      "sectionId": "6885019c-63c9-11ca-b9a4-fab11235249e",
+      "sectionName": "New section",
+      "components": [{
+        "componentId": "b587db44-2eaf-bb99-bc4a-f334df719b5c",
+        "label": "",
+        "componentName": "AppTailwindHeaderComponent",
+        "position": {
+          "id": "ID1_1",
+          "index": 0,
+          "type": 1
+        },
+        "value": null,
+        "rules": {},
+        "style": {
+          "border-top": "1px solid #CED8E3",
+          "padding": "0px",
+          "margin": "10px",
+          "font-family": "Roboto,'Helvetica Neue',sans-serif"
+        },
+        "action": null
+      }, {
+        "componentId": "0dd5eae1-dd37-a5c4-647e-39c54cc6d449",
+        "label": "Profile",
+        "componentName": "FormQLLabelComponent",
+        "position": {
+          "id": "left",
+          "index": 0,
+          "type": 2
+        },
+        "rules": {},
+        "value": null
+      }, {
+        "componentId": "176ebd1c-e1df-44ac-503f-a687769ba9b2",
+        "label": "This information will be shown publicly so be careful what information you provide.",
+        "componentName": "FormQLLabelComponent",
+        "position": {
+          "id": "left",
+          "index": 1,
+          "type": 2
+        },
+        "rules": {},
+        "style": {
+          "font-size": "14px",
+          "margin-top": "0px",
+          "padding-top": "0px",
+          "color": "#55729A"
+        },
+        "value": null
+      }],
+      "template": {
+        "header": {
+          "gridTemplateColumns": "3fr",
+          "gridTemplateRows": "1px",
+          "gridTemplateAreas": "\"ID1_1\"",
+          "hidden": false
+        },
+        "body": {
+          "gridTemplateColumns": "1fr 1.5fr 1.5fr",
+          "gridTemplateRows": "200px",
+          "gridTemplateAreas": "\"left right-1 right-2\""
+        },
+        "reRender": false
+      },
+      "position": {
+        "id": "middle",
+        "index": 2
+      }
+    }],
+    "pageId": "f83c2ca3-1259-aa95-e817-61321a04713d"
+  }]
 }
