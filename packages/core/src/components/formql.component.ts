@@ -38,7 +38,7 @@ export class FormQLComponent implements OnDestroy, OnInit {
     @Output() formSaveEnd: EventEmitter<boolean> = new EventEmitter();
     @Output() formError: EventEmitter<boolean> = new EventEmitter();
 
-    @ViewChild('target', { read: ViewContainerRef }) target: ViewContainerRef;
+    @ViewChild('target', { read: ViewContainerRef, static : false }) target: ViewContainerRef;
 
     private componentDestroyed = new Subject();
 
