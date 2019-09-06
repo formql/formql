@@ -55,8 +55,8 @@ import { GridPositionType } from '../models/style.model';
 })
 export class SectionWrapperComponent implements OnInit {
 
-    @ViewChild('wrapper', { read: ViewContainerRef }) wrapper: ViewContainerRef;
-    @ViewChild('tooltip', { read: ViewContainerRef }) tooltip: ViewContainerRef;
+    @ViewChild('wrapper', { read: ViewContainerRef, static : true }) wrapper: ViewContainerRef;
+    @ViewChild('tooltip', { read: ViewContainerRef, static : true }) tooltip: ViewContainerRef;
 
     @Input() section: FormSection;
     @Input() reactiveSection: FormGroup;

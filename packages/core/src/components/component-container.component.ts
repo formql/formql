@@ -34,9 +34,9 @@ import { Subscription } from 'rxjs';
 })
 export class ComponentContainerComponent implements OnInit, OnDestroy {
 
-    @ViewChild('content', { read: ViewContainerRef }) content: ViewContainerRef;
-    @ViewChild('wrapper', { read: ViewContainerRef }) wrapper: ViewContainerRef;
-    @ViewChild('tooltip', { read: ViewContainerRef }) tooltip: ViewContainerRef;
+    @ViewChild('content', { read: ViewContainerRef, static : true }) content: ViewContainerRef;
+    @ViewChild('wrapper', { read: ViewContainerRef, static : true }) wrapper: ViewContainerRef;
+    @ViewChild('tooltip', { read: ViewContainerRef, static : true }) tooltip: ViewContainerRef;
 
     @Input() component: FormComponent<any>;
     @Input() reactiveSection: FormGroup;

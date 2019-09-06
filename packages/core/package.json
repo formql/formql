@@ -1,6 +1,6 @@
 {
     "name": "@formql/core",
-    "version": "0.3.7",
+    "version": "0.4.0",
     "description": "FormQL - A framework for building dynamic forms",
     "license": "MIT",
     "author": "Juan Stoppa",
@@ -13,10 +13,10 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "peerDependencies": {
-        "@angular/common": "^7.2.0",
-        "@angular/compiler": "^7.2.0",
-        "@angular/core": "^7.2.0",
-        "@angular/forms": "^7.2.0",
+        "@angular/common": "^8.2.4",
+        "@angular/compiler": "^8.2.4",
+        "@angular/core": "^8.2.4",
+        "@angular/forms": "^8.2.4",
         "rxjs": "^6.3.3",
         "angular2-text-mask": "^9.0.0",
         "text-mask-addons": "^3.8.0",

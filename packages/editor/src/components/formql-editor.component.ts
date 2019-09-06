@@ -18,11 +18,11 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
     @Input() validators: Array<Function>;
     @Input() pathOpenViewMode: string;  // path should contain {0} for passing the fornName
 
-    @ViewChild('target', { read: ViewContainerRef }) target: ViewContainerRef;
-    @ViewChild('rightSidenav', { read: ViewContainerRef }) rightSidenav: ViewContainerRef;
-    @ViewChild('editorWindow', { read: ViewContainerRef }) editorWindow: ViewContainerRef;
-    @ViewChild('pusher', { read: ViewContainerRef }) pusher: ViewContainerRef;
-    @ViewChild('editor', { read: ViewContainerRef }) editor: ViewContainerRef;
+    @ViewChild('target', { read: ViewContainerRef, static : true }) target: ViewContainerRef;
+    @ViewChild('rightSidenav', { read: ViewContainerRef, static : true }) rightSidenav: ViewContainerRef;
+    @ViewChild('editorWindow', { read: ViewContainerRef, static : true }) editorWindow: ViewContainerRef;
+    @ViewChild('pusher', { read: ViewContainerRef, static : true }) pusher: ViewContainerRef;
+    @ViewChild('editor', { read: ViewContainerRef, static : true }) editor: ViewContainerRef;
 
     formql: FormQLComponent;
     subscription$: Subscription;
