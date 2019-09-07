@@ -9,4 +9,4 @@ branches:
 before_install:
 
 install:
-  - npm install
+  - npm ci
