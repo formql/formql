@@ -7,6 +7,6 @@ branches:
   only:
   - master
 before_install:
-  - npm install -g @angular/cli@8.3.2
+
 install:
   - npm ci
