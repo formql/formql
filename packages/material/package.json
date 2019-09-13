@@ -1,6 +1,6 @@
 {
     "name": "@formql/material",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "description": "FormQL - A framework for building dynamic forms",
     "license": "MIT",
     "author": "Juan Stoppa",
@@ -13,18 +13,18 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "peerDependencies": {
+        "@angular/cdk": "^8.1.4",
         "@angular/common": "^8.2.4",
         "@angular/compiler": "^8.2.4",
         "@angular/core": "^8.2.4",
         "@angular/forms": "^8.2.4",
-        "rxjs": "^6.3.3",
-        "angular2-text-mask": "^9.0.0",
-        "text-mask-addons": "^3.8.0",
-        "angular2-uuid": "^1.1.1",
-        "@angular/platform-browser": "^8.2.4",
-        "@angular/cdk": "^8.1.4",
         "@angular/material": "^8.1.4",
-        "@formql/core": "^0.4.0"
+        "@angular/platform-browser": "^8.2.4",
+        "@formql/core": "^0.4.0",
+        "angular2-text-mask": "^9.0.0",
+        "angular2-uuid": "^1.1.1",
+        "rxjs": "^6.3.3",
+        "text-mask-addons": "^3.8.0"
     },
     "bugs": {
         "url": "https://github.com/formql/formql/issues"
