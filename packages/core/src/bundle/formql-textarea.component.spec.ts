@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormQLTextareaComponent } from './formql-textarea.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TextMaskModule } from 'angular2-text-mask';
 
 describe('FormQLTextareaComponent', () => {
   let component: FormQLTextareaComponent;
@@ -11,7 +10,7 @@ describe('FormQLTextareaComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, ReactiveFormsModule, TextMaskModule],
+      imports: [CommonModule, ReactiveFormsModule],
       declarations: [FormQLTextareaComponent]
     }).compileComponents();
   }));
