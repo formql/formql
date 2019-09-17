@@ -9,8 +9,7 @@ describe('FormQLMatButtonComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [FormQLMatButtonComponent]
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -19,7 +18,8 @@ describe('FormQLMatButtonComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should create', () => {
+    test('should create', () => {
+        console.log('component = ' + component);
         expect(component).toBeTruthy();
     });
 });

@@ -13,11 +13,11 @@ import { FormQLInternalMaterialModule } from './formql-internal-material';
 
 @NgModule({
     imports: [
-        BrowserAnimationsModule, 
-        FormQLModule, 
-        TextMaskModule, 
-        ReactiveFormsModule, 
-        CommonModule, 
+        BrowserAnimationsModule,
+        FormQLModule,
+        TextMaskModule,
+        ReactiveFormsModule,
+        CommonModule,
         FormQLInternalMaterialModule
     ],
     declarations: [

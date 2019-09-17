@@ -365,19 +365,17 @@ describe('Service: GetForm', () => {
         });
         service = TestBed.get(DummyService);
         backend = TestBed.get(HttpTestingController);
-
-        //jest.spyOn(console, 'error').mockImplementation(() => undefined);
     });
 
     afterEach(inject([HttpTestingController], (_backend: HttpTestingController) => {
         _backend.verify()
     }))
 
-    it('should create an instance sucessfully', () => {
+    test('should create an instance sucessfully', () => {
         expect(service).toBeDefined()
     })
 
-    it('should call getForm(contactInfo) api and return the form', () => {
+    test('should call getForm(contactInfo) api and return the form', () => {
         let actualDataReturned = {};
 
         service.getForm('contactInfo').subscribe(data => actualDataReturned = data);
@@ -391,7 +389,7 @@ describe('Service: GetForm', () => {
         expect(actualDataReturned).toEqual(mockContactInfo);
     });
 
-    it('should call getData(123) api and return the data', () => {
+    test('should call getData(123) api and return the data', () => {
         let actualDataReturned = {};
 
         localStorage.setItem('123', JSON.stringify(mockData));
