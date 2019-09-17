@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation, ViewChild, ViewContainerRef, OnInit, ComponentFactoryResolver } from '@angular/core';
+import { Component, Input, ViewChild, ViewContainerRef, OnInit, ComponentFactoryResolver } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormSection } from '../models/form-section.model';
 import { InternalEventHandlerService } from '../services/internal-event-handler.service';

@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormQLSelectComponent } from './formql-select.component';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('FormQLSelectComponent', () => {
   let component: FormQLSelectComponent;
@@ -8,6 +10,7 @@ describe('FormQLSelectComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [CommonModule, ReactiveFormsModule],
       declarations: [ FormQLSelectComponent ]
     })
     .compileComponents();

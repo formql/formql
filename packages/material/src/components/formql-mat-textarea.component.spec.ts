@@ -14,8 +14,7 @@ describe('FormQLMatTextareaComponent', () => {
         TestBed.configureTestingModule({
             imports: [CommonModule,
                       FormQLInternalMaterialModule,
-                      ReactiveFormsModule,
-                      BrowserAnimationsModule],
+                      ReactiveFormsModule],
             declarations: [FormQLMatTextareaComponent]
         }).compileComponents();
     }));

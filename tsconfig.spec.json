@@ -6,7 +6,8 @@
     "target": "es5",
     "baseUrl": "",
     "types": ["jest", "node"],
-    "allowJs": true
+    "allowJs": true,
+    "emitDecoratorMetadata": true
   },
   "files": [
     "karmaTest.ts"
