@@ -22,7 +22,7 @@ import { GridPositionType } from '../models/style.model';
             <div class="fql-section-tooltip">
                 <ng-container #tooltip></ng-container>
             </div>
-            <div *ngIf="!section.template.header.hidden" class="fql-section-header">
+            <div *ngIf="section.template && !section.template.header.hidden" class="fql-section-header">
                 <ng-template formqlGdConfig
                     [formqlGdConfigOf]="section.template.header" let-headeritem let-i="index">
                     <div formql-section-container
@@ -36,7 +36,7 @@ import { GridPositionType } from '../models/style.model';
                     </div>
                 </ng-template>
             </div>
-            <div *ngIf="!section.template.body.hidden" class="fql-section-body">
+            <div *ngIf="section.template && !section.template.body.hidden" class="fql-section-body">
                 <ng-template formqlGdConfig
                     [formqlGdConfigOf]="section.template.body" let-bodyitem let-i="index">
                     <div formql-section-container
