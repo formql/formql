@@ -25,7 +25,7 @@ describe('FormQLMatFormFieldComponent', () => {
         fixture.detectChanges();
     });
 
-    test('should create', () => {
+    test('should create FormQLMatFormFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 });
