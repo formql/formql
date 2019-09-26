@@ -14,6 +14,11 @@ export interface FormSection {
     rules: FormRules;
 }
 
+export interface SectionGroup {
+    [key: string]: Array<FormSection>;
+}
+
+
 
 
 

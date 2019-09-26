@@ -4,9 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { PlainLayoutComponent } from './components/layouts/plain-layout.component';
 import { PageWrapperComponent } from './components/page-wrapper.component';
-import { PageContainerComponent } from './components/page-container.component';
 import { SectionWrapperComponent } from './components/section-wrapper.component';
-import { SectionContainerComponent } from './components/section-container.component';
 import { ComponentContainerComponent } from './components/component-container.component';
 
 import { LayoutDirective } from './directives/layout.directive';
@@ -34,9 +32,7 @@ import { FormQLCheckboxComponent } from './bundle/formql-checkbox.component';
     // components
     PlainLayoutComponent,
     PageWrapperComponent,
-    PageContainerComponent,
     SectionWrapperComponent,
-    SectionContainerComponent,
     ComponentContainerComponent,
     FormQLComponent,
 

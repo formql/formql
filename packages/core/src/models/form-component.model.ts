@@ -26,3 +26,7 @@ export interface ComponentControl {
     key: string;
     control: FormControl;
 }
+
+export interface ComponentGroup {
+    [key: string]: Array<FormComponent<any>>;
+}

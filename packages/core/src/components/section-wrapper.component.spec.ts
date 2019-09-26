@@ -1,14 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SectionWrapperComponent } from './section-wrapper.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { DndDirective } from '../directives/dnd.directive';
 import { LayoutDirective } from '../directives/layout.directive';
-import { SectionContainerComponent } from './section-container.component';
 import { DndDropDirective } from '../directives/dnd-drop.directive';
 import { ComponentContainerComponent } from './component-container.component';
 import { FormQLMode } from '../models/type.model';
+
 
 describe('SectionWrapperComponent', () => {
   let component: SectionWrapperComponent;
@@ -21,7 +20,6 @@ describe('SectionWrapperComponent', () => {
       declarations: [SectionWrapperComponent,
         DndDirective,
         LayoutDirective,
-        SectionContainerComponent,
         DndDropDirective,
         ComponentContainerComponent
       ]

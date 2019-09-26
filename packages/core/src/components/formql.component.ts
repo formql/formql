@@ -1,5 +1,5 @@
 import { OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver,
-        Input, OnInit, Output, EventEmitter } from '@angular/core';
+        Input, OnInit, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormWindow, FormError, FormState } from '../models/form-window.model';
 import { InternalEventHandlerService } from '../services/internal-event-handler.service';
@@ -55,11 +55,13 @@ export class FormQLComponent implements OnDestroy, OnInit {
         private vcRef: ViewContainerRef,
         private internalEventHandlerService: InternalEventHandlerService,
         private actionHandlerService: ActionHandlerService,
-        private storeService: StoreService
+        private storeService: StoreService,
+        private cdRef: ChangeDetectorRef
     ) {
     }
 
     ngOnInit() {
+
         if (this.mode === FormQLMode.Edit)
             this.loadInternalEventHandlers();
 
