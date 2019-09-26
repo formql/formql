@@ -10,3 +10,4 @@ before_install:
 
 install:
   - npm ci
+  
