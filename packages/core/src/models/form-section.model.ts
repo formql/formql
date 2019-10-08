@@ -9,9 +9,9 @@ export interface FormSection {
     template: GridTemplate;
     position: GridPosition;
     headerStyle: string;
-    sectionStyle: string;
+    sectionStyle?: string;
 
-    rules: FormRules;
+    rules?: FormRules;
 }
 
 export interface SectionGroup {
