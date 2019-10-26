@@ -21,6 +21,7 @@ import { FormQLTextareaComponent } from './bundle/formql-textarea.component';
 import { FormQLSelectComponent } from './bundle/formql-select.component';
 import { FormQLRadioComponent } from './bundle/formql-radio.component';
 import { FormQLCheckboxComponent } from './bundle/formql-checkbox.component';
+import { LayoutLoaderComponent } from './components/layout-loader.component';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { FormQLCheckboxComponent } from './bundle/formql-checkbox.component';
     SectionWrapperComponent,
     ComponentContainerComponent,
     FormQLComponent,
+    LayoutLoaderComponent,
 
     // directives
     LayoutDirective,

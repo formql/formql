@@ -20,10 +20,10 @@
     ],
     "paths": {
       "@formql/core": [
-        "dist/formql"
+        "dist/@formql/core"
       ],
       "@formql/editor": [
-        "dist/editor"
+        "dist/@formql/editor"
       ],
       "material": [
         "dist/material"

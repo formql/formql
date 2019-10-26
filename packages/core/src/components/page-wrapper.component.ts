@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormPage } from '../models/form-page.model';
 import { FormGroup } from '@angular/forms';
 import { DndService } from '../services/dnd.service';
@@ -35,7 +35,8 @@ import { FormSection, SectionGroup } from '../models/form-section.model';
         </div>
       </ng-template>`,
   styleUrls: ['./page-wrapper.component.scss'],
-  providers: [DndService]
+  providers: [DndService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PageWrapperComponent implements OnInit {
 

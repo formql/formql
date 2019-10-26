@@ -13,7 +13,7 @@
     "test": "jest",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "npm_prepare_library_formql_pack": "rd /s /q .\\dist\\@formql\\core && ng build core --prod",
+    "npm_prepare_library_formql_pack": "ng build core --prod",
     "npm_prepare_library_formql_editor_pack": "ng build editor --prod",
     "npm_prepare_library_formql_material_pack": "ng build material --prod",
     "npm_prepare_library_formql": "ng build core --prod && cd dist/core && npm publish",
