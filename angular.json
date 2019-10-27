@@ -112,6 +112,8 @@
             "prefix": "formql",
             "architect": {
                 "build": {
+                    "outputPath": "../dist",
+                    "deleteOutputPath": false,
                     "builder": "@angular-devkit/build-ng-packagr:build",
                     "options": {
                         "tsConfig": "packages/core/tsconfig.lib.json",
@@ -144,6 +146,7 @@
             "prefix": "formql",
             "architect": {
                 "build": {
+                    "deleteOutputPath": true,
                     "builder": "@angular-devkit/build-ng-packagr:build",
                     "options": {
                         "tsConfig": "packages/editor/tsconfig.lib.json",
@@ -176,6 +179,7 @@
             "prefix": "formql",
             "architect": {
                 "build": {
+                    "deleteOutputPath": true,
                     "builder": "@angular-devkit/build-ng-packagr:build",
                     "options": {
                         "tsConfig": "packages/material/tsconfig.lib.json",

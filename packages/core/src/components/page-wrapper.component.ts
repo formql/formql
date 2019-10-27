@@ -14,7 +14,8 @@ import { FormSection, SectionGroup } from '../models/form-section.model';
   selector: '[formql-page-wrapper]',
   template: `
       <div class="fql-page-body">
-        <ng-template formqlGdConfig [formqlGdConfigOf]="page.template.body" let-bodyitem let-i="index">
+        <ng-template formqlGdConfig [formqlGdConfigOf]="page.template.body" let-bodyitem let-i="index"
+          (resetItems)="resetSections()">
           <div class="fql-section-container" [ngStyle]="bodyitem.style">
             <div formqlDndDrop [type]="ContainerType.Section" [mode]="mode"
               [ngClass]="{'fql-page-container': (mode === FormQLMode.Edit)}"
@@ -35,8 +36,7 @@ import { FormSection, SectionGroup } from '../models/form-section.model';
         </div>
       </ng-template>`,
   styleUrls: ['./page-wrapper.component.scss'],
-  providers: [DndService],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [DndService]
 })
 export class PageWrapperComponent implements OnInit {
 
@@ -70,6 +70,7 @@ export class PageWrapperComponent implements OnInit {
       targetIndexId: $event.targetIndexId
     };
     this.page = this.dndService.synchronisePageModel(this.page, dndEvent);
+    this.sections = this.createSections(this.page);
     this.storeService.reSetForm(InternalEventType.DndFormChanged, this.page);
   }
 
@@ -88,5 +89,14 @@ export class PageWrapperComponent implements OnInit {
 
   trackByFn(index, item) {
     return item.id;
+  }
+
+  resetSections() {
+    if (this.sections)
+      this.sections = this.createSections(this.page);
+  }
+
+  log(obj) {
+    console.log(obj);
   }
 }

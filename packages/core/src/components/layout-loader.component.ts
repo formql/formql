@@ -64,7 +64,7 @@ export class LayoutLoaderComponent {
 
   @Input()
   set internalEventHandler(response) {
-    if (this.mode === FormQLMode.View && response)
+    if (this.mode !== FormQLMode.View && response)
       this.storeService.reSetForm((<InternalEventHandler>response).eventType, response.event);
   }
 

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, ViewContainerRef, TemplateRef, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, ViewContainerRef, TemplateRef, Renderer2, Output, EventEmitter } from '@angular/core';
 import { GridStyle } from '../models/style.model';
 
 @Directive({
@@ -10,6 +10,8 @@ export class LayoutDirective {
         private renderer: Renderer2,
         private template: TemplateRef<any>) { }
 
+    @Output() resetItems: EventEmitter<boolean> = new EventEmitter();
+
     @Input()
     set formqlGdConfigOf(config: GridStyle) {
         this.view.clear();
@@ -17,13 +19,15 @@ export class LayoutDirective {
         this.setParentAttributes(config);
 
         const list = this.getGridStyleList(config);
-        if (list)
-            list.forEach((item, index) => {
-                this.view.createEmbeddedView(this.template, {
-                    $implicit: item,
-                    index
-                });
-            });
+        if (list) {
+          this.resetItems.emit(true);
+          list.forEach((item, index) => {
+              this.view.createEmbeddedView(this.template, {
+                  $implicit: item,
+                  index
+              });
+          });
+        }
     }
 
     /**
@@ -108,5 +112,4 @@ export class LayoutDirective {
             this.renderer.setAttribute(parentElement, 'style', styleAttrValue);
 
     }
-
 }
