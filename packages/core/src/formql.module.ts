@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ComponentFactoryResolver } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -23,6 +23,8 @@ import { FormQLTextareaComponent } from './bundle/formql-textarea.component';
 import { FormQLSelectComponent } from './bundle/formql-select.component';
 import { FormQLRadioComponent } from './bundle/formql-radio.component';
 import { FormQLCheckboxComponent } from './bundle/formql-checkbox.component';
+
+import { ComponentResolverService } from './services/component-resolver.service';
 
 @NgModule({
   imports: [
@@ -54,6 +56,8 @@ import { FormQLCheckboxComponent } from './bundle/formql-checkbox.component';
     FormQLRadioComponent,
     FormQLCheckboxComponent
   ],
+  providers: [
+  ],
   entryComponents: [
     // formql
     FormQLComponent,
@@ -74,5 +78,8 @@ import { FormQLCheckboxComponent } from './bundle/formql-checkbox.component';
       FormQLComponent
   ]
 })
-export class FormQLModule { }
-
+export class FormQLModule {
+  public static registerComponents(componentResolverService: ComponentResolverService) {
+    componentResolverService.addComponents(FormQLComponent, PlainLayoutComponent, FormQLLabelComponent);
+  }    
+}

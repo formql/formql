@@ -1,6 +1,7 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable, Output, EventEmitter, Directive } from '@angular/core';
 import { InternalEventHandler, InternalEventType } from '../models/internal-event.model';
 
+@Directive()
 @Injectable({
     providedIn: 'root'
 })

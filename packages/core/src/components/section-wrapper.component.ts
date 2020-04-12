@@ -1,10 +1,11 @@
-import { Component, Input, ViewChild, ViewContainerRef, OnInit, ComponentFactoryResolver } from '@angular/core';
+import { Component, Input, ViewChild, ViewContainerRef, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormSection } from '../models/form-section.model';
 import { InternalEventHandlerService } from '../services/internal-event-handler.service';
 import { InternalEventType } from '../models/internal-event.model';
 import { FormPage } from '../models/form-page.model';
 import { HelperService } from '../services/helper.service';
+import { ComponentResolverService } from '../services/component-resolver.service';
 import { FormQLMode, ContainerType } from '../models/type.model';
 import { GridPositionType } from '../models/style.model';
 
@@ -71,7 +72,7 @@ export class SectionWrapperComponent implements OnInit {
 
     constructor(
         private internalEventHandlerService: InternalEventHandlerService,
-        private componentFactoryResolver: ComponentFactoryResolver,
+        private componentResolverService: ComponentResolverService,
         private viewContainerRef: ViewContainerRef
     ) {}
 
@@ -79,7 +80,7 @@ export class SectionWrapperComponent implements OnInit {
 
         if (this.mode === FormQLMode.Edit) {
             const tooltip = this.viewContainerRef.createComponent(
-                HelperService.getFactory(this.componentFactoryResolver, 'TooltipComponent'));
+                HelperService.getFactory(this.componentResolverService, 'TooltipComponent'));
             (<any>tooltip).instance.wrapper = this.wrapper;
             (<any>tooltip).instance.type = ContainerType.Section;
             (<any>tooltip).instance.object = this.section;

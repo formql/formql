@@ -1,9 +1,10 @@
-import { Injectable, ComponentFactoryResolver, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { FormError, FormState } from '../models/form-window.model';
 import { FormService } from './form.service';
 import { FormComponent, ComponentControl } from '../models/form-component.model';
 import { HelperService } from './helper.service';
+import { ComponentResolverService } from '../services/component-resolver.service';
 import { takeUntil } from 'rxjs/operators';
 import { FormBuilder } from '@angular/forms';
 import { InternalEventType } from '../models/internal-event.model';
@@ -14,7 +15,7 @@ import { FormSection } from '../models/form-section.model';
 export class StoreService implements OnDestroy {
     constructor(
         private formService: FormService,
-        private componentFactoryResolver: ComponentFactoryResolver,
+        private componentResolverService: ComponentResolverService,
         private formBuilder: FormBuilder
     ) { }
 
@@ -44,7 +45,7 @@ export class StoreService implements OnDestroy {
 
     setComponet(component: FormComponent<any>) {
         this.formState = this.formService.updateComponent(component, this.formState);
-        this.formControls = HelperService.resetValidators(this.formState.components, this.formControls, this.componentFactoryResolver);
+        this.formControls = HelperService.resetValidators(this.formState.components, this.formControls, this.componentResolverService);
         this.data$.next(this.formState.data);
     }
 
@@ -152,7 +153,7 @@ export class StoreService implements OnDestroy {
             this.formState.form = HelperService.updateTemplates(this.formState.form);
             if (reactiveFormStructure.components != null && reactiveFormStructure.components.length > 0)
                 this.formControls = HelperService.resetValidators(reactiveFormStructure.components,
-                            this.formControls, this.componentFactoryResolver);
+                            this.formControls, this.componentResolverService);
         }
     }
 }

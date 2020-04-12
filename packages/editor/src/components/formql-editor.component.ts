@@ -1,9 +1,10 @@
-import { OnInit, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver, Input, Renderer2, OnDestroy } from '@angular/core';
+import { OnInit, ViewChild, Component, ViewContainerRef, Input, Renderer2, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { FormQLMode, HelperService, InternalEventHandlerService,
         InternalEventHandler, InternalEventType, FormQLComponent } from '@formql/core';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ComponentResolverService } from '@formql/core';
 
 @Component({
     selector: 'formql-editor',
@@ -33,7 +34,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
     private componetDestroyed = new Subject();
 
     constructor(
-        private componentFactoryResolver: ComponentFactoryResolver,
+        private componentResolverService: ComponentResolverService,
         private vcRef: ViewContainerRef,
         private internalEventHandlerService: InternalEventHandlerService,
         private formBuilder: FormBuilder,
@@ -47,7 +48,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
         this.reactiveForm = this.formBuilder.group([]);
 
-        const formQLRef = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, 'FormQLComponent'));
+        const formQLRef = this.vcRef.createComponent(HelperService.getFactory(this.componentResolverService, 'FormQLComponent'));
         const formql = <any>formQLRef;
 
         formql.instance.mode = this.mode;
@@ -93,7 +94,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
     loadEditor(name: string, object: any, type: InternalEventType) {
         this.editor.clear();
 
-        const componentRef = this.vcRef.createComponent(HelperService.getFactory(this.componentFactoryResolver, name));
+        const componentRef = this.vcRef.createComponent(HelperService.getFactory(this.componentResolverService, name));
         const component = (<any>componentRef);
 
         switch (type) {

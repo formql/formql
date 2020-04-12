@@ -1,6 +1,7 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable, Output, EventEmitter, Directive } from '@angular/core';
 import { FormAction } from '../models/action.model';
 
+@Directive()
 @Injectable({
     providedIn: 'root'
 })

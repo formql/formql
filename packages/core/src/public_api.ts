@@ -19,4 +19,5 @@ export * from './services/helper.service';
 export * from './services/internal-event-handler.service';
 export * from './services/action-handler.service';
 export * from './services/store.service';
+export * from './services/component-resolver.service';
 

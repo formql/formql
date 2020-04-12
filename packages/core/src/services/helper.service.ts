@@ -1,9 +1,10 @@
-import { Injectable, Component, Type, ComponentFactoryResolver, ComponentFactory } from '@angular/core';
+import { Injectable, Component, ComponentFactory } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormComponent, ComponentControl } from '../models/form-component.model';
 import { FormError, FormWindow } from '../models/form-window.model';
 import { EvalResponse } from '../models/type.model';
 import { FormValidator } from '../models/rule.model';
+import { ComponentResolverService } from './component-resolver.service';
 
 @Injectable({
     providedIn: 'root'
@@ -103,17 +104,20 @@ export class HelperService {
         }
     }
 
-    public static getFactory(componentFactoryResolver: ComponentFactoryResolver, componentName: string): ComponentFactory<Component> {
-        const factories = Array.from(componentFactoryResolver['_factories'].keys());
-        const type = <Type<Component>>factories.find((x: any) => x.componentName === componentName);
+    public static getFactory(componentResolverService: ComponentResolverService, componentName: string): ComponentFactory<Component> {
+        // const factories = Array.from(componentFactoryResolver['_factories'].keys());
+        // const type = <Type<Component>>factories.find((x: any) => x.componentName === componentName);
+        // return componentFactoryResolver.resolveComponentFactory(type);
 
-        return componentFactoryResolver.resolveComponentFactory(type);
+        return componentResolverService.resolveComponent(componentName);
     }
 
-    public static setValidators(componentFactoryResolver: ComponentFactoryResolver,
+    public static setValidators(componentResolverService: ComponentResolverService,
                                 component: FormComponent<any>, control: FormControl): FormControl {
-        const factories = Array.from(componentFactoryResolver['_factories'].keys());
-        const type = factories.find((x: any) => x.componentName === component.componentName);
+        // const factories = Array.from(componentFactoryResolver['_factories'].keys());
+        // const type = factories.find((x: any) => x.componentName === component.componentName);
+
+        const type = componentResolverService.resolveComponent(component.componentName);
         if (type && (!type['validators'] || (type['validators'] && type['validators'].length === 0)))
             return control;
 
@@ -253,13 +257,13 @@ export class HelperService {
     }
 
     public static resetValidators(components: Array<FormComponent<any>>, formControls: Array<ComponentControl>,
-        componentFactoryResolver: ComponentFactoryResolver): Array<ComponentControl>  {
+        componentResolverService: ComponentResolverService): Array<ComponentControl>  {
         if (components && components.length > 0)
             components.forEach(component => {
                 if (component != null) {
                     const componentControl = formControls.find(fc => fc.key === component.componentId);
                     if (componentControl)
-                        componentControl.control = HelperService.setValidators(componentFactoryResolver,
+                        componentControl.control = HelperService.setValidators(componentResolverService,
                             component, componentControl.control);
                 }
             });

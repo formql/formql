@@ -1,5 +1,6 @@
-import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output, DoCheck } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, DoCheck } from '@angular/core';
 import { FormRule, FormValidator, FormComponent, FormQLMode, HelperService, FormRules, FormAction, FormActionType } from '@formql/core';
+import { ComponentResolverService } from '@formql/core';
 
 @Component({
     selector: 'formql-component-editor',
@@ -25,14 +26,15 @@ export class ComponentEditorComponent implements OnInit {
     FormActionType = FormActionType;
 
     constructor(
-        private componentFactoryResolver: ComponentFactoryResolver
+        private componentResolverService: ComponentResolverService
     ) {
-        this.factories = Array.from(this.componentFactoryResolver['_factories'].keys());
-        this.componentList = this.factories
-            .filter((x: any) => x.formQLComponent)
-            .map((x: any) => x.componentName)
-            .filter((x, index, self) => index === self.indexOf(x))
-            .sort();
+        console.log('A9UPGRADE - needs sorting');
+        // this.factories = Array.from(this.componentFactoryResolver['_factories'].keys());
+        // this.componentList = this.factories
+        //     .filter((x: any) => x.formQLComponent)
+        //     .map((x: any) => x.componentName)
+        //     .filter((x, index, self) => index === self.indexOf(x))
+        //     .sort();
     }
 
     ngOnInit() {

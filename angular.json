@@ -14,6 +14,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
+                        "aot": true,
                         "outputPath": "dist/form-app",
                         "index": "packages/form-app/form-app/src/index.html",
                         "main": "packages/form-app/form-app/src/main.ts",
@@ -31,10 +32,18 @@
                     },
                     "configurations": {
                         "production": {
-                            "fileReplacements": [{
-                                "replace": "packages/form-app/form-app/src/environments/environment.ts",
-                                "with": "packages/form-app/form-app/src/environments/environment.prod.ts"
-                            }],
+                            "budgets": [
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ],
+                            "fileReplacements": [
+                                {
+                                    "replace": "packages/form-app/form-app/src/environments/environment.ts",
+                                    "with": "packages/form-app/form-app/src/environments/environment.prod.ts"
+                                }
+                            ],
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -119,7 +128,8 @@
                     },
                     "configurations": {
                         "production": {
-                            "project": "packages/core/ng-package.prod.json"
+                            "project": "packages/core/ng-package.prod.json",
+                            "tsConfig": "packages/core/tsconfig.lib.prod.json"
                         }
                     }
                 },
@@ -151,7 +161,8 @@
                     },
                     "configurations": {
                         "production": {
-                            "project": "packages/editor/ng-package.prod.json"
+                            "project": "packages/editor/ng-package.prod.json",
+                            "tsConfig": "packages/editor/tsconfig.lib.prod.json"
                         }
                     }
                 },
@@ -183,7 +194,8 @@
                     },
                     "configurations": {
                         "production": {
-                            "project": "packages/material/ng-package.prod.json"
+                            "project": "packages/material/ng-package.prod.json",
+                            "tsConfig": "packages/material/tsconfig.lib.prod.json"
                         }
                     }
                 },
@@ -200,6 +212,6 @@
                     }
                 }
             }
-        }   
+        }
     }
 }

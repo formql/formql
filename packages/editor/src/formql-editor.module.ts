@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { FormQLModule } from '@formql/core';
+import { ComponentResolverService, FormQLModule } from '@formql/core';
 
 import { LeftSideBarComponent } from './components/left-side-bar.component';
 import { TextMaskModule } from 'angular2-text-mask';
@@ -49,5 +49,8 @@ import { JsonFieldInputComponent } from './components/json-field-input.component
         JsonFieldInputComponent
     ]
 })
-export class FormQLEditorModule { }
-
+export class FormQLEditorModule { 
+    public static registerComponents(componentResolverService: ComponentResolverService) {
+        componentResolverService.addComponents(TooltipComponent);
+    }    
+}

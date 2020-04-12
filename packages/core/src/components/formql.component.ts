@@ -1,10 +1,11 @@
-import { OnDestroy, ViewChild, Component, ViewContainerRef, ComponentFactoryResolver,
+import { OnDestroy, ViewChild, Component, ViewContainerRef,
         Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormWindow, FormError, FormState } from '../models/form-window.model';
 import { InternalEventHandlerService } from '../services/internal-event-handler.service';
 import { InternalEventHandler, InternalEventType } from '../models/internal-event.model';
 import { HelperService } from '../services/helper.service';
+import { ComponentResolverService } from '../services/component-resolver.service';
 import { FormComponent } from '../models/form-component.model';
 import { StoreService } from '../services/store.service';
 import { FormQLMode } from '../models/type.model';
@@ -51,7 +52,7 @@ export class FormQLComponent implements OnDestroy, OnInit {
     error: FormError;
 
     constructor(
-        private componentFactoryResolver: ComponentFactoryResolver,
+        private componentResolverService: ComponentResolverService,
         private vcRef: ViewContainerRef,
         private internalEventHandlerService: InternalEventHandlerService,
         private actionHandlerService: ActionHandlerService,
@@ -85,7 +86,7 @@ export class FormQLComponent implements OnDestroy, OnInit {
             this.target.clear();
 
         const componentRef = this.vcRef.createComponent(
-            HelperService.getFactory(this.componentFactoryResolver, formState.form.layoutComponentName));
+            HelperService.getFactory(this.componentResolverService, formState.form.layoutComponentName));
 
         const component = (<any>componentRef);
         component.instance.form = formState.form;
