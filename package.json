@@ -17,9 +17,9 @@
     "build_editor": "ng build editor --prod",
     "build_material": "ng build material --prod",
     "build_all": "npm run build_core && npm run build_editor && npm run build_material",
-    "publish_core": "ng build core --prod && cd dist/core && npm publish",
-    "publish_editor": "ng build editor --prod && cd dist/editor && npm publish",
-    "publish_material": "ng build material --prod && cd dist/material && npm publish",
+    "publish_core": "ng build core --prod && cd dist/@formql/core && npm publish",
+    "publish_editor": "ng build editor --prod && cd dist/@formql/editor && npm publish",
+    "publish_material": "ng build material --prod && cd dist/@formql/material && npm publish",
     "publish_all": "npm run publish_core && npm run publish_editor && npm run publish_material",
     "semantic-release": "semantic-release"
   },
