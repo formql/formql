@@ -1,5 +1,6 @@
-import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output, DoCheck } from '@angular/core';
-import { FormRule, FormValidator, FormComponent, FormQLMode, HelperService, FormRules, FormAction, FormActionType } from '@formql/core';
+import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormRule, FormValidator, FormComponent, FormQLMode,
+         HelperService, FormRules, FormAction, FormActionType } from '@formql/core';
 
 @Component({
     selector: 'formql-component-editor',

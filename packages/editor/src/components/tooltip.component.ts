@@ -39,7 +39,7 @@ export class TooltipComponent {
     }
 
     remove() {
-        const result = confirm(`Are you want to remove this ${this.type === ContainerType.Component ? 'Component' : 'Section'}?`);
+        const result = confirm(`Are you sure you want to remove this ${this.type === ContainerType.Component ? 'Component' : 'Section'}?`);
         if (result)
             if (this.type === ContainerType.Component)
                 this.internalEventHandlerService.send(InternalEventType.RemoveComponent, this.object);

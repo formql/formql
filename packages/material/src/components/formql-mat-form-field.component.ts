@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, OnInit } from '@angular/core';
+import { Component, Input, forwardRef, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validators, FormControl } from '@angular/forms';
 import { FormComponent, FormValidator } from '@formql/core';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
@@ -29,7 +29,8 @@ import createNumberMask from 'text-mask-addons/dist/createNumberMask';
             provide: NG_VALIDATORS,
             useExisting: forwardRef(() => FormQLMatFormFieldComponent),
             multi: true
-        }]
+        }],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormQLMatFormFieldComponent implements OnInit, ControlValueAccessor {
 

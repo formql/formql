@@ -20,16 +20,13 @@
     ],
     "paths": {
       "@formql/core": [
-        "dist/formql"
+        "packages/core/src/public_api.ts"
       ],
       "@formql/editor": [
-        "dist/editor"
+        "packages/editor/src/public_api.ts"
       ],
-      "material": [
-        "dist/material"
-      ],
-      "material/*": [
-        "dist/material/*"
+      "@formql/material": [
+        "packages/material/src/public_api.ts"
       ]
     }
   }
