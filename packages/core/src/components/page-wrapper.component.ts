@@ -14,10 +14,15 @@ import { FormSection, SectionGroup } from '../models/form-section.model';
   selector: '[formql-page-wrapper]',
   template: `
       <div class="fql-page-body">
-        <ng-template formqlGdConfig [formqlGdConfigOf]="page.template.body" let-bodyitem let-i="index"
+        <ng-template formqlGdConfig
+          [formqlGdConfigOf]="page.template.body" let-bodyitem let-i="index"
           (resetItems)="resetSections()">
-          <div class="fql-section-container" [ngStyle]="bodyitem.style">
-            <div formqlDndDrop [type]="ContainerType.Section" [mode]="mode"
+          <div
+            [ngClass]="{'fql-page-container': mode === FormQLMode.Edit}"
+            [ngStyle]="bodyitem.style">
+            <div formqlDndDrop
+              [type]="ContainerType.Section"
+              [mode]="mode"
               [ngClass]="{'fql-page-container': (mode === FormQLMode.Edit)}"
               (synchronise)="synchroniseModel($event, bodyitem.id)">
               <ng-container *ngFor="let section of sections[bodyitem.id]; trackBy: trackByFn">
@@ -30,8 +35,12 @@ import { FormSection, SectionGroup } from '../models/form-section.model';
       </div>
       <ng-template #templateRef let-section="section">
         <div [formGroup]="reactivePage">
-          <div formql-section-wrapper [page]="page" [section]="section" [formGroupName]="section.sectionId"
-            [reactiveSection]="reactivePage.controls[section.sectionId]" [mode]="mode">
+          <div formql-section-wrapper
+            [page]="page"
+            [section]="section"
+            [formGroupName]="section.sectionId"
+            [reactiveSection]="reactivePage.controls[section.sectionId]"
+            [mode]="mode">
           </div>
         </div>
       </ng-template>`,

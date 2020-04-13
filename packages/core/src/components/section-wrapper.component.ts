@@ -50,12 +50,10 @@ import { ComponentGroup, FormComponent } from '../models/form-component.model';
             </div>
         </div>
         <ng-template #templateRef let-templateitem="templateitem" let-positionType="positionType">
-          <div formqlDndDrop
-              [ngStyle]="templateitem.style"
-              [type]="ContainerType.Component"
+          <div [ngStyle]="templateitem.style">
+            <div formqlDndDrop
               *ngIf="(mode === FormQLMode.Edit)"
-              [mode]="mode"
-              [positionType]="positionType"
+              [type]="ContainerType.Component"
               class="fql-section-container"
               (synchronise)="synchroniseModel($event, templateitem.id, positionType)">
               <ng-container *ngFor="let component of components[positionType + '_' + templateitem.id]; trackBy: trackByFn">
@@ -67,17 +65,17 @@ import { ComponentGroup, FormComponent } from '../models/form-component.model';
                       [reactiveSection]="reactiveSection"
                       [mode]="mode"></div>
               </ng-container>
-          </div>
-          <div *ngIf="!(mode === FormQLMode.Edit)"
-              [ngStyle]="templateitem.style">
+            </div>
+            <div *ngIf="!(mode === FormQLMode.Edit)">
               <ng-container *ngFor="let component of components[positionType + '_' + templateitem.id]; trackBy: trackByFn">
-                  <div formql-component-container *ngIf="!component.rules?.hidden?.value"
-                      [component]="component"
-                      [sectionId]="section.sectionId"
-                      [value]="component.value"
-                      [reactiveSection]="reactiveSection"
-                      [mode]="mode"></div>
+                <div formql-component-container *ngIf="!component.rules?.hidden?.value"
+                    [component]="component"
+                    [sectionId]="section.sectionId"
+                    [value]="component.value"
+                    [reactiveSection]="reactiveSection"
+                    [mode]="mode"></div>
               </ng-container>
+            </div>
           </div>
         </ng-template>
         `,

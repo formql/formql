@@ -14,13 +14,9 @@
     "types": [],
     "lib": [
       "dom",
-      "es2015"
-    ],
-    "paths": {
-      "@formql/core": [
-        "dist/@formql/core"
-      ]
-    }
+      "es2015",
+      "esnext.asynciterable"
+    ]
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,

@@ -1,9 +1,9 @@
 import {
   ViewChild, Component, ViewContainerRef,
-  Input, Output, EventEmitter, ChangeDetectionStrategy, AfterViewInit, OnDestroy
+  Input, Output, EventEmitter, ChangeDetectionStrategy, AfterViewInit, OnDestroy, OnInit
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormWindow, FormError } from '../models/form-window.model';
+import { FormWindow, FormError, FormState } from '../models/form-window.model';
 import { InternalEventHandlerService } from '../services/internal-event-handler.service';
 import { InternalEventType } from '../models/internal-event.model';
 import { FormComponent } from '../models/form-component.model';
@@ -22,7 +22,7 @@ import { takeUntil } from 'rxjs/operators';
                 <span>{{error?.message}}</span>
               </div>
               <formql-layout-loader
-                [formState]="formState$ | async"
+                [formState]="formState"
                 [actionHandler]= "actionHandler$ | async"
                 [internalEventHandler]="internalEventHandler$ | async"
                 [reactiveForm]="reactiveForm"
@@ -30,10 +30,9 @@ import { takeUntil } from 'rxjs/operators';
                 (formSaveStart)="formSaveStart.emit(true)"
                 (formSaveEnd)="formSaveEnd.emit(true)"
                 (formError)="formError.emit(true)">
-              </formql-layout-loader>`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+              </formql-layout-loader>`
 })
-export class FormQLComponent implements AfterViewInit, OnDestroy {
+export class FormQLComponent implements OnInit, OnDestroy {
   static componentName = 'FormQLComponent';
 
   @Input() formName: string;
@@ -52,6 +51,7 @@ export class FormQLComponent implements AfterViewInit, OnDestroy {
 
   data: any;
   form: FormWindow;
+  formState: FormState;
 
   data$ = this.storeService.getData();
   formState$ = this.storeService.getFormState();
@@ -68,10 +68,17 @@ export class FormQLComponent implements AfterViewInit, OnDestroy {
     private storeService: StoreService
   ) { }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.data$.pipe(takeUntil(this.componentDestroyed)).subscribe( data => this.data = data);
     this.formState$.pipe(takeUntil(this.componentDestroyed)).
-        subscribe(formState => formState && formState.form ? this.form = formState.form : this.form = null);
+        subscribe((formState) => {
+          if (formState) {
+            this.formState = {...formState};
+
+            if (formState.form)
+              this.form = formState.form;
+          }
+        });
     this.storeService.getAll(this.formName, this.ids);
   }
 

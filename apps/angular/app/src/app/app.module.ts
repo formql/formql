@@ -4,11 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormQLModule } from '@formql/core';
-// import { FormQLModule } from '../../../../core/src/formql.module';
 import { FormQLEditorModule } from '@formql/editor';
-// import { FormQLEditorModule } from '../../../../editor/src/formql-editor.module';
-import { FormQLMaterialModule } from '@formql/material'
-// import { FormQLMaterialModule } from '../../../../material/src/formql-material.module';
+import { FormQLMaterialModule } from '@formql/material';
 
 import { DummyService } from './app-service';
 
