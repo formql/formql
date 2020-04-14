@@ -31,6 +31,10 @@ export class ComponentResolverService {
   public addComponent(component: any) {
     this.componentRegister[component.componentName] = component;
   }
+
+  public getComponentArray() {
+    return Array.from(Object.keys(this.componentRegister), x => this.componentRegister[x]);
+  }
 }
 
 

@@ -5,6 +5,7 @@
 
 .fql-component-container-wrapper {
     position:relative;
+    border: 1px solid transparent;
 }
 
 .fql-component-container-wrapper:hover .fql-component-tooltip {
@@ -12,8 +13,8 @@
 }
 
 .fql-component-container-wrapper:hover {
-    box-shadow: 3px 3px 3px rgb(200, 200, 200);
-    border: 1px solid;
+    box-shadow: 3px 3px 3px orange;
+    border: 1px solid orange;
 }
 
 .fql-component-tooltip {

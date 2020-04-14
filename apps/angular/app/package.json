@@ -27,7 +27,7 @@
         "@angular/router": "~9.1.1",    
         "core-js": "^2.5.4",
         "rxjs": "~6.5.5",
-        "zone.js": "~0.10.2",
+        "zone.js": "~0.10.2"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "~0.901.1",

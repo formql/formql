@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER, ComponentFactoryResolver } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -78,6 +78,16 @@ import { ComponentResolverService } from './services/component-resolver.service'
 })
 export class FormQLModule {
   public static registerComponents(componentResolverService: ComponentResolverService) {
-    componentResolverService.addComponents(FormQLComponent, PlainLayoutComponent, FormQLLabelComponent);
+    componentResolverService.addComponents(
+      FormQLComponent,
+      PlainLayoutComponent,
+      FormQLButtonComponent,
+      FormQLInputComponent,
+      FormQLLabelComponent,
+      FormQLTextareaComponent,
+      FormQLSelectComponent,
+      FormQLRadioComponent,
+      FormQLCheckboxComponent      
+    );
   }    
 }

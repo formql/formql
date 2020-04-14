@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter, ViewChild,
-         ViewContainerRef, ComponentFactoryResolver, ChangeDetectionStrategy } from '@angular/core';
+         ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { HelperService } from '../services/helper.service';
+import { ComponentResolverService } from '../services/component-resolver.service';
 import { StoreService } from '../services/store.service';
 import { FormActionType } from '../models/action.model';
 import { InternalEventHandler } from '../models/internal-event.model';
@@ -49,7 +50,7 @@ export class LayoutLoaderComponent {
         this.target.clear();
 
       const componentRef = this.vcRef.createComponent(
-        HelperService.getFactory(this.componentFactoryResolver, formState.form.layoutComponentName));
+        HelperService.getFactory(this.componentResolverService, formState.form.layoutComponentName));
 
       const component = (<any>componentRef);
       component.instance.form = formState.form;
@@ -75,7 +76,7 @@ export class LayoutLoaderComponent {
 
   constructor(
     private vcRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver,
+    private componentResolverService: ComponentResolverService,
     private storeService: StoreService
   ) {}
 

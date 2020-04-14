@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormRule, FormValidator, FormComponent, FormQLMode,
          HelperService, FormRules, FormAction, FormActionType } from '@formql/core';
 import { ComponentResolverService } from '@formql/core';
@@ -22,20 +22,17 @@ export class ComponentEditorComponent implements OnInit {
     validators: Array<FormValidator>;
     rules: Array<FormRule>;
     actionList: Array<FormAction>;
-    factories: any;
 
     FormActionType = FormActionType;
 
     constructor(
         private componentResolverService: ComponentResolverService
     ) {
-        console.log('A9UPGRADE - needs sorting');
-        // this.factories = Array.from(this.componentFactoryResolver['_factories'].keys());
-        // this.componentList = this.factories
-        //     .filter((x: any) => x.formQLComponent)
-        //     .map((x: any) => x.componentName)
-        //     .filter((x, index, self) => index === self.indexOf(x))
-        //     .sort();
+        this.componentList = this.componentResolverService.getComponentArray()
+            .filter((x: any) => x.formQLComponent)
+            .map((x: any) => x.componentName)
+            .filter((x, index, self) => index === self.indexOf(x))
+            .sort();        
     }
 
     ngOnInit() {
@@ -95,7 +92,7 @@ export class ComponentEditorComponent implements OnInit {
         this.validators.push(<FormValidator>{ name: 'Hidden Condition', key: 'hidden', validator: null });
         this.validators.push(<FormValidator>{ name: 'Read Only Condition', key: 'readonly', validator: null });
 
-        const componentRef = this.factories.find((x: any) => x.componentName === componentName);
+        const componentRef = this.componentResolverService.componentRegister[componentName];
 
         if (componentRef != null && componentRef['validators'] !== null)
             componentRef['validators'].forEach((v: FormValidator) => {
@@ -121,7 +118,7 @@ export class ComponentEditorComponent implements OnInit {
     }
 
     loadActions(componentName: string, reset = false) {
-        const componentRef = this.factories.find((x: any) => x.componentName === componentName);
+        const componentRef = this.componentResolverService.componentRegister[componentName];
         if (componentRef['actions'] && componentRef['actions'].length > 0) {
             if (!this.updatedComponent.action)
                 this.updatedComponent.action = <FormAction>{};

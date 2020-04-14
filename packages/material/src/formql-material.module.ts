@@ -39,7 +39,12 @@ import { FormQLInternalMaterialModule } from './formql-internal-material';
 })
 export class FormQLMaterialModule { 
     public static registerComponents(componentResolverService: ComponentResolverService) {
-        componentResolverService.addComponents(FormQLMatFormFieldComponent, FormQLMatTextareaComponent, 
-            FormQLMatCheckboxComponent, FormQLMatDatepickerComponent, FormQLMatButtonComponent);
+        componentResolverService.addComponents(
+            FormQLMatFormFieldComponent, 
+            FormQLMatTextareaComponent, 
+            FormQLMatCheckboxComponent, 
+            FormQLMatDatepickerComponent, 
+            FormQLMatButtonComponent
+        );
     }        
 }
