@@ -16,7 +16,12 @@
       "dom",
       "es2015",
       "esnext.asynciterable"
-    ]
+    ],
+    "paths": {
+      "@formql/core": [
+        "dist/@formql/core"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,

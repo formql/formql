@@ -14,7 +14,6 @@ import { FormValidator } from '../models/rule.model';
         <div>
             <select [formControl]="formControl" [id]="field.componentId"
                 class="fql-bundle-field-input" [tabIndex]="field.tabIndex"
-                [attr.disabled]="field.rules?.readonly?.value ? '' : null"
                 [attr.multiple]="field.type === 'multiple'">
                 <ng-container *ngIf="list">
                     <option *ngFor="let item of list" [value]="item.value">{{item.name}}</option>

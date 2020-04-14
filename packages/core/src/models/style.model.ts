@@ -20,9 +20,9 @@ export enum GridPositionType {
 
 export interface GridTemplate {
     title: string;
-    header: GridStyle;
+    header?: GridStyle;
     body: GridStyle;
-    footer: GridStyle;
+    footer?: GridStyle;
     reRender: boolean;
 }
 

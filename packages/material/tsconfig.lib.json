@@ -15,7 +15,12 @@
     "lib": [
       "dom",
       "es2015"
-    ]
+    ],
+    "paths": {
+      "@formql/core": [
+        "dist/@formql/core"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,

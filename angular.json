@@ -4,9 +4,9 @@
     "newProjectRoot": "packages",
     "defaultProject": "formql",
     "projects": {
-        "form-app": {
-            "root": "packages/form-app/form-app/",
-            "sourceRoot": "packages/form-app/form-app/src/",
+        "app": {
+            "root": "apps/angular/app/",
+            "sourceRoot": "apps/angular/app/src/",
             "projectType": "application",
             "prefix": "app",
             "schematics": {},
@@ -14,19 +14,18 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "aot": true,
-                        "outputPath": "dist/form-app",
-                        "index": "packages/form-app/form-app/src/index.html",
-                        "main": "packages/form-app/form-app/src/main.ts",
-                        "polyfills": "packages/form-app/form-app/src/polyfills.ts",
-                        "tsConfig": "packages/form-app/form-app/src/tsconfig.app.json",
+                        "outputPath": "dist/apps/angular/app",
+                        "index": "apps/angular/app/src/index.html",
+                        "main": "apps/angular/app/src//main.ts",
+                        "polyfills": "apps/angular/app/src/polyfills.ts",
+                        "tsConfig": "apps/angular/app/tsconfig.app.json",
                         "assets": [
-                            "packages/form-app/form-app/src/favicon.ico",
-                            "packages/form-app/form-app/src/assets",
-                            "packages/form-app/form-app/src/assets/api"
+                            "apps/angular/app/src/favicon.ico",
+                            "apps/angular/app/src/assets",
+                            "apps/angular/app/src/assets/api"
                         ],
                         "styles": [
-                            "packages/form-app/form-app/src/styles.css"
+                            "apps/angular/app/src/styles.css"
                         ],
                         "scripts": []
                     },
@@ -38,12 +37,10 @@
                                     "maximumWarning": "6kb"
                                 }
                             ],
-                            "fileReplacements": [
-                                {
-                                    "replace": "packages/form-app/form-app/src/environments/environment.ts",
-                                    "with": "packages/form-app/form-app/src/environments/environment.prod.ts"
-                                }
-                            ],
+                            "fileReplacements": [{
+                                "replace": "apps/angular/app/src/environments/environment.ts",
+                                "with": "apps/angular/app/src/environments/environment.prod.ts"
+                            }],
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -59,26 +56,26 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "form-app:build"
+                        "browserTarget": "app:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "form-app:build:production"
+                            "browserTarget": "app:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "form-app:build"
+                        "browserTarget": "app:build"
                     }
                 },
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
                         "tsConfig": [
-                            "packages/form-app/form-app/src/tsconfig.app.json",
-                            "packages/form-app/form-app/src/tsconfig.spec.json"
+                            "apps/angular/app/tsconfig.app.json",
+                            "apps/angular/app/tsconfig.spec.json"
                         ],
                         "exclude": [
                             "**/node_modules/**"
@@ -87,26 +84,26 @@
                 }
             }
         },
-        "form-app-e2e": {
-            "root": "packages/form-app/form-app-e2e/",
+        "app-e2e": {
+            "root": "apps/angular/app-e2e/",
             "projectType": "application",
             "architect": {
                 "e2e": {
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
-                        "protractorConfig": "packages/form-app/form-app-e2e/protractor.conf.js",
-                        "devServerTarget": "form-app:serve"
+                        "protractorConfig": "apps/angular/app-e2e/src/protractor.conf.js",
+                        "devServerTarget": "app:serve"
                     },
                     "configurations": {
                         "production": {
-                            "devServerTarget": "form-app:serve:production"
+                            "devServerTarget": "app:serve:production"
                         }
                     }
                 },
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
-                        "tsConfig": "packages/form-app/form-app-e2e/tsconfig.e2e.json",
+                        "tsConfig": "apps/angular/app-e2e/tsconfig.e2e.json",
                         "exclude": [
                             "**/node_modules/**"
                         ]
@@ -114,7 +111,7 @@
                 }
             }
         },
-        "formql": {
+        "core": {
             "root": "packages/core",
             "sourceRoot": "packages/core/src",
             "projectType": "library",
@@ -147,7 +144,7 @@
                 }
             }
         },
-        "formql-editor": {
+        "editor": {
             "root": "packages/editor",
             "sourceRoot": "packages/editor/src",
             "projectType": "library",
@@ -180,7 +177,7 @@
                 }
             }
         },
-        "formql-material": {
+        "material": {
             "root": "packages/material",
             "sourceRoot": "packages/material/src",
             "projectType": "library",

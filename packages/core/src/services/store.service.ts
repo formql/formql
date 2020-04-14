@@ -46,7 +46,8 @@ export class StoreService implements OnDestroy {
     setComponet(component: FormComponent<any>) {
         this.formState = this.formService.updateComponent(component, this.formState);
         this.formControls = HelperService.resetValidators(this.formState.components, this.formControls, this.componentResolverService);
-        this.data$.next(this.formState.data);
+        this.data$.next({...this.formState.data});
+        this.formState$.next({...this.formState});
     }
 
     getAll(formName: string, ids: Array<string>) {
@@ -56,10 +57,12 @@ export class StoreService implements OnDestroy {
             if (this.formState.form.pages != null && this.formState.form.pages.length > 0) {
                 const reactiveFormStructure = HelperService.createReactiveFormStructure(this.formState.form);
                 this.formControls = reactiveFormStructure.formControls;
+                this.formControls = HelperService.resetValidators(this.formState.components, this.formControls,
+                    this.componentResolverService);
                 this.formState.reactiveForm =  this.formBuilder.group(reactiveFormStructure.pageGroup);
-                this.formState$.next(this.formState);
             }
-            this.data$.next(response.data);
+            this.data$.next({...response.data});
+            this.formState$.next(this.formState);
         },
         error => {
             this.formState$.next(<FormState> {
@@ -138,6 +141,7 @@ export class StoreService implements OnDestroy {
                 this.populateReactiveForm();
             break;
         }
+        this.formState$.next({...this.formState});
     }
 
     private populateReactiveForm()  {
