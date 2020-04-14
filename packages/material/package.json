@@ -1,6 +1,6 @@
 {
     "name": "@formql/material",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "description": "FormQL - A framework for building dynamic forms",
     "license": "MIT",
     "author": "Juan Stoppa",
@@ -20,7 +20,7 @@
         "@angular/forms": "~9.1.1",
         "@angular/material": "~9.2.0",
         "@angular/platform-browser": "~9.1.1",    
-        "@formql/core": "^0.4.1",
+        "@formql/core": "^0.4.2",
         "angular2-text-mask": "^9.0.0",
         "angular2-uuid": "^1.1.1",
         "rxjs": "~6.5.5",
