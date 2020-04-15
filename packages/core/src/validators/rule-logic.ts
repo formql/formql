@@ -4,9 +4,11 @@ import { FormState } from "../models/form-window.model";
 
 export class RuleLogic {
 
+    private evalFunctions = ['GET', 'SUM'];
+
     constructor(
         private formService: FormService, private formState: FormState, private subject: FormComponent<any>
-    ){}
+    ){ }
 
     private doEval(rule: string, ruleFunctions: object) {
 
@@ -48,13 +50,13 @@ export class RuleLogic {
 
     public register(rule: string) {
         'use strict';
-        let formService = this.formService;
-        let formState = this.formState;
-        let subject = this.subject;
-
+        const self = this;
         let registerFunctions = {
             GET(schema: string) {
-                formService.addSchemaDependent(formState, schema, subject);
+                self.formService.addSchemaDependent(self.formState, schema, self.subject);
+            },
+            SUM(...schemas: string[]) {
+                schemas.forEach (schema => self.formService.addSchemaDependent(self.formState, schema, self.subject));
             }
         }
         
@@ -62,12 +64,21 @@ export class RuleLogic {
     }
 
     public evaluate(rule: string): any {
-        let formService = this.formService;
-        let formState = this.formState;
-
+        'use strict';
+        const self = this;
         let evalFunctions = {
             GET(schema: string) {
-                return formService.getSchemaValue(formState, schema);
+                return self.formService.getSchemaValue(self.formState, schema);
+            },
+            SUM(...schemas: string[]) {
+                let total = 0;
+                schemas.forEach (schema => {
+                    let value = self.formService.getSchemaValue(self.formState, schema);
+                    if (value && !isNaN(value)) {
+                        total += parseFloat(value);
+                    }
+                });
+                return total;
             }
         }
        
