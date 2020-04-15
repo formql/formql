@@ -87,7 +87,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
   }
 
   refreshComponent(component: FormComponent<any>) {
-    this.storeService.setComponet(component);
+    this.storeService.setComponent(component);
   }
 
   saveForm() {

@@ -6,6 +6,7 @@ import { FormComponent } from '../models/form-component.model';
 import { UUID } from 'angular2-uuid';
 import { HelperService } from './helper.service';
 import { IFormQLService } from '../interfaces/formql-service';
+import { RuleLogic } from '../validators/rule-logic';
 
 @Injectable({
     providedIn: 'root'
@@ -58,6 +59,7 @@ export class FormService {
                                 component.componentId = UUID.UUID();
 
                             component.value = this.getValue(component.schema, data, component.type);
+                            this.registerComponentDependencies(formState, component);
                             formState.components.push(component);
 
                             if (!data)
@@ -67,6 +69,13 @@ export class FormService {
         });
         formState = this.resolveConditions(formState);
         return formState;
+    }
+
+    registerComponentDependencies(formState: FormState, component: FormComponent<any>) {
+        if (component.rules) Object.keys(component.rules).forEach(key => {
+            let rule = component.rules[key];
+            new RuleLogic(this, formState, component).register(rule.condition);
+        });
     }
 
     initiateData(data: any, schema: string) {
@@ -175,39 +184,71 @@ export class FormService {
     updateComponent(component: FormComponent<any>, formState: FormState) {
         const value = HelperService.resolveType(component.value, component.type);
         formState.data = this.setValue(component.schema, value, formState.data);
-        formState = this.resolveConditions(formState);
+
+        // refresh any dependent components
+        if (component.dependents) component.dependents.forEach(dep => {
+            this.resolveComponentRules(dep, formState);
+        });
+
+        // set the value on any components that have the same schema
         formState.components.forEach((c: FormComponent<any>) => {
-            if (c.schema === component.schema || (c.schema && c.schema.indexOf('.') === -1))
+            if (c.schema === component.schema)
                 c.value = this.getValue(c.schema, formState.data, c.type);
         });
         return formState;
     }
 
+    addSchemaDependent(formState: FormState, schema: string, component: FormComponent<any>) {
+        formState.components.forEach((c: FormComponent<any>) => {
+            if (c.schema === schema) {
+                if (c.dependents == null) c.dependents = [component];
+                else if (c.dependents.find(x => x === component)) c.dependents.push(component);
+            }
+        });
+        
+    }
+
+    getSchemaValue(formState: FormState, schema: string) {
+        let evalFunc = new Function('data', 'schema', `return data.${schema}`);
+        return evalFunc(formState.data, schema);
+    }
+
+    // updateComponent(component: FormComponent<any>, formState: FormState) {
+    //     const value = HelperService.resolveType(component.value, component.type);
+    //     formState.data = this.setValue(component.schema, value, formState.data);
+    //     formState = this.resolveConditions(formState);
+    //     formState.components.forEach((c: FormComponent<any>) => {
+    //         if (c.schema === component.schema || (c.schema && c.schema.indexOf('.') === -1))
+    //             c.value = this.getValue(c.schema, formState.data, c.type);
+    //     });
+    //     return formState;
+    // }
+
+    resolveComponentRules(component: FormComponent<any>, formState: FormState) {
+        let recalculate = false;
+        if (component.rules) {
+            Object.keys(component.rules).forEach(key => {
+                const property = component.rules[key];
+                if (property.condition) {
+                    let evaluatedValue = new RuleLogic(this, formState, component).evaluate(property.condition)
+ 
+                    if (key === 'value') {
+                        const value = HelperService.resolveType(evaluatedValue, component.type);
+                        if (component.value !== value) {
+                            component.value = value;
+                            this.updateComponent(component, formState);
+                        }
+                    }
+                    property.value = evaluatedValue;
+                } else
+                    delete component.rules[key];
+            });
+        }
+    }    
+
     resolveConditions(formState: FormState, reRun = false): FormState {
         let recalculate = false;
         formState.components.forEach(component => {
-            if (component.rules)
-                Object.keys(component.rules).forEach(key => {
-                    const property = component.rules[key];
-                    if (property.condition) {
-                        let evaluatedValue: any;
-                        if (key === 'value')
-                            evaluatedValue = HelperService.evaluateValue(property.condition, formState.data);
-                        else
-                            evaluatedValue = HelperService.evaluateCondition(property.condition, formState.data);
-
-                        if (!evaluatedValue.error && key === 'value') {
-                            const value = HelperService.resolveType(evaluatedValue.value, component.type);
-                            if (component.value !== value) {
-                                recalculate = true;
-                                formState.data = this.setValue(component.schema, value, formState.data);
-                                component.value = value;
-                            }
-                        }
-                        property.value = evaluatedValue.value;
-                    } else
-                        delete component.rules[key];
-                });
         });
 
         // recalculate the calculated values as they might be dependant from each other

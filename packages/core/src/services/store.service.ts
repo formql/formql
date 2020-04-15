@@ -10,6 +10,7 @@ import { FormBuilder } from '@angular/forms';
 import { InternalEventType } from '../models/internal-event.model';
 import { FormPage } from '../models/form-page.model';
 import { FormSection } from '../models/form-section.model';
+import { RuleLogic } from '../validators/rule-logic';
 
 @Injectable({ providedIn: 'root' })
 export class StoreService implements OnDestroy {
@@ -43,7 +44,13 @@ export class StoreService implements OnDestroy {
         return this.formState$.asObservable();
     }
 
-    setComponet(component: FormComponent<any>) {
+    updateComponent(component: FormComponent<any>) {
+        this.formState = this.formService.updateComponent(component, this.formState);
+        this.data$.next({...this.formState.data});
+        this.formState$.next({...this.formState});
+    }
+
+    setComponent(component: FormComponent<any>) {
         this.formState = this.formService.updateComponent(component, this.formState);
         this.formControls = HelperService.resetValidators(this.formState.components, this.formControls, this.componentResolverService);
         this.data$.next({...this.formState.data});

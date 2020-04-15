@@ -20,6 +20,8 @@ export interface FormComponent<T> {
 
     style: any;
     configuration: any;
+
+    dependents: FormComponent<any>[];
 }
 
 export interface ComponentControl {
