@@ -87,7 +87,7 @@ export class FormQLModule {
       FormQLTextareaComponent,
       FormQLSelectComponent,
       FormQLRadioComponent,
-      FormQLCheckboxComponent      
+      FormQLCheckboxComponent
     );
-  }    
+  }
 }

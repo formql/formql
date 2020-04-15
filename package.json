@@ -17,6 +17,7 @@
     "build_editor": "ng build editor --prod",
     "build_material": "ng build material --prod",
     "build_all": "npm run build_core && npm run build_editor && npm run build_material",
+    "pack_all": "npm pack dist/@formql/core dist/@formql/core && npm pack dist/@formql/editor && npm pack dist/@formql/material",
     "publish_core": "ng build core --prod && cd dist/@formql/core && npm publish",
     "publish_editor": "ng build editor --prod && cd dist/@formql/editor && npm publish",
     "publish_material": "ng build material --prod && cd dist/@formql/material && npm publish",
