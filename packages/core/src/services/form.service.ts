@@ -164,7 +164,6 @@ export class FormService {
           if (component.rules != null)
             Object.keys(component.rules).forEach(p => {
               component.rules[p].value = null;
-              component.dependents = null;
             });
         });
       });
