@@ -12,13 +12,12 @@ export class ComponentResolverService {
     if (!this.componentRegister) {
       return null;
     }
-
-    let comp = this.componentRegister[componentName];
-    if (!comp) {
+    const component = this.componentRegister[componentName];
+    if (!component) {
       console.log(`Component ${componentName} not found.`);
       return null;
     }
-    const resolvedComponent = this.componentFactoryResolver.resolveComponentFactory(comp);
+    const resolvedComponent = this.componentFactoryResolver.resolveComponentFactory(component);
     return resolvedComponent;
   }
 

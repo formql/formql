@@ -32,7 +32,7 @@ export class ComponentEditorComponent implements OnInit {
             .filter((x: any) => x.formQLComponent)
             .map((x: any) => x.componentName)
             .filter((x, index, self) => index === self.indexOf(x))
-            .sort();        
+            .sort();
     }
 
     ngOnInit() {

@@ -69,7 +69,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.data$.pipe(takeUntil(this.componentDestroyed)).subscribe( data => this.data = data);
+    this.data$.pipe(takeUntil(this.componentDestroyed)).subscribe(data => this.data = data);
     this.formState$.pipe(takeUntil(this.componentDestroyed)).
         subscribe((formState) => {
           if (formState) {
