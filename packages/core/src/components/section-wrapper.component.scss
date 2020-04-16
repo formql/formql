@@ -22,8 +22,8 @@
 
 
 .fql-section-wrapper-edit:hover {
-    border: 1px solid;
-    box-shadow: 3px 3px 3px rgb(200, 200, 200);
+    //border: 1px solid;
+    //box-shadow: 3px 3px 3px rgb(200, 200, 200);
 }
 
 .fql-section-header {
@@ -40,5 +40,16 @@
     min-height: 30px;
     -ms-grid-row: 2;
     -ms-grid-column: 1;
+}
 
+.fql-section-container {
+    display: table;
+    height: 100%;
+    width: 100%;
+    border: 1px dotted;
+    min-height: 15px;
+}
+
+.fql-component-container-hidden {
+    background-color: #ffecf2;
 }

@@ -1,7 +1,7 @@
 {
   "extends": "../../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../out-tsc/app",
+    "outDir": "../out-tsc/app",
     "types": []
   },
   "files": [
@@ -9,6 +9,6 @@
     "src/polyfills.ts"
   ],
   "include": [
-    "src/**/*.d.ts"
+    "packages/form-app/form-app/src/**/*.d.ts"
   ]
 }

@@ -1,12 +1,10 @@
-import { NgModule, APP_INITIALIZER, ComponentFactoryResolver } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { PlainLayoutComponent } from './components/layouts/plain-layout.component';
 import { PageWrapperComponent } from './components/page-wrapper.component';
-import { PageContainerComponent } from './components/page-container.component';
 import { SectionWrapperComponent } from './components/section-wrapper.component';
-import { SectionContainerComponent } from './components/section-container.component';
 import { ComponentContainerComponent } from './components/component-container.component';
 
 import { LayoutDirective } from './directives/layout.directive';
@@ -23,6 +21,7 @@ import { FormQLTextareaComponent } from './bundle/formql-textarea.component';
 import { FormQLSelectComponent } from './bundle/formql-select.component';
 import { FormQLRadioComponent } from './bundle/formql-radio.component';
 import { FormQLCheckboxComponent } from './bundle/formql-checkbox.component';
+import { LayoutLoaderComponent } from './components/layout-loader.component';
 
 import { ComponentResolverService } from './services/component-resolver.service';
 
@@ -36,11 +35,10 @@ import { ComponentResolverService } from './services/component-resolver.service'
     // components
     PlainLayoutComponent,
     PageWrapperComponent,
-    PageContainerComponent,
     SectionWrapperComponent,
-    SectionContainerComponent,
     ComponentContainerComponent,
     FormQLComponent,
+    LayoutLoaderComponent,
 
     // directives
     LayoutDirective,
@@ -80,6 +78,16 @@ import { ComponentResolverService } from './services/component-resolver.service'
 })
 export class FormQLModule {
   public static registerComponents(componentResolverService: ComponentResolverService) {
-    componentResolverService.addComponents(FormQLComponent, PlainLayoutComponent, FormQLLabelComponent);
+    componentResolverService.addComponents(
+      FormQLComponent,
+      PlainLayoutComponent,
+      FormQLButtonComponent,
+      FormQLInputComponent,
+      FormQLLabelComponent,
+      FormQLTextareaComponent,
+      FormQLSelectComponent,
+      FormQLRadioComponent,
+      FormQLCheckboxComponent      
+    );
   }    
 }

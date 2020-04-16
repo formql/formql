@@ -73,7 +73,7 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
         this.formSubscription$ = this.reactiveSection.controls[this.component.componentId].valueChanges.subscribe((change) => {
             if (this.component.value !== change) {
                 this.component.value = change;
-                this.storeService.setComponet(this.component);
+                this.storeService.updateComponent(this.component);
             }
         });
 

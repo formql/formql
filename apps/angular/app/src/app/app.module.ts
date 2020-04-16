@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormQLModule } from '@formql/core';
 import { FormQLEditorModule } from '@formql/editor';
-import { FormQLMaterialModule } from '@formql/material'
+import { FormQLMaterialModule } from '@formql/material';
 
 import { DummyService } from './app-service';
 

@@ -1,27 +1,28 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlainLayoutComponent } from './plain-layout.component';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { PageWrapperComponent } from '../page-wrapper.component';
-import { SectionWrapperComponent } from '../section-wrapper.component';
-import { DndDirective } from '../../directives/dnd.directive';
-import { LayoutDirective } from '../../directives/layout.directive';
-import { DndDropDirective } from '../../directives/dnd-drop.directive';
-import { ComponentContainerComponent } from '../component-container.component';
-import { FormQLLabelComponent } from '../../bundle/formql-label.component';
-import { DndService } from '../../services/dnd.service';
+import { PageWrapperComponent } from './page-wrapper.component';
+import { SectionWrapperComponent } from './section-wrapper.component';
+import { DndDirective } from '../directives/dnd.directive';
+import { LayoutDirective } from '../directives/layout.directive';
+import { DndDropDirective } from '../directives/dnd-drop.directive';
+import { ComponentContainerComponent } from './component-container.component';
+import { FormQLLabelComponent } from '../bundle/formql-label.component';
+import { DndService } from '../services/dnd.service';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { LayoutLoaderComponent } from './layout-loader.component';
+import { FormState } from '../models/form-window.model';
 
-describe('PlainLayoutComponent', () => {
-  let component: PlainLayoutComponent;
-  let fixture: ComponentFixture<PlainLayoutComponent>;
+describe('LayoutLoaderComponent', () => {
+  let component: LayoutLoaderComponent;
+  let fixture: ComponentFixture<LayoutLoaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CommonModule,
         ReactiveFormsModule],
-      declarations: [ PlainLayoutComponent,
+      declarations: [ LayoutLoaderComponent,
         PageWrapperComponent,
         SectionWrapperComponent,
         DndDirective,
@@ -40,9 +41,10 @@ describe('PlainLayoutComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PlainLayoutComponent);
+    fixture = TestBed.createComponent(LayoutLoaderComponent);
     component = fixture.componentInstance;
-    component.form = {
+    component.formState = <FormState>{};
+    component.formState.form = {
       error: null,
       class: null,
       dataSource: null,
