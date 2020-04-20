@@ -27,7 +27,7 @@ export class StoreService implements OnDestroy {
 
   private formState: FormState;
 
-  private formControls: FormControls;
+  // private formControls: FormControls;
 
 
   ngOnDestroy(): void {
@@ -44,14 +44,14 @@ export class StoreService implements OnDestroy {
   }
 
   updateComponent(component: FormComponent<any>) {
-    this.formState = this.formService.updateComponent(component, this.formState);
+    this.formState = this.formService.updateComponent(component, this.formState, false);
     this.data$.next({ ...this.formState.data });
     this.formState$.next({ ...this.formState });
   }
 
   setComponent(component: FormComponent<any>) {
-    this.formState = this.formService.updateComponent(component, this.formState);
-    this.formControls = HelperService.resetValidators(this.formState.components, this.formControls, this.componentResolverService);
+    this.formState = this.formService.updateComponent(component, this.formState, true);
+    // this.formControls = HelperService.resetValidators(this.formState.components, this.formControls, this.componentResolverService);
     this.data$.next({ ...this.formState.data });
     this.formState$.next({ ...this.formState });
   }
@@ -60,13 +60,12 @@ export class StoreService implements OnDestroy {
     this.formService.getFormAndData(formName, ids).pipe(takeUntil(this.serviceDestroyed)).subscribe(response => {
       this.formState = { ...response };
       this.formState.ids = ids;
-      if (this.formState.form.pages != null && this.formState.form.pages.length > 0) {
-        const reactiveFormStructure = HelperService.createReactiveFormStructure(this.formState.form);
-        this.formControls = reactiveFormStructure.formControls;
-        this.formControls = HelperService.resetValidators(this.formState.components, this.formControls,
-          this.componentResolverService);
-        this.formState.reactiveForm = this.formBuilder.group(reactiveFormStructure.pageGroup);
-      }
+      // if (this.formState.form.pages != null && this.formState.form.pages.length > 0) {
+      //   const reactiveFormStructure = HelperService.createReactiveFormStructure(this.formState.form);
+      //   this.formState.formControls = HelperService.resetValidators(this.formState.components, reactiveFormStructure.formControls,
+      //     this.componentResolverService);
+      //   this.formState.reactiveForm = this.formBuilder.group(reactiveFormStructure.pageGroup);
+      // }
       this.data$.next({ ...response.data });
       this.formState$.next(this.formState);
     },
@@ -147,14 +146,13 @@ export class StoreService implements OnDestroy {
         this.populateReactiveForm();
         break;
     }
-    this.formState$.next({...this.formState });
+    this.formState$.next({ ...this.formState });
   }
 
   private populateReactiveForm() {
     if (this.formState.form.pages != null && this.formState.form.pages.length > 0) {
       // get reactive structure -> formControls, pageGroup and components if it's an update
-      const reactiveFormStructure = HelperService.createReactiveFormStructure(this.formState.form, true);
-      this.formControls = reactiveFormStructure.formControls;
+      const reactiveFormStructure = HelperService.createReactiveFormStructure(this.formState.form);
 
       // if it's an update, refresh reactive form, set all form controls, validators
       this.formState.form.pages.forEach(page => {
@@ -162,8 +160,9 @@ export class StoreService implements OnDestroy {
       });
       this.formState.form = HelperService.updateTemplates(this.formState.form);
       if (reactiveFormStructure.components != null && Object.keys(reactiveFormStructure.components).length > 0)
-        this.formControls = HelperService.resetValidators(reactiveFormStructure.components,
-          this.formControls, this.componentResolverService);
+        this.formState.formControls = HelperService.resetValidators(reactiveFormStructure.components,
+          reactiveFormStructure.formControls, this.componentResolverService);
+
     }
   }
 }

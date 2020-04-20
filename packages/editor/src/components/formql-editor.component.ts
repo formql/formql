@@ -48,7 +48,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
 
         this.reactiveForm = this.formBuilder.group([]);
 
-        const formQLRef = this.vcRef.createComponent(HelperService.getFactory(this.componentResolverService, 'FormQLComponent'));
+        const formQLRef = this.vcRef.createComponent(this.componentResolverService.resolveComponent('FormQLComponent'));
         const formql = <any>formQLRef;
 
         formql.instance.mode = this.mode;
@@ -94,7 +94,7 @@ export class FormQLEditorComponent implements OnInit, OnDestroy {
     loadEditor(name: string, object: any, type: InternalEventType) {
         this.editor.clear();
 
-        const componentRef = this.vcRef.createComponent(HelperService.getFactory(this.componentResolverService, name));
+        const componentRef = this.vcRef.createComponent(this.componentResolverService.resolveComponent(name));
         const component = (<any>componentRef);
 
         switch (type) {

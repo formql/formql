@@ -86,38 +86,32 @@ export class HelperService {
     return response;
   }
 
-  public static resolveType(value, type) {
-    if (value === null || value === undefined || value === '')
-      return null;
-    else if (Number.isNaN(value))
-      return 0;
+  public static setValue<T, U>(schema: string, value: T, data: U): U {
+    if (!schema || !data)
+      return data;
 
-    switch (type) {
-      case 'number':
-        if (typeof value === 'string')
-          value = value.replace(/[^\d\.]/g, '');
-
-        return Number(value);
-
-      default:
-        return value;
-    }
+    const evalFunc = new Function('data', 'value', `data.${schema} = value; return data;`);
+    return evalFunc(data, value);
   }
 
-  public static getFactory(componentResolverService: ComponentResolverService, componentName: string): ComponentFactory<Component> {
-    // const factories = Array.from(componentFactoryResolver['_factories'].keys());
-    // const type = <Type<Component>>factories.find((x: any) => x.componentName === componentName);
-    // return componentFactoryResolver.resolveComponentFactory(type);
+  public static getValue<T>(schema: string, data: T, type: string) {
+    if (!schema || !data || (data && Object.keys(data).length === 0 && data.constructor === Object))
+      return;
 
-    return componentResolverService.resolveComponent(componentName);
+    const evalFunc = new Function('data', `return data.${schema};`);
+    return evalFunc(data);
   }
 
   public static setValidators(componentResolverService: ComponentResolverService,
     component: FormComponent<any>, control: FormControl): FormControl {
-    // const factories = Array.from(componentFactoryResolver['_factories'].keys());
-    // const type = factories.find((x: any) => x.componentName === component.componentName);
 
-    const type = componentResolverService.resolveComponent(component.componentName);
+    const componentRef = componentResolverService.resolveComponent(component.componentName);
+
+    if (!componentRef)
+      return control;
+
+    const type = componentRef.componentType;
+
     if (type && (!type['validators'] || (type['validators'] && type['validators'].length === 0)))
       return control;
 
@@ -143,7 +137,7 @@ export class HelperService {
     return control;
   }
 
-  public static createReactiveFormStructure(form: FormWindow, getComponents: boolean = false) {
+  public static createReactiveFormStructure<T>(form: FormWindow, data: T = null) {
     const formControls = {} as FormControls;
     const components = {} as FormComponents;
     const pageGroup = new FormGroup({});
@@ -154,18 +148,44 @@ export class HelperService {
           const componentGroup: any = {};
           if (section.components != null)
             section.components.forEach(component => {
-              if (getComponents)
-                components[component.componentId] = component;
 
+              components[component.componentId] = component;
               const singleComponentGroup = new FormControl();
               formControls[component.componentId] = singleComponentGroup;
               componentGroup[component.componentId] = singleComponentGroup;
+
+              if (data)
+                data = HelperService.instantiateData(data, component.schema);
+
+              try {
+                component.value = this.getValue(component.schema, data, component.type);
+              } catch (err) {
+                throw err;
+              }
+
             });
           sectionGroup[section.sectionId] = new FormGroup(componentGroup);
         });
       pageGroup[page.pageId] = new FormGroup(sectionGroup);
     });
-    return { pageGroup: pageGroup, formControls: formControls, components: components };
+    return { pageGroup: pageGroup, formControls: formControls, components: components, data: data };
+  }
+
+  public static instantiateData<T>(data: T, schema: string): T {
+    if (schema && schema.indexOf('.') !== -1) {
+        const arr = schema.split('.');
+        let item = data;
+        let key = '';
+        for (let i = 0; i <= arr.length - 2; i++) {
+            key = arr[i];
+            if (!item[key])
+                item[key] = {};
+
+            if (i !== arr.length - 2)
+                item = item[key];
+        }
+    }
+    return data;
   }
 
   public static deepCopy(oldObj: any, ignoreProperty: Array<string> = null) {
@@ -257,10 +277,10 @@ export class HelperService {
     if (components && Object.keys(components).length > 0)
       Object.keys(components).forEach(key => {
         const component = components[key];
-        if (component != null) {
-          const componentControl = formControls[component.componentId];
+        if (component) {
+          let componentControl = formControls[component.componentId];
           if (componentControl)
-            componentControl['control'] = HelperService.setValidators(componentResolverService, component, componentControl['control']);
+            componentControl = HelperService.setValidators(componentResolverService, component, componentControl);
         }
       });
     return formControls;

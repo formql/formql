@@ -12,39 +12,41 @@ import { FormQLMatButtonComponent } from './components/formql-mat-button.compone
 import { FormQLInternalMaterialModule } from './formql-internal-material';
 
 @NgModule({
-    imports: [
-        BrowserAnimationsModule,
-        FormQLModule,
-        TextMaskModule,
-        ReactiveFormsModule,
-        CommonModule,
-        FormQLInternalMaterialModule
-    ],
-    declarations: [
-        FormQLMatFormFieldComponent,
-        FormQLMatTextareaComponent,
-        FormQLMatCheckboxComponent,
-        FormQLMatDatepickerComponent,
-        FormQLMatButtonComponent
-    ],
-    exports: [
-    ],
-    entryComponents: [
-        FormQLMatFormFieldComponent,
-        FormQLMatTextareaComponent,
-        FormQLMatCheckboxComponent,
-        FormQLMatDatepickerComponent,
-        FormQLMatButtonComponent
-    ]
+  imports: [
+    BrowserAnimationsModule,
+    FormQLModule,
+    TextMaskModule,
+    ReactiveFormsModule,
+    CommonModule,
+    FormQLInternalMaterialModule
+  ],
+  declarations: [
+    FormQLMatFormFieldComponent,
+    FormQLMatTextareaComponent,
+    FormQLMatCheckboxComponent,
+    FormQLMatDatepickerComponent,
+    FormQLMatButtonComponent
+  ],
+  exports: [
+  ],
+  entryComponents: [
+    FormQLMatFormFieldComponent,
+    FormQLMatTextareaComponent,
+    FormQLMatCheckboxComponent,
+    FormQLMatDatepickerComponent,
+    FormQLMatButtonComponent
+  ]
 })
-export class FormQLMaterialModule { 
-    public static registerComponents(componentResolverService: ComponentResolverService) {
-        componentResolverService.addComponents(
-            FormQLMatFormFieldComponent, 
-            FormQLMatTextareaComponent, 
-            FormQLMatCheckboxComponent, 
-            FormQLMatDatepickerComponent, 
-            FormQLMatButtonComponent
-        );
-    }        
+export class FormQLMaterialModule {
+
+  constructor(componentResolverService: ComponentResolverService) {
+    componentResolverService.addComponents(
+      FormQLMatFormFieldComponent,
+      FormQLMatTextareaComponent,
+      FormQLMatCheckboxComponent,
+      FormQLMatDatepickerComponent,
+      FormQLMatButtonComponent
+    );
+
+  }
 }

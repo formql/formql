@@ -63,8 +63,8 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        const component = this.viewContainerRef.createComponent(
-            HelperService.getFactory(this.componentResolverService, this.component.componentName));
+        const component = this.viewContainerRef.createComponent(this.componentResolverService.resolveComponent(
+            this.component.componentName));
         (<any>component).instance.field = this.component;
         (<any>component).instance.formControl = this.reactiveSection.controls[this.component.componentId];
 
@@ -78,8 +78,7 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
         });
 
         if (this.mode === FormQLMode.Edit) {
-            const tooltip = this.viewContainerRef.createComponent(
-                HelperService.getFactory(this.componentResolverService, 'TooltipComponent'));
+            const tooltip = this.viewContainerRef.createComponent(this.componentResolverService.resolveComponent('TooltipComponent'));
             (<any>tooltip).instance.wrapper = this.wrapper;
             (<any>tooltip).instance.type = ContainerType.Component;
             (<any>tooltip).instance.object = this.component;

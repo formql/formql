@@ -50,13 +50,13 @@ import { JsonFieldInputComponent } from './components/json-field-input.component
     ]
 })
 export class FormQLEditorModule { 
-    public static registerComponents(componentResolverService: ComponentResolverService) {
+    constructor(componentResolverService: ComponentResolverService) {
         componentResolverService.addComponents(
             TooltipComponent,
             ComponentEditorComponent,
             SectionEditorComponent,
             PageEditorComponent,
-            FormEditorComponent    
+            FormEditorComponent
         );
-    }    
+    }
 }

@@ -36,6 +36,7 @@ describe('ComponentContainerComponent', () => {
       label: 'Contact Info',
       componentName: 'FormQLLabelComponent',
       type: 'text',
+      dependents: null,
       position: {
         id: 'ID1_1',
         index: 1,

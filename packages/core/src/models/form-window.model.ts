@@ -23,6 +23,7 @@ export interface FormState {
     form: FormWindow;
     reactiveForm: FormGroup;
     components: FormComponents;
+    formControls: FormControls;
     ids: Array<string>;
     isLoading: boolean;
     error: any;

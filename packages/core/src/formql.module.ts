@@ -77,7 +77,8 @@ import { ComponentResolverService } from './services/component-resolver.service'
   ]
 })
 export class FormQLModule {
-  public static registerComponents(componentResolverService: ComponentResolverService) {
+
+  constructor(componentResolverService: ComponentResolverService) {
     componentResolverService.addComponents(
       FormQLComponent,
       PlainLayoutComponent,
@@ -87,7 +88,7 @@ export class FormQLModule {
       FormQLTextareaComponent,
       FormQLSelectComponent,
       FormQLRadioComponent,
-      FormQLCheckboxComponent      
+      FormQLCheckboxComponent
     );
-  }    
+  }
 }

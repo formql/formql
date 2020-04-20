@@ -59,6 +59,7 @@ describe('PageWrapperComponent', () => {
         rules: null,
         components: [{
           textMask: null,
+          dependents: null,
           tabIndex: null,
           action: null,
           configuration: null,
