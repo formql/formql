@@ -5,11 +5,12 @@ import { takeUntil } from 'rxjs/operators';
 import { FormComponent } from '../models/form-component.model';
 import { FormPage } from '../models/form-page.model';
 import { FormSection } from '../models/form-section.model';
-import { FormControls, FormError, FormState } from '../models/form-window.model';
+import { FormError, FormState } from '../models/form-window.model';
 import { InternalEventType } from '../models/internal-event.model';
 import { ComponentResolverService } from '../services/component-resolver.service';
 import { FormService } from './form.service';
 import { HelperService } from './helper.service';
+import { FormQLMode } from '../models/type.model';
 
 @Injectable({ providedIn: 'root' })
 export class StoreService implements OnDestroy {
@@ -56,16 +57,11 @@ export class StoreService implements OnDestroy {
     this.formState$.next({ ...this.formState });
   }
 
-  getAll(formName: string, ids: Array<string>) {
+  getAll(formName: string, ids: Array<string>, mode: FormQLMode) {
     this.formService.getFormAndData(formName, ids).pipe(takeUntil(this.serviceDestroyed)).subscribe(response => {
       this.formState = { ...response };
       this.formState.ids = ids;
-      // if (this.formState.form.pages != null && this.formState.form.pages.length > 0) {
-      //   const reactiveFormStructure = HelperService.createReactiveFormStructure(this.formState.form);
-      //   this.formState.formControls = HelperService.resetValidators(this.formState.components, reactiveFormStructure.formControls,
-      //     this.componentResolverService);
-      //   this.formState.reactiveForm = this.formBuilder.group(reactiveFormStructure.pageGroup);
-      // }
+      this.formState.mode = mode;
       this.data$.next({ ...response.data });
       this.formState$.next(this.formState);
     },
@@ -152,7 +148,9 @@ export class StoreService implements OnDestroy {
   private populateReactiveForm() {
     if (this.formState.form.pages != null && this.formState.form.pages.length > 0) {
       // get reactive structure -> formControls, pageGroup and components if it's an update
-      const reactiveFormStructure = HelperService.createReactiveFormStructure(this.formState.form);
+      const reactiveFormStructure = HelperService.createReactiveFormStructure(this.formState.form, true, this.formState.data);
+      this.formState.formControls = reactiveFormStructure.formControls;
+
 
       // if it's an update, refresh reactive form, set all form controls, validators
       this.formState.form.pages.forEach(page => {
@@ -161,7 +159,9 @@ export class StoreService implements OnDestroy {
       this.formState.form = HelperService.updateTemplates(this.formState.form);
       if (reactiveFormStructure.components != null && Object.keys(reactiveFormStructure.components).length > 0)
         this.formState.formControls = HelperService.resetValidators(reactiveFormStructure.components,
-          reactiveFormStructure.formControls, this.componentResolverService);
+              this.formState.formControls, this.componentResolverService);
+
+      this.formState = this.formService.resolveConditions(this.formState);
 
     }
   }

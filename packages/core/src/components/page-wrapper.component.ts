@@ -104,8 +104,4 @@ export class PageWrapperComponent implements OnInit {
     if (this.sections)
       this.sections = this.createSections(this.page);
   }
-
-  log(obj) {
-    console.log(obj);
-  }
 }

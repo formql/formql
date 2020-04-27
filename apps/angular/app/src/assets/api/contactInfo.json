@@ -38,7 +38,10 @@
                   "errorMessage": "Please enter first name"
                 }
               },
-              "dependents": ["4b206429-58d0-7a41-8bfc-040cdaf81677"]
+              "dependents": [
+                "bb22abb9-0fd0-fa7b-ff0a-50e2c2031970",
+                "4b206429-58d0-7a41-8bfc-040cdaf81677"
+              ]
             },
             {
               "schema": "contact.lastName",
@@ -61,7 +64,13 @@
               "order": 1,
               "position": { "id": "ID2_2", "index": 0, "type": 2 },
               "componentId": "bb22abb9-0fd0-fa7b-ff0a-50e2c2031970",
-              "conditions": {}
+              "conditions": {},
+              "rules": {
+                "hidden": {
+                  "key": "hidden",
+                  "condition": "!GET('contact.firstName')"
+                }
+              }
             },
             {
               "schema": "contact.email",

@@ -67,7 +67,7 @@ import { ComponentGroup, FormComponent } from '../models/form-component.model';
                       [mode]="mode"></div>
               </ng-container>
             </div>
-            <div *ngIf="!(mode === FormQLMode.Edit)">
+            <div *ngIf="mode !== FormQLMode.Edit">
               <ng-container *ngFor="let component of components[positionType + '_' + templateitem.id]; trackBy: trackByFn">
                 <div formql-component-container *ngIf="!component.rules?.hidden?.value"
                     [component]="component"

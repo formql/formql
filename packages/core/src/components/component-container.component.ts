@@ -20,8 +20,7 @@ import { Subscription } from 'rxjs';
         [sourceWrapperId]="sectionId"
         [type]="ContainerType.Component"
         [mode]="mode"
-        [ngClass]="{'fql-component-container-wrapper': (mode === FormQLMode.Edit)}">
-        <div class="fql-component-vilibility-off"></div>
+        [ngClass]="{'fql-component-container-wrapper': (mode === FormQLMode.Edit) }">
         <div class="fql-component-tooltip">
             <ng-container #tooltip></ng-container>
         </div>

@@ -18,8 +18,6 @@ import { StoreService } from '../services/store.service';
               </div>
               <formql-layout-loader
                 [formState]="formState"
-                [reactiveForm]="reactiveForm"
-                [mode]="mode"
                 (formSaveStart)="formSaveStart.emit(true)"
                 (formSaveEnd)="formSaveEnd.emit(true)"
                 (formError)="formError.emit(true)">
@@ -67,7 +65,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
               this.form = formState.form;
           }
         });
-    this.storeService.getAll(this.formName, this.ids);
+    this.storeService.getAll(this.formName, this.ids, this.mode);
   }
 
   resetForm(objectId: string) {

@@ -10,25 +10,21 @@ import { ComponentResolverService } from './component-resolver.service';
   providedIn: 'root'
 })
 export class HelperService {
-
   public static evaluateCondition(condition: string, data: any): EvalResponse {
     'use strict';
     let response = <EvalResponse>{ value: false, error: null };
 
     if (condition && condition.trim() !== '' && condition !== 'false') {
-
       if (condition === 'true') {
         response.value = true;
         return response;
       }
 
-      if (!data)
-        return response;
+      if (!data) return response;
 
       response = { ...this.evaluate(condition, data) };
 
-      if (response.value !== true)
-        response.value = false;
+      if (response.value !== true) response.value = false;
     }
     return response;
   }
@@ -38,15 +34,12 @@ export class HelperService {
 
     let response = <EvalResponse>{ value: null, error: null };
 
-    if (!data)
-      return response;
+    if (!data) return response;
 
-    response = {...this.evaluate(path, data) };
+    response = { ...this.evaluate(path, data) };
 
-    if (Number.isNaN(response.value) || response.value === Infinity)
-      response.value = null;
-    else
-      response.value = this.deepCopy(response.value);
+    if (Number.isNaN(response.value) || response.value === Infinity) response.value = null;
+    else response.value = this.deepCopy(response.value);
 
     return response;
   }
@@ -59,8 +52,7 @@ export class HelperService {
     const props = Object.keys(data);
     const params = [];
 
-    for (let i = 0; i < props.length; i++)
-      params.push(data[props[i]]);
+    for (let i = 0; i < props.length; i++) params.push(data[props[i]]);
 
     params.push(path);
 
@@ -87,82 +79,106 @@ export class HelperService {
   }
 
   public static setValue<T, U>(schema: string, value: T, data: U): U {
-    if (!schema || !data)
-      return data;
+    if (value === undefined)
+        value = null;
+    if (schema) {
+        if (!data)
+            data = {} as U;
+        let key = schema;
+        if (schema.indexOf('.') !== -1) {
+            const arr = schema.split('.');
+            let item = data;
+            for (let i = 0; i <= arr.length - 1; i++) {
+                key = arr[i];
+                if (!item[key])
+                    item[key] = {};
 
-    const evalFunc = new Function('data', 'value', `data.${schema} = value; return data;`);
-    return evalFunc(data, value);
+                if (i !== arr.length - 1)
+                    item = item[key];
+            }
+            item[key] = value;
+        } else
+            data[key] = value;
+    }
+    return data;
+}
+
+  public static getValue<T, U>(schema: string, data: T, type: string): U {
+    if (!schema || !data || (data && Object.keys(data).length === 0 && data.constructor === Object)) return;
+
+    try {
+      const evalFunc = new Function('data', `return data.${schema};`);
+      return HelperService.resolveType(evalFunc(data), type);
+    } catch (err) {
+      return null;
+    }
   }
 
-  public static getValue<T>(schema: string, data: T, type: string) {
-    if (!schema || !data || (data && Object.keys(data).length === 0 && data.constructor === Object))
-      return;
-
-    const evalFunc = new Function('data', `return data.${schema};`);
-    return evalFunc(data);
-  }
-
-  public static setValidators(componentResolverService: ComponentResolverService,
-    component: FormComponent<any>, control: FormControl): FormControl {
-
+  public static setValidators(
+    componentResolverService: ComponentResolverService,
+    component: FormComponent<any>,
+    control: FormControl
+  ): FormControl {
     const componentRef = componentResolverService.resolveComponent(component.componentName);
 
-    if (!componentRef)
-      return control;
+    if (!componentRef) return control;
 
     const type = componentRef.componentType;
 
-    if (type && (!type['validators'] || (type['validators'] && type['validators'].length === 0)))
-      return control;
+    if (type && (!type['validators'] || (type['validators'] && type['validators'].length === 0))) return control;
 
     const validators = [];
     const rules = component.rules;
     if (rules != null) {
       const FormValidators = <Array<FormValidator>>type['validators'];
-      Object.keys(rules).forEach(key => {
+      Object.keys(rules).forEach((key) => {
         const item = rules[key];
         if (item.value && item.key !== 'readonly' && item.key !== 'hidden' && item.key !== 'value') {
-          const validator = FormValidators.find(x => x.key === item.key);
-          if (validator && validator.validator)
-            validators.push(validator.validator);
-        } else if (item.value && item.key === 'readonly' && control.enabled)
-          control.disable();
+          const validator = FormValidators.find((x) => x.key === item.key);
+          if (validator && validator.validator) validators.push(validator.validator);
+        } else if (item.value && item.key === 'readonly' && control.enabled) control.disable();
       });
-      if (control.disabled && (!rules || (rules && !rules.readonly) || (rules && rules.readonly && !rules.readonly.value)))
+      if (
+        control.disabled &&
+        (!rules || (rules && !rules.readonly) || (rules && rules.readonly && !rules.readonly.value))
+      )
         control.enable();
     }
-    if (validators.length > 0)
-      control.setValidators(validators);
+    if (validators.length > 0) control.setValidators(validators);
 
     return control;
   }
 
-  public static createReactiveFormStructure<T>(form: FormWindow, data: T = null) {
+  public static createReactiveFormStructure<T>(form: FormWindow, initialiseData = true, data: T = null) {
     const formControls = {} as FormControls;
     const components = {} as FormComponents;
     const pageGroup = new FormGroup({});
-    form.pages.forEach(page => {
+    form.pages.forEach((page) => {
       const sectionGroup: any = {};
       if (page.sections != null)
-        page.sections.forEach(section => {
+        page.sections.forEach((section) => {
           const componentGroup: any = {};
           if (section.components != null)
-            section.components.forEach(component => {
-
+            section.components.forEach((component) => {
               components[component.componentId] = component;
               const singleComponentGroup = new FormControl();
               formControls[component.componentId] = singleComponentGroup;
               componentGroup[component.componentId] = singleComponentGroup;
 
-              if (data)
+              if (initialiseData) {
+                if (!data) data = {} as T;
+
                 data = HelperService.instantiateData(data, component.schema);
-
-              try {
-                component.value = this.getValue(component.schema, data, component.type);
-              } catch (err) {
-                throw err;
+                try {
+                  const value = this.getValue(component.schema, data, component.type);
+                  if (value) {
+                    formControls[component.componentId].setValue(value);
+                    component.value = value;
+                  }
+                } catch (err) {
+                  throw err;
+                }
               }
-
             });
           sectionGroup[section.sectionId] = new FormGroup(componentGroup);
         });
@@ -173,17 +189,15 @@ export class HelperService {
 
   public static instantiateData<T>(data: T, schema: string): T {
     if (schema && schema.indexOf('.') !== -1) {
-        const arr = schema.split('.');
-        let item = data;
-        let key = '';
-        for (let i = 0; i <= arr.length - 2; i++) {
-            key = arr[i];
-            if (!item[key])
-                item[key] = {};
+      const arr = schema.split('.');
+      let item = data;
+      let key = '';
+      for (let i = 0; i <= arr.length - 2; i++) {
+        key = arr[i];
+        if (!item[key]) item[key] = {};
 
-            if (i !== arr.length - 2)
-                item = item[key];
-        }
+        if (i !== arr.length - 2) item = item[key];
+      }
     }
     return data;
   }
@@ -193,7 +207,7 @@ export class HelperService {
     if (oldObj && typeof oldObj === 'object') {
       newObj = Object.prototype.toString.call(oldObj) === '[object Array]' ? [] : {};
       for (const i in oldObj)
-        if (!ignoreProperty || (ignoreProperty && !ignoreProperty.find(p => p === i)))
+        if (!ignoreProperty || (ignoreProperty && !ignoreProperty.find((p) => p === i)))
           newObj[i] = this.deepCopy(oldObj[i]);
     }
     return newObj;
@@ -202,15 +216,12 @@ export class HelperService {
   public static propertyCopy(source: any, target: any, ignoreProperties: Array<string> = null) {
     if (source && typeof source === 'object')
       for (const i in source)
-        if (!ignoreProperties || (ignoreProperties && !ignoreProperties.find(p => p === i)))
+        if (!ignoreProperties || (ignoreProperties && !ignoreProperties.find((p) => p === i)))
           if (source[i] && typeof source[i] === 'object') {
-            if (!target[i])
-              target[i] = {};
+            if (!target[i]) target[i] = {};
             target[i] = this.propertyCopy(source[i], target[i]);
-          } else
-            target[i] = source[i];
-        else
-          console.log(`propertyCopy function doesn't support primitives`);
+          } else target[i] = source[i];
+        else console.log(`propertyCopy function doesn't support primitives`);
 
     return target;
   }
@@ -218,34 +229,43 @@ export class HelperService {
   public static formatForGraphQl(obj: any) {
     const updatedData = this.deepCopy(obj);
 
-    if (updatedData['__typename'])
-      delete updatedData['__typename'];
+    if (updatedData['__typename']) delete updatedData['__typename'];
 
     let dataForQuery = '';
 
-    Object.keys(updatedData).forEach(fieldName => {
-      if (updatedData[fieldName] == null)
-        dataForQuery += fieldName + ': null,';
+    Object.keys(updatedData).forEach((fieldName) => {
+      if (updatedData[fieldName] == null) dataForQuery += fieldName + ': null,';
       else if (typeof updatedData[fieldName] === 'object')
         dataForQuery += this.formatForGraphQl(updatedData[fieldName]);
       else if (typeof updatedData[fieldName] === 'number' || typeof updatedData[fieldName] === 'boolean')
         dataForQuery += fieldName + `:${updatedData[fieldName]},`;
-      else
-        dataForQuery += fieldName + `:\"${updatedData[fieldName]},`;
+      else dataForQuery += fieldName + `:\"${updatedData[fieldName]},`;
     });
     dataForQuery = `{${dataForQuery.slice(0, -1)}}`;
     return dataForQuery;
-
   }
 
   public static formatError(error: FormError) {
-    if (!error)
-      return;
+    if (!error) return;
 
-    if (error.error && error.error.message)
-      error.message = error.error.message;
+    if (error.error && error.error.message) error.message = error.error.message;
 
     return error;
+  }
+
+  public static resolveType(value: any, type: string) {
+    if (value === null || value === undefined || value === '') return null;
+    else if (Number.isNaN(value)) return 0;
+
+    switch (type) {
+      case 'number':
+        if (typeof value === 'string') value = value.replace(/[^\d\.]/g, '');
+
+        return Number(value);
+
+      default:
+        return value;
+    }
   }
 
   public static maskToArray(mask: string) {
@@ -253,7 +273,7 @@ export class HelperService {
     if (mask) {
       const maskTrimmed = mask.trim().substring(1).slice(0, -1).replace('\\\\', '\\');
       const arry = maskTrimmed.split(',');
-      arry.forEach(item => {
+      arry.forEach((item) => {
         result.push(item.trim().replace(/\"/g, '').replace(/\'/g, ''));
       });
     }
@@ -261,10 +281,10 @@ export class HelperService {
   }
 
   public static updateTemplates(form: FormWindow): FormWindow {
-    form.pages.forEach(page => {
+    form.pages.forEach((page) => {
       page.template.reRender = false;
       page.template = HelperService.deepCopy(page.template);
-      page.sections.forEach(section => {
+      page.sections.forEach((section) => {
         section.template.reRender = false;
         section.template = HelperService.deepCopy(section.template);
       });
@@ -272,10 +292,13 @@ export class HelperService {
     return form;
   }
 
-  public static resetValidators(components: FormComponents, formControls: FormControls,
-    componentResolverService: ComponentResolverService): FormControls {
+  public static resetValidators(
+    components: FormComponents,
+    formControls: FormControls,
+    componentResolverService: ComponentResolverService
+  ): FormControls {
     if (components && Object.keys(components).length > 0)
-      Object.keys(components).forEach(key => {
+      Object.keys(components).forEach((key) => {
         const component = components[key];
         if (component) {
           let componentControl = formControls[component.componentId];
@@ -287,12 +310,10 @@ export class HelperService {
   }
 
   public static validateForm(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {
+    Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);
-      if (control instanceof FormControl)
-        control.markAsTouched({ onlySelf: true });
-      else if (control instanceof FormGroup)
-        this.validateForm(control);
+      if (control instanceof FormControl) control.markAsTouched({ onlySelf: true });
+      else if (control instanceof FormGroup) this.validateForm(control);
     });
   }
 }

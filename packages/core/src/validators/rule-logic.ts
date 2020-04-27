@@ -1,5 +1,7 @@
 import { FormComponent } from '../models/form-component.model';
 import { FormState, FormComponents } from '../models/form-window.model';
+import { EvalResponse } from '../models/type.model';
+import { HelperService } from '../services/helper.service';
 
 export class RuleLogic {
 
@@ -10,15 +12,18 @@ export class RuleLogic {
   /*
     Perform a condition evaluation
   */
-  private doEval(formState: FormState, condition: string, conditionFunctions: object): any {
+  private doEval<T, U>(data: T, condition: string, conditionFunctions: object): U {
 
     const conditionFunctionsDeclares = Object.keys(conditionFunctions).map(x => `let ${x} = conditionFunctions.${x}; `).join('');
 
-    const props = Object.keys(formState.data);
+    if (this.evalFunctions.indexOf(condition.trim()) !== -1)
+      throw Error(`Funcitons need a parameter (e.g. GET('contact.firstName') )`);
+
+    const props = Object.keys(data);
     const params = [];
 
     for (let i = 0; i < props.length; i++)
-      params.push(formState.data[props[i]]);
+      params.push(data[props[i]]);
 
     params.push(condition);
     params.push(conditionFunctions);
@@ -46,13 +51,14 @@ export class RuleLogic {
     } catch (err) {
       debugger; // intentionally left to help troubleshooting issues
       console.log(err);
+      throw err;
     }
   }
 
   /*
     Reset all dependancies for any given condition in a component
   */
-  public resetDependancies(formState: FormState, condition: string, component: FormComponent<any>): any {
+  public resetDependancies<T, U>(formState: FormState, condition: string, component: FormComponent<T>): U {
     'use strict';
     const self = this;
     const registerFunctions = {
@@ -63,18 +69,18 @@ export class RuleLogic {
         schemas.forEach(schema => formState.components = self.setDependents(formState.components, schema, component.componentId));
       }
     };
-    return this.doEval(formState, condition, registerFunctions);
+    return this.doEval(formState.data, condition, registerFunctions);
   }
 
   /*
     Evaluetes the value of any given condition
   */
-  public evaluate(formState: FormState, condition: string): any {
+  public evaluate<T, U>(data: T, condition: string): U {
     'use strict';
     const self = this;
     const evalFunctions = {
       GET(schema: string) {
-        const result = self.getSchemaValue(formState, schema);
+        const result = self.getSchemaValue(data, schema);
         if (result !== undefined && result !== null)
           return result;
         else
@@ -83,22 +89,69 @@ export class RuleLogic {
       SUM(...schemas: string[]) {
         let total = 0;
         schemas.forEach(schema => {
-          const value = self.getSchemaValue(formState, schema);
+          const value = self.getSchemaValue(data, schema) as number;
           if (value && !isNaN(value))
-            total += parseFloat(value);
+            total += value;
         });
         return total;
       }
     };
-    return this.doEval(formState, condition, evalFunctions);
+    return this.doEval(data, condition, evalFunctions);
   }
 
-  private getSchemaValue(formState: FormState, schema: string): any {
+  public evaluateCondition<T>(data: T, condition: string): EvalResponse {
+    const response = { value: false, error: null } as EvalResponse;
+
+    if (condition && condition.trim() !== '' && condition !== 'false') {
+
+      if (condition === 'true') {
+        response.value = true;
+        return response;
+      }
+
+      if (!data)
+        return response;
+
+      try {
+        response.value = this.evaluate(data, condition);
+      } catch (err) {
+        response.error = err;
+      }
+
+      if (response.value !== true)
+        response.value = false;
+    }
+    return response;
+  }
+
+  public evaluateValue<T>(data: T, expression: string): EvalResponse {
+    const response = { value: null, error: null } as EvalResponse;
+
+    if (!data)
+      return response;
+
+    try {
+      response.value = this.evaluate(data, expression);
+    } catch (err) {
+      response.error = err;
+      return response;
+    }
+
+    if (Number.isNaN(response.value) || response.value === Infinity)
+      response.value = null;
+    else
+      response.value = HelperService.deepCopy(response.value);
+
+    return response;
+  }
+
+
+  private getSchemaValue<T, U>(data: T, schema: string): U {
     const evalFunc = new Function('data', 'schema', `return data.${schema}`);
-    return evalFunc(formState.data, schema);
+    return evalFunc(data, schema) as U;
   }
 
-  private setDependents(components: FormComponents, schema: string, componentId: string) {
+  private setDependents(components: FormComponents, schema: string, componentId: string): FormComponents {
     Object.keys(components).forEach((key) => {
       const component = components[key];
       if (component.schema === schema) {
