@@ -24,6 +24,7 @@ describe('FormQLButtonComponent', () => {
       label: 'Last Name',
       componentName: 'FormQLButtonComponent',
       type: 'text',
+      dependents: null,
       position: {
         id: 'ID1_1',
         index: 1,

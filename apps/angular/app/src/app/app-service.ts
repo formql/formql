@@ -37,7 +37,7 @@ export class DummyService implements IFormQLService {
         return of(form);
     }
 
-    saveData(dataSource: FormDataSource, ids: Array<string>, data: any) {
+    saveData<T>(dataSource: FormDataSource, ids: Array<string>, data: T) {
         if (!ids)
             throwError('no ids provided!');
 

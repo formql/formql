@@ -1,55 +1,58 @@
-.fql-section-wrapper , .fql-section-wrapper-edit {
-    display: -ms-grid;
-    display: grid;
-    padding: 1px;
-    -ms-grid-columns: 100%;
-    grid-template-columns: 100%;
-    grid-template-rows: auto auto;
-    position: relative;
+
+@import "../variables.scss";
+
+.fql-section-wrapper,
+.fql-section-wrapper-edit {
+  display: -ms-grid;
+  display: grid;
+  padding: 1px;
+  -ms-grid-columns: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: auto auto;
+  position: relative;
 }
 
 .fql-section-wrapper-edit:hover .fql-section-tooltip {
-    opacity:1;
+  opacity: 1;
 }
 
 .fql-section-tooltip {
-    opacity:0;
-    display: block;
-    position: absolute; 
-    right: 0%;
-    z-index: 1;
-}
-
-
-.fql-section-wrapper-edit:hover {
-    //border: 1px solid;
-    //box-shadow: 3px 3px 3px rgb(200, 200, 200);
+  opacity: 0;
+  display: block;
+  position: absolute;
+  right: 0%;
+  z-index: 1;
+  transition: opacity 0.3s;
 }
 
 .fql-section-header {
-    display: -ms-grid;
-    display: grid;
-    min-height: 30px;
-    -ms-grid-row: 1;
-    -ms-grid-column: 1;
+  display: -ms-grid;
+  display: grid;
+  min-height: 30px;
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
 }
 
 .fql-section-body {
-    display: -ms-grid;
-    display: grid;
-    min-height: 30px;
-    -ms-grid-row: 2;
-    -ms-grid-column: 1;
+  display: -ms-grid;
+  display: grid;
+  min-height: 30px;
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
 }
 
 .fql-section-container {
-    display: table;
-    height: 100%;
-    width: 100%;
-    border: 1px dotted;
-    min-height: 15px;
+  display: table;
+  height: 100%;
+  width: 100%;
+  
+  min-height: 15px;
+}
+
+.fql-section-container:hover {
+  outline: 1px solid;
 }
 
 .fql-component-container-hidden {
-    background-color: #ffecf2;
+  background-color: #ffecf2;
 }

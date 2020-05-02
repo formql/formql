@@ -54,9 +54,8 @@ export class AppModule { }
 
 export function InitModule(componentResolverService: ComponentResolverService) {
     let x = () => {
-        FormQLModule.registerComponents(componentResolverService);
-        FormQLEditorModule.registerComponents(componentResolverService);
-        FormQLMaterialModule.registerComponents(componentResolverService);
+        // Here you can register your custom component 
+        // e.g. componentResolverService.addComponent(...);
     }
     return x;
 }

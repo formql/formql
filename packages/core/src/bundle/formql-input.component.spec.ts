@@ -32,6 +32,7 @@ describe('FormQLInputComponent', () => {
       },
       componentId: '0af1e87f-19fe-e6e0-80ca-f1d512b889ec',
       rules: {},
+      dependents: null,
       value: null,
       tabIndex: null,
       action: null,

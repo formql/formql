@@ -1,6 +1,7 @@
 import { FormPage } from './form-page.model';
 import { FormComponent } from './form-component.model';
 import { FormGroup, FormControl } from '@angular/forms';
+import { FormQLMode } from './type.model';
 
 export interface FormWindow {
     error: FormError;
@@ -23,8 +24,10 @@ export interface FormState {
     form: FormWindow;
     reactiveForm: FormGroup;
     components: FormComponents;
+    formControls: FormControls;
     ids: Array<string>;
     isLoading: boolean;
+    mode: FormQLMode;
     error: any;
 }
 

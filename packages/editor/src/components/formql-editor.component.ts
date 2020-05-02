@@ -1,185 +1,177 @@
-import { OnInit, ViewChild, Component, ViewContainerRef, Input, Renderer2, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { FormQLMode, HelperService, InternalEventHandlerService,
-        InternalEventHandler, InternalEventType, FormQLComponent } from '@formql/core';
+import { Component, Input, OnDestroy, OnInit, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  ComponentResolverService,
+  FormQLComponent,
+  FormQLMode,
+  InternalEventHandler,
+  InternalEventHandlerService,
+  InternalEventType
+} from '@formql/core';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ComponentResolverService } from '@formql/core';
 
 @Component({
-    selector: 'formql-editor',
-    templateUrl: './formql-editor.component.html',
-    styleUrls: ['./formql-editor.component.scss']
+  selector: 'formql-editor',
+  templateUrl: './formql-editor.component.html',
+  styleUrls: ['./formql-editor.component.scss']
 })
 export class FormQLEditorComponent implements OnInit, OnDestroy {
+  @Input() formName: string;
+  @Input() ids: Array<string>;
+  @Input() mode: FormQLMode = FormQLMode.Edit;
+  @Input() validators: Array<Function>;
+  @Input() pathOpenViewMode: string; // path should contain {0} for passing the fornName
 
-    @Input() formName: string;
-    @Input() ids: Array<string>;
-    @Input() mode: FormQLMode = FormQLMode.Edit;
-    @Input() validators: Array<Function>;
-    @Input() pathOpenViewMode: string;  // path should contain {0} for passing the fornName
+  @ViewChild('target', { read: ViewContainerRef, static: true }) target: ViewContainerRef;
+  @ViewChild('rightSidenav', { read: ViewContainerRef, static: true }) rightSidenav: ViewContainerRef;
+  @ViewChild('editorWindow', { read: ViewContainerRef, static: true }) editorWindow: ViewContainerRef;
+  @ViewChild('pusher', { read: ViewContainerRef, static: true }) pusher: ViewContainerRef;
+  @ViewChild('editor', { read: ViewContainerRef, static: true }) editor: ViewContainerRef;
 
-    @ViewChild('target', { read: ViewContainerRef, static : true }) target: ViewContainerRef;
-    @ViewChild('rightSidenav', { read: ViewContainerRef, static : true }) rightSidenav: ViewContainerRef;
-    @ViewChild('editorWindow', { read: ViewContainerRef, static : true }) editorWindow: ViewContainerRef;
-    @ViewChild('pusher', { read: ViewContainerRef, static : true }) pusher: ViewContainerRef;
-    @ViewChild('editor', { read: ViewContainerRef, static : true }) editor: ViewContainerRef;
+  formql: FormQLComponent;
+  subscription$: Subscription;
 
-    formql: FormQLComponent;
-    subscription$: Subscription;
+  saving = false;
+  reactiveForm: FormGroup;
 
-    saving = false;
-    reactiveForm: FormGroup;
+  private componetDestroyed = new Subject();
 
-    private componetDestroyed = new Subject();
+  constructor(
+    private componentResolverService: ComponentResolverService,
+    private vcRef: ViewContainerRef,
+    private internalEventHandlerService: InternalEventHandlerService,
+    private formBuilder: FormBuilder,
+    private renderer: Renderer2
+  ) {
+    this.loadEventHandlers();
+  }
 
-    constructor(
-        private componentResolverService: ComponentResolverService,
-        private vcRef: ViewContainerRef,
-        private internalEventHandlerService: InternalEventHandlerService,
-        private formBuilder: FormBuilder,
-        private renderer: Renderer2
+  ngOnInit() {
+    this.reactiveForm = this.formBuilder.group([]);
 
-    ) {
-        this.loadEventHandlers();
-    }
+    const formQLRef = this.vcRef.createComponent(this.componentResolverService.resolveComponent('FormQLComponent'));
+    const formql = <any>formQLRef;
 
-    ngOnInit() {
+    formql.instance.mode = this.mode;
+    formql.instance.formName = this.formName;
+    formql.instance.ids = this.ids;
+    formql.instance.reactiveForm = this.reactiveForm;
 
-        this.reactiveForm = this.formBuilder.group([]);
+    this.target.insert(formql.hostView);
 
-        const formQLRef = this.vcRef.createComponent(HelperService.getFactory(this.componentResolverService, 'FormQLComponent'));
-        const formql = <any>formQLRef;
+    this.formql = <FormQLComponent>formql.instance;
+  }
 
-        formql.instance.mode = this.mode;
-        formql.instance.formName = this.formName;
-        formql.instance.ids = this.ids;
-        formql.instance.reactiveForm = this.reactiveForm;
+  openEditBar() {
+    this.renderer.addClass(this.editorWindow.element.nativeElement, 'fql-bar-effect');
+    this.renderer.addClass(this.editorWindow.element.nativeElement, 'fql-slide-bar-open');
+    this.renderer.addClass(this.pusher.element.nativeElement, 'fql-slide-pusher');
+  }
 
-        this.target.insert(formql.hostView);
+  closeEditBar() {
+    this.renderer.removeClass(this.editorWindow.element.nativeElement, 'fql-bar-effect');
+    this.renderer.removeClass(this.editorWindow.element.nativeElement, 'fql-slide-bar-open');
+    this.renderer.removeClass(this.pusher.element.nativeElement, 'fql-slide-pusher');
+  }
 
-        this.formql = <FormQLComponent>formql.instance;
+  editForm() {
+    this.loadEditor('FormEditorComponent', '', InternalEventType.EditingForm);
+  }
 
-    }
+  openViewMode() {
+    let relativePath = this.pathOpenViewMode;
+    if (!relativePath) relativePath = '/#/form/{0}';
 
-    openEditBar() {
-        this.renderer.addClass(this.editorWindow.element.nativeElement, 'fql-bar-effect');
-        this.renderer.addClass(this.editorWindow.element.nativeElement, 'fql-slide-bar-open');
-        this.renderer.addClass(this.pusher.element.nativeElement, 'fql-slide-pusher');
-    }
+    if (this.ids && this.ids.length > 0) relativePath = `${relativePath.replace('{0}', this.formName)}/${this.ids[0]}`;
+    else relativePath = `${relativePath.replace('{0}', this.formName)}`;
 
-    closeEditBar() {
-        this.renderer.removeClass(this.editorWindow.element.nativeElement, 'fql-bar-effect');
-        this.renderer.removeClass(this.editorWindow.element.nativeElement, 'fql-slide-bar-open');
-        this.renderer.removeClass(this.pusher.element.nativeElement, 'fql-slide-pusher');
-    }
+    window.open(window.location.origin + relativePath);
+  }
 
-    editForm() {
-        this.loadEditor('FormEditorComponent', '', InternalEventType.EditingForm);
-    }
+  loadEditor(name: string, object: any, type: InternalEventType) {
+    this.editor.clear();
 
-    openViewMode() {
-        let relativePath = this.pathOpenViewMode;
-        if (!relativePath)
-            relativePath = '/#/form/{0}';
+    const componentRef = this.vcRef.createComponent(this.componentResolverService.resolveComponent(name));
+    const component = <any>componentRef;
 
-        if (this.ids && this.ids.length > 0)
-            relativePath = `${relativePath.replace('{0}', this.formName)}/${this.ids[0]}`;
-        else
-            relativePath = `${relativePath.replace('{0}', this.formName)}`;
-
-        window.open(window.location.origin + relativePath);
-    }
-
-    loadEditor(name: string, object: any, type: InternalEventType) {
-        this.editor.clear();
-
-        const componentRef = this.vcRef.createComponent(HelperService.getFactory(this.componentResolverService, name));
-        const component = (<any>componentRef);
-
-        switch (type) {
-            case InternalEventType.EditingComponent:
-                component.instance.component = object;
-                component.instance.data = this.formql.data;
-                break;
-
-            case InternalEventType.EditingSection:
-                component.instance.section = object;
-                break;
-
-            case InternalEventType.EditingPage:
-                component.instance.page = this.formql.form.pages[0];
-                break;
-
-            case InternalEventType.EditingForm:
-                component.instance.form = this.formql.form;
-                break;
-
-        }
-
+    switch (type) {
+      case InternalEventType.EditingComponent:
+        component.instance.component = object;
         component.instance.data = this.formql.data;
-        component.instance.mode = this.mode;
+        break;
 
-        this.subscription$ = component.instance.action
-            .pipe(takeUntil(this.componetDestroyed))
-            .subscribe(action => { this.editorResponse(action); });
+      case InternalEventType.EditingSection:
+        component.instance.section = object;
+        break;
 
-        this.editor.insert(component.hostView);
+      case InternalEventType.EditingPage:
+        component.instance.page = this.formql.form.pages[0];
+        break;
 
-        this.openEditBar();
+      case InternalEventType.EditingForm:
+        component.instance.form = this.formql.form;
+        break;
     }
 
-    editorResponse($event) {
-        this.closeEditBar();
-        if ($event)
-            if ($event.componentId) {
-                this.formql.refreshComponent($event);
-                this.formql.resetForm($event.componentId);
-            } else if ($event.sectionId)
-                this.formql.resetForm($event.sectionId);
-            else if ($event.pageId)
-                this.formql.resetForm($event.pageId);
+    component.instance.data = this.formql.data;
+    component.instance.mode = this.mode;
 
-        if (this.subscription$)
-            this.subscription$.unsubscribe();
+    this.subscription$ = component.instance.action.pipe(takeUntil(this.componetDestroyed)).subscribe((action) => {
+      this.editorResponse(action);
+    });
 
-        const self = this;
-        setTimeout(function () {
-            self.editor.clear();
-        }, 500);
-    }
+    this.editor.insert(component.hostView);
 
-    saveForm() {
-        this.formql.saveForm();
-    }
+    this.openEditBar();
+  }
 
-    leftSideNavBarActionClick(event) {
-        if (event === 'saveForm')
-            this.saveForm();
-    }
+  editorResponse($event) {
+    this.closeEditBar();
+    if ($event)
+      if ($event.componentId) {
+        this.formql.refreshComponent($event);
+        this.formql.resetForm($event.componentId);
+      } else if ($event.sectionId) this.formql.resetForm($event.sectionId);
+      else if ($event.pageId) this.formql.resetForm($event.pageId);
 
-    loadEventHandlers() {
-        this.internalEventHandlerService.event.pipe(takeUntil(this.componetDestroyed)).subscribe(res => {
-            const internalEventHandler = <InternalEventHandler>res;
+    if (this.subscription$) this.subscription$.unsubscribe();
 
-            switch (internalEventHandler.eventType) {
-                case InternalEventType.EditingComponent:
-                    this.loadEditor('ComponentEditorComponent', internalEventHandler.event, internalEventHandler.eventType);
-                    break;
+    const self = this;
+    setTimeout(function () {
+      self.editor.clear();
+    }, 500);
+  }
 
-                case InternalEventType.EditingSection:
-                    this.loadEditor('SectionEditorComponent', internalEventHandler.event, internalEventHandler.eventType);
-                    break;
-                case InternalEventType.EditingPage:
-                    this.loadEditor('PageEditorComponent', internalEventHandler.event, internalEventHandler.eventType);
-                    break;
-            }
-        });
-    }
+  saveForm() {
+    this.formql.saveForm();
+  }
 
-    ngOnDestroy(): void {
-        this.componetDestroyed.next();
-        this.componetDestroyed.unsubscribe();
-    }
+  leftSideNavBarActionClick(event) {
+    if (event === 'saveForm') this.saveForm();
+  }
 
+  loadEventHandlers() {
+    this.internalEventHandlerService.event.pipe(takeUntil(this.componetDestroyed)).subscribe((res) => {
+      const internalEventHandler = <InternalEventHandler>res;
+
+      switch (internalEventHandler.eventType) {
+        case InternalEventType.EditingComponent:
+          this.loadEditor('ComponentEditorComponent', internalEventHandler.event, internalEventHandler.eventType);
+          break;
+
+        case InternalEventType.EditingSection:
+          this.loadEditor('SectionEditorComponent', internalEventHandler.event, internalEventHandler.eventType);
+          break;
+        case InternalEventType.EditingPage:
+          this.loadEditor('PageEditorComponent', internalEventHandler.event, internalEventHandler.eventType);
+          break;
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.componetDestroyed.next();
+    this.componetDestroyed.unsubscribe();
+  }
 }
