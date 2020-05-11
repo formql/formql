@@ -4,7 +4,7 @@
     "newProjectRoot": "packages",
     "defaultProject": "app",
     "projects": {
-        "app": {
+      "app": {
             "root": "apps/angular/app/",
             "sourceRoot": "apps/angular/app/src/",
             "projectType": "application",
@@ -30,6 +30,9 @@
                         "scripts": []
                     },
                     "configurations": {
+                        "es5": {
+                            "tsConfig": "./tsconfig.es5.json"
+                        },
                         "production": {
                             "budgets": [
                                 {
@@ -59,6 +62,9 @@
                         "browserTarget": "app:build"
                     },
                     "configurations": {
+                        "es5": {
+                            "browserTarget": "app:build:es5"
+                        },
                         "production": {
                             "browserTarget": "app:build:production"
                         }

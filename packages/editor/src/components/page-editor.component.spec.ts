@@ -3,8 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PageEditorComponent } from './page-editor.component';
 
 describe('PageEditorComponent', () => {
-  let component: PageEditorComponent;
-  let fixture: ComponentFixture<PageEditorComponent>;
+  let component: PageEditorComponent<any>;
+  let fixture: ComponentFixture<PageEditorComponent<any>>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

@@ -36,13 +36,10 @@
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "enableIvy": true
-  }
+    "enableIvy": false
+  },
+  "exclude": [
+    "examples"
+  ]
 }
-// "dist/formql"
-// "dist/formql-editor"
-// "dist/formql-material"
-// "dist/formql-material/*"
-// "packages/core/src/public_api.ts"
-// "packages/editor/src/public_api.ts"
-// "packages/material/src/public_api.ts"
+

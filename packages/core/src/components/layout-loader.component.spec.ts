@@ -124,13 +124,13 @@ describe('LayoutLoaderComponent', () => {
       }]
       }]
     };
-    component.reactiveForm = new FormGroup({
-      '1d3fcbe3-a029-aaaa-4791-9666155fff0f': new FormGroup({
-        '1d3fcbe3-a029-ca5e-4791-9666155fff0f': new FormGroup({
-          '0af1e87f-19fe-e6e0-80ca-f1d512b889ec': new FormControl('')
-        })
-      })
-    });
+    // component.reactiveForm = new FormGroup({
+    //   '1d3fcbe3-a029-aaaa-4791-9666155fff0f': new FormGroup({
+    //     '1d3fcbe3-a029-ca5e-4791-9666155fff0f': new FormGroup({
+    //       '0af1e87f-19fe-e6e0-80ca-f1d512b889ec': new FormControl('')
+    //     })
+    //   })
+    // });
     fixture.detectChanges();
   });
 

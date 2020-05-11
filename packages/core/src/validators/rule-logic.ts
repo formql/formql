@@ -12,25 +12,25 @@ export class RuleLogic {
   /*
     Perform a condition evaluation
   */
-  private doEval<T, U>(data: T, condition: string, conditionFunctions: object): U {
+  private doEval<U>(condition: string, conditionFunctions: object): U {
 
     const conditionFunctionsDeclares = Object.keys(conditionFunctions).map(x => `let ${x} = conditionFunctions.${x}; `).join('');
+
+    if (condition.trim() === '')
+      return;
 
     if (this.evalFunctions.indexOf(condition.trim()) !== -1)
       throw Error(`Funcitons need a parameter (e.g. GET('contact.firstName') )`);
 
-    const props = Object.keys(data);
+    const props = [];
     const params = [];
 
-    for (let i = 0; i < props.length; i++)
-      params.push(data[props[i]]);
 
     params.push(condition);
     params.push(conditionFunctions);
 
     props.push('condition');
     props.push('conditionFunctions');
-
 
     const expression = `
             'use strict'
@@ -69,7 +69,7 @@ export class RuleLogic {
         schemas.forEach(schema => formState.components = self.setDependents(formState.components, schema, component.componentId));
       }
     };
-    return this.doEval(formState.data, condition, registerFunctions);
+    return this.doEval(condition, registerFunctions);
   }
 
   /*
@@ -96,7 +96,7 @@ export class RuleLogic {
         return total;
       }
     };
-    return this.doEval(data, condition, evalFunctions);
+    return this.doEval(condition, evalFunctions);
   }
 
   public evaluateCondition<T>(data: T, condition: string): EvalResponse {
