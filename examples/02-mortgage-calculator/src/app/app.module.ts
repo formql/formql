@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { FormQLModule } from '@formql/core';
+import { FormQLModule, ComponentResolverService } from '@formql/core';
 import { FormQLEditorModule } from '@formql/editor';
 import { FormQLMaterialModule } from '@formql/material';
 
@@ -38,7 +38,25 @@ import { AppFormQLMortgageScheduleComponent } from './app-formql-mortgage-schedu
     ChartsModule
   ],
   entryComponents: [AppFormQLChartComponent, AppFormQLMortgageScheduleComponent],
-  providers: [DummyService, {provide: 'FormQLService', useClass: DummyService }],
+  providers: [
+    ComponentResolverService,
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      deps: [ComponentResolverService],
+      useFactory: InitModule
+    },
+    DummyService, {provide: 'FormQLService', useClass: DummyService }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export function InitModule(componentResolverService: ComponentResolverService) {
+  const x = () => {
+      // Here you can register your custom component
+      // e.g. componentResolverService.addComponent(...);
+      componentResolverService.addComponent(AppFormQLChartComponent);
+      componentResolverService.addComponent(AppFormQLMortgageScheduleComponent);
+  };
+  return x;
+}
