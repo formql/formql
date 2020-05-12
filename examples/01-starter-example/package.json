@@ -15,29 +15,29 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~8.2.4",
-    "@angular/common": "~8.2.4",
-    "@angular/compiler": "~8.2.4",
-    "@angular/core": "~8.2.4",
-    "@angular/forms": "~8.2.4",
-    "@angular/platform-browser": "~8.2.4",
-    "@angular/platform-browser-dynamic": "~8.2.4",
-    "@angular/router": "~8.2.4",
+    "@angular/animations": "~9.1.6",
+    "@angular/common": "~9.1.6",
+    "@angular/compiler": "~9.1.6",
+    "@angular/core": "~9.1.6",
+    "@angular/forms": "~9.1.6",
+    "@angular/platform-browser": "~9.1.6",
+    "@angular/platform-browser-dynamic": "~9.1.6",
+    "@angular/router": "~9.1.6",
     "@formql/core": "file:../../dist/@formql/core/formql-core-0.4.2.tgz",
     "@formql/editor": "file:../../dist/@formql/editor/formql-editor-0.4.2.tgz",
     "angular2-text-mask": "9.0.0",
     "angular2-uuid": "1.1.1",
     "text-mask-addons": "3.8.0",
     "core-js": "^2.5.4",
-    "rxjs": "~6.3.3",
-    "tslib": "^1.9.0",
-    "zone.js": "~0.8.26"
+    "rxjs": "~6.5.5",
+    "tslib": "^1.11.2",
+    "zone.js": "~0.10.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.803.2",
-    "@angular/cli": "~8.3.2",
-    "@angular/compiler-cli": "~8.2.4",
-    "@angular/language-service": "~8.2.4",
+    "@angular-devkit/build-angular": "~0.901.5",
+    "@angular/cli": "~9.1.5",
+    "@angular/compiler-cli": "~9.1.6",
+    "@angular/language-service": "~9.1.6",
     "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
@@ -52,6 +52,6 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.4.5"
+    "typescript": "~3.8.3"
   }
 }
