@@ -2,9 +2,9 @@
     "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
     "version": 1,
     "newProjectRoot": "packages",
-    "defaultProject": "formql",
+    "defaultProject": "app",
     "projects": {
-        "app": {
+      "app": {
             "root": "apps/angular/app/",
             "sourceRoot": "apps/angular/app/src/",
             "projectType": "application",
@@ -16,7 +16,7 @@
                     "options": {
                         "outputPath": "dist/apps/angular/app",
                         "index": "apps/angular/app/src/index.html",
-                        "main": "apps/angular/app/src//main.ts",
+                        "main": "apps/angular/app/src/main.ts",
                         "polyfills": "apps/angular/app/src/polyfills.ts",
                         "tsConfig": "apps/angular/app/tsconfig.app.json",
                         "assets": [
@@ -30,7 +30,16 @@
                         "scripts": []
                     },
                     "configurations": {
+                        "es5": {
+                            "tsConfig": "./tsconfig.es5.json"
+                        },
                         "production": {
+                            "budgets": [
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ],
                             "fileReplacements": [{
                                 "replace": "apps/angular/app/src/environments/environment.ts",
                                 "with": "apps/angular/app/src/environments/environment.prod.ts"
@@ -53,6 +62,9 @@
                         "browserTarget": "app:build"
                     },
                     "configurations": {
+                        "es5": {
+                            "browserTarget": "app:build:es5"
+                        },
                         "production": {
                             "browserTarget": "app:build:production"
                         }
@@ -119,7 +131,8 @@
                     },
                     "configurations": {
                         "production": {
-                            "project": "packages/core/ng-package.prod.json"
+                            "project": "packages/core/ng-package.prod.json",
+                            "tsConfig": "packages/core/tsconfig.lib.prod.json"
                         }
                     }
                 },
@@ -151,7 +164,8 @@
                     },
                     "configurations": {
                         "production": {
-                            "project": "packages/editor/ng-package.prod.json"
+                            "project": "packages/editor/ng-package.prod.json",
+                            "tsConfig": "packages/editor/tsconfig.lib.prod.json"
                         }
                     }
                 },
@@ -183,7 +197,8 @@
                     },
                     "configurations": {
                         "production": {
-                            "project": "packages/material/ng-package.prod.json"
+                            "project": "packages/material/ng-package.prod.json",
+                            "tsConfig": "packages/material/tsconfig.lib.prod.json"
                         }
                     }
                 },
@@ -200,6 +215,6 @@
                     }
                 }
             }
-        }   
+        }
     }
 }

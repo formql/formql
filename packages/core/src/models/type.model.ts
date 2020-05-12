@@ -21,5 +21,5 @@ export enum FormQLMode {
 
 export interface EvalResponse {
     value: boolean | any;
-    error: any;
+    error: Error;
 }

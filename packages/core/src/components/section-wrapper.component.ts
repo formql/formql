@@ -1,10 +1,11 @@
-import { Component, Input, ViewChild, ViewContainerRef, OnInit, ComponentFactoryResolver, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ViewChild, ViewContainerRef, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormSection } from '../models/form-section.model';
 import { InternalEventHandlerService } from '../services/internal-event-handler.service';
 import { InternalEventType } from '../models/internal-event.model';
 import { FormPage } from '../models/form-page.model';
 import { HelperService } from '../services/helper.service';
+import { ComponentResolverService } from '../services/component-resolver.service';
 import { FormQLMode, ContainerType } from '../models/type.model';
 import { GridPositionType } from '../models/style.model';
 import { DndTransfer, DndEvent } from '../models/dnd.model';
@@ -66,7 +67,7 @@ import { ComponentGroup, FormComponent } from '../models/form-component.model';
                       [mode]="mode"></div>
               </ng-container>
             </div>
-            <div *ngIf="!(mode === FormQLMode.Edit)">
+            <div *ngIf="mode !== FormQLMode.Edit">
               <ng-container *ngFor="let component of components[positionType + '_' + templateitem.id]; trackBy: trackByFn">
                 <div formql-component-container *ngIf="!component.rules?.hidden?.value"
                     [component]="component"
@@ -99,11 +100,11 @@ export class SectionWrapperComponent implements OnInit {
   public ComponentPositionType = GridPositionType;
 
   constructor(
-    private internalEventHandlerService: InternalEventHandlerService,
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private viewContainerRef: ViewContainerRef,
-    private dndService: DndService,
-    private storeService: StoreService,
+      private internalEventHandlerService: InternalEventHandlerService,
+      private componentResolverService: ComponentResolverService,
+      private viewContainerRef: ViewContainerRef,
+      private dndService: DndService,
+      private storeService: StoreService
   ) { }
 
   ngOnInit() {
@@ -111,8 +112,7 @@ export class SectionWrapperComponent implements OnInit {
     this.components = this.createComponents(this.section);
 
     if (this.mode === FormQLMode.Edit) {
-      const tooltip = this.viewContainerRef.createComponent(
-        HelperService.getFactory(this.componentFactoryResolver, 'TooltipComponent'));
+      const tooltip = this.viewContainerRef.createComponent(this.componentResolverService.resolveComponent('TooltipComponent'));
       (<any>tooltip).instance.wrapper = this.wrapper;
       (<any>tooltip).instance.type = ContainerType.Section;
       (<any>tooltip).instance.object = this.section;

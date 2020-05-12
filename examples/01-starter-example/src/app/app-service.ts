@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { IFormQLService, FormWindow, FormDataSource } from "@formql/core";
-import { of, throwError } from 'rxjs';
+import { of, throwError, Observable } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 
 
@@ -35,7 +35,7 @@ export class DummyService implements IFormQLService {
         localStorage.setItem(name, JSON.stringify(form));
         return of(form);
     }
-    saveData(dataSource: FormDataSource, ids: Array<string>, data: any) {
+    saveData<T>(dataSource: FormDataSource, ids: Array<string>, data: T): Observable<T> {
         if (!ids)
             throwError('no ids provided!');
 

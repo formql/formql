@@ -1,17 +1,12 @@
-import {
-  ViewChild, Component, ViewContainerRef,
-  Input, Output, EventEmitter, ChangeDetectionStrategy, AfterViewInit, OnDestroy, OnInit
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormWindow, FormError, FormState } from '../models/form-window.model';
-import { InternalEventHandlerService } from '../services/internal-event-handler.service';
-import { InternalEventType } from '../models/internal-event.model';
-import { FormComponent } from '../models/form-component.model';
-import { StoreService } from '../services/store.service';
-import { FormQLMode } from '../models/type.model';
-import { ActionHandlerService } from '../services/action-handler.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { FormComponent } from '../models/form-component.model';
+import { FormError, FormState, FormWindow } from '../models/form-window.model';
+import { InternalEventType } from '../models/internal-event.model';
+import { FormQLMode } from '../models/type.model';
+import { StoreService } from '../services/store.service';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -23,10 +18,6 @@ import { takeUntil } from 'rxjs/operators';
               </div>
               <formql-layout-loader
                 [formState]="formState"
-                [actionHandler]= "actionHandler$ | async"
-                [internalEventHandler]="internalEventHandler$ | async"
-                [reactiveForm]="reactiveForm"
-                [mode]="mode"
                 (formSaveStart)="formSaveStart.emit(true)"
                 (formSaveEnd)="formSaveEnd.emit(true)"
                 (formError)="formError.emit(true)">
@@ -55,21 +46,16 @@ export class FormQLComponent implements OnInit, OnDestroy {
 
   data$ = this.storeService.getData();
   formState$ = this.storeService.getFormState();
-  actionHandler$ = this.actionHandlerService.action;
-  internalEventHandler$ = this.internalEventHandlerService.event;
-
   error: FormError;
 
   private componentDestroyed = new Subject();
 
   constructor(
-    private internalEventHandlerService: InternalEventHandlerService,
-    private actionHandlerService: ActionHandlerService,
     private storeService: StoreService
   ) { }
 
   ngOnInit(): void {
-    this.data$.pipe(takeUntil(this.componentDestroyed)).subscribe( data => this.data = data);
+    this.data$.pipe(takeUntil(this.componentDestroyed)).subscribe(data => this.data = data);
     this.formState$.pipe(takeUntil(this.componentDestroyed)).
         subscribe((formState) => {
           if (formState) {
@@ -79,7 +65,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
               this.form = formState.form;
           }
         });
-    this.storeService.getAll(this.formName, this.ids);
+    this.storeService.getAll(this.formName, this.ids, this.mode);
   }
 
   resetForm(objectId: string) {
@@ -87,7 +73,7 @@ export class FormQLComponent implements OnInit, OnDestroy {
   }
 
   refreshComponent(component: FormComponent<any>) {
-    this.storeService.setComponet(component);
+    this.storeService.setComponent(component);
   }
 
   saveForm() {

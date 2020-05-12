@@ -23,6 +23,8 @@ import { FormQLRadioComponent } from './bundle/formql-radio.component';
 import { FormQLCheckboxComponent } from './bundle/formql-checkbox.component';
 import { LayoutLoaderComponent } from './components/layout-loader.component';
 
+import { ComponentResolverService } from './services/component-resolver.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -52,6 +54,8 @@ import { LayoutLoaderComponent } from './components/layout-loader.component';
     FormQLRadioComponent,
     FormQLCheckboxComponent
   ],
+  providers: [
+  ],
   entryComponents: [
     // formql
     FormQLComponent,
@@ -72,5 +76,19 @@ import { LayoutLoaderComponent } from './components/layout-loader.component';
       FormQLComponent
   ]
 })
-export class FormQLModule { }
+export class FormQLModule {
 
+  constructor(componentResolverService: ComponentResolverService) {
+    componentResolverService.addComponents(
+      FormQLComponent,
+      PlainLayoutComponent,
+      FormQLButtonComponent,
+      FormQLInputComponent,
+      FormQLLabelComponent,
+      FormQLTextareaComponent,
+      FormQLSelectComponent,
+      FormQLRadioComponent,
+      FormQLCheckboxComponent
+    );
+  }
+}

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -16,6 +16,8 @@ import { AppFormQLEditorComponent } from './app-formql-editor.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { ComponentResolverService } from '@formql/core';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -32,7 +34,28 @@ import { ReactiveFormsModule } from '@angular/forms';
         TextMaskModule,
         ReactiveFormsModule
     ],
-    providers: [DummyService, { provide: 'FormQLService', useClass: DummyService }],
+    providers: [
+        ComponentResolverService,
+        { 
+            provide : APP_INITIALIZER, 
+            multi : true, 
+            deps : [ComponentResolverService], 
+            useFactory : InitModule
+        },        
+        DummyService, 
+        { 
+            provide: 'FormQLService', 
+            useClass: DummyService 
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export function InitModule(componentResolverService: ComponentResolverService) {
+    let x = () => {
+        // Here you can register your custom component 
+        // e.g. componentResolverService.addComponent(...);
+    }
+    return x;
+}

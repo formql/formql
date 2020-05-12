@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
-import { FormQLModule } from '@formql/core';
+import { ComponentResolverService, FormQLModule } from '@formql/core';
 import { TextMaskModule } from 'angular2-text-mask';
 import { FormQLMatFormFieldComponent } from './components/formql-mat-form-field.component';
 import { FormQLMatTextareaComponent } from './components/formql-mat-textarea.component';
@@ -12,30 +12,41 @@ import { FormQLMatButtonComponent } from './components/formql-mat-button.compone
 import { FormQLInternalMaterialModule } from './formql-internal-material';
 
 @NgModule({
-    imports: [
-        BrowserAnimationsModule,
-        FormQLModule,
-        TextMaskModule,
-        ReactiveFormsModule,
-        CommonModule,
-        FormQLInternalMaterialModule
-    ],
-    declarations: [
-        FormQLMatFormFieldComponent,
-        FormQLMatTextareaComponent,
-        FormQLMatCheckboxComponent,
-        FormQLMatDatepickerComponent,
-        FormQLMatButtonComponent
-    ],
-    exports: [
-        FormQLInternalMaterialModule
-    ],
-    entryComponents: [
-        FormQLMatFormFieldComponent,
-        FormQLMatTextareaComponent,
-        FormQLMatCheckboxComponent,
-        FormQLMatDatepickerComponent,
-        FormQLMatButtonComponent
-    ]
+  imports: [
+    BrowserAnimationsModule,
+    FormQLModule,
+    TextMaskModule,
+    ReactiveFormsModule,
+    CommonModule,
+    FormQLInternalMaterialModule
+  ],
+  declarations: [
+    FormQLMatFormFieldComponent,
+    FormQLMatTextareaComponent,
+    FormQLMatCheckboxComponent,
+    FormQLMatDatepickerComponent,
+    FormQLMatButtonComponent
+  ],
+  exports: [
+  ],
+  entryComponents: [
+    FormQLMatFormFieldComponent,
+    FormQLMatTextareaComponent,
+    FormQLMatCheckboxComponent,
+    FormQLMatDatepickerComponent,
+    FormQLMatButtonComponent
+  ]
 })
-export class FormQLMaterialModule { }
+export class FormQLMaterialModule {
+
+  constructor(componentResolverService: ComponentResolverService) {
+    componentResolverService.addComponents(
+      FormQLMatFormFieldComponent,
+      FormQLMatTextareaComponent,
+      FormQLMatCheckboxComponent,
+      FormQLMatDatepickerComponent,
+      FormQLMatButtonComponent
+    );
+
+  }
+}

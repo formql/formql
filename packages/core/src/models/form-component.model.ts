@@ -4,29 +4,26 @@ import { FormControl } from '@angular/forms';
 import { GridPosition } from './style.model';
 
 export interface FormComponent<T> {
-    componentId: string;
-    componentName: string;
-    value: T;
-    textMask: any;
-    schema: string;
-    label: string;
-    type: string;
-    tabIndex: string;
+  componentId: string;
+  componentName: string;
+  value: T;
+  textMask: any;
+  schema: string;
+  label: string;
+  type: string;
+  tabIndex: string;
 
-    rules: FormRules;
-    action: FormAction;
+  rules: FormRules;
+  dependents: string[];
 
-    position: GridPosition;
+  action: FormAction;
 
-    style: any;
-    configuration: any;
-}
+  position: GridPosition;
 
-export interface ComponentControl {
-    key: string;
-    control: FormControl;
+  style: any;
+  configuration: any;
 }
 
 export interface ComponentGroup {
-    [key: string]: Array<FormComponent<any>>;
+  [key: string]: Array<FormComponent<any>>;
 }

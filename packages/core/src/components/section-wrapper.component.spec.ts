@@ -53,6 +53,7 @@ describe('SectionWrapperComponent', () => {
           type: 1
         },
         componentId: '0af1e87f-19fe-e6e0-80ca-f1d512b889ec',
+        dependents: null,
         rules: {},
         value: null,
         tabIndex: null,
@@ -113,6 +114,7 @@ describe('SectionWrapperComponent', () => {
           schema: 'contact.lastName',
           label: 'Contact Info',
           componentName: 'FormQLLabelComponent',
+          dependents: null,
           type: 'text',
           position: {
             id: 'ID1_1',

@@ -1,8 +1,8 @@
 .fql-bundle-field-input { 
-    width: 100%; 
-    box-sizing: border-box; 
-    -webkit-box-sizing:border-box; 
-    -moz-box-sizing: border-box;
+  width: 100%; 
+  box-sizing: border-box; 
+  -webkit-box-sizing:border-box; 
+  -moz-box-sizing: border-box;
 }
 
 .fql-bundle-checkbox-input { 
@@ -24,4 +24,12 @@
 .fql-error-message {
     text-align: center; 
     padding: 20px; 
+}
+
+.fql-dnd-container-separator {
+  box-shadow: 0 -2px 0 blue;
+}
+
+.fql-dnd-container-drop-area {
+  outline: 3px dashed;
 }

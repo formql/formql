@@ -2,20 +2,23 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
+    "module": "esnext",
+    "outDir": "./dist",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
+    "emitDecoratorMetadata": false,
     "experimentalDecorators": true,
     "skipLibCheck": true,
-    "types": ["jest"],
-    "target": "es5",
+    "types": [
+      "jest"
+    ],
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
+      "es2018",
       "dom"
     ],
     "paths": {
@@ -29,5 +32,14 @@
         "packages/material/src/public_api.ts"
       ]
     }
-  }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "enableIvy": false
+  },
+  "exclude": [
+    "examples"
+  ]
 }
+

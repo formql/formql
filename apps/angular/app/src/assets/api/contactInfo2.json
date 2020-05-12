@@ -138,7 +138,7 @@
                 "rules": {
                     "hidden": {
                         "key": "hidden",
-                        "condition": "contact.addComments !== true",
+                        "condition": "!GET('contact.addComments')",
                         "value": null
                     }
                 },
@@ -210,17 +210,17 @@
                 "rules": {
                     "hidden": {
                         "key": "hidden",
-                        "condition": "contact.fistName === ''",
+                        "condition": "!GET('contact.firstName')",
                         "value": null
                     },
                     "readonly": {
                         "key": "readonly",
-                        "condition": "contact.fistName === ''",
+                        "condition": "!GET('contact.firstName')",
                         "value": null
                     },
                     "required": {
                         "key": "required",
-                        "condition": "contact.fistName === ''",
+                        "condition": "!GET('contact.firstName')",
                         "value": null,
                         "errorMessage": "bbbbbbbbbbbb"
                     }

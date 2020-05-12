@@ -7,7 +7,7 @@
     "baseUrl": "",
     "types": ["jest", "node"],
     "allowJs": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": false
   },
   "files": [
     "karmaTest.ts"

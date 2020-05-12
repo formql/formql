@@ -73,6 +73,7 @@ describe('PlainLayoutComponent', () => {
           schema: 'contact.lastName',
           label: 'Contact Info',
           componentName: 'FormQLLabelComponent',
+          dependents: null,
           type: 'text',
           position: {
             id: 'ID1_1',

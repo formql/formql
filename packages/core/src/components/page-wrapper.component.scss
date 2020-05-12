@@ -1,3 +1,5 @@
+@import "../variables.scss";
+
 .fql-page-body {
     display: -ms-grid;
     display: grid;
@@ -9,6 +11,10 @@
     display: table;
     height: 100%;
     width: 100%;
-    border: 1px dotted;
+    // border: 1px solid transparent;
     min-height: 15px;
+}
+
+.fql-page-container:hover {
+    outline: 2px solid;
 }
