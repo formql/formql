@@ -277,7 +277,7 @@
                 "rules": {
                     "value": {
                         "key": "value",
-                        "condition": "contact.mortgagePeriod*12*contact.mortgageMonthlyPayments",
+                        "condition": "GET('contact.mortgagePeriod')*12*GET('contact.mortgageMonthlyPayments')",
                         "value": null
                     },
                     "readonly": {
@@ -340,7 +340,7 @@
                 "rules": {
                     "value": {
                         "key": "value",
-                        "condition": "contact.mortgageAmount*(contact.mortgageInterestRate/100/12)*(Math.pow(1 + (contact.mortgageInterestRate/100/12), (contact.mortgagePeriod*12)))/(Math.pow(1+(contact.mortgageInterestRate/100/12),(contact.mortgagePeriod*12))-1)",
+                        "condition": "GET('contact.mortgageAmount')*(GET('contact.mortgageInterestRate')/100/12)*(Math.pow(1 + (GET('contact.mortgageInterestRate')/100/12), (GET('contact.mortgagePeriod')*12)))/(Math.pow(1+(GET('contact.mortgageInterestRate')/100/12),(GET('contact.mortgagePeriod')*12))-1)",
                         "value": null
                     },
                     "readonly": {
@@ -377,7 +377,7 @@
                 "rules": {
                     "value": {
                         "key": "value",
-                        "condition": "contact.mortgageTotalCost-contact.mortgageAmount",
+                        "condition": "GET('contact.mortgageTotalCost')-GET('contact.mortgageAmount')",
                         "value": null
                     },
                     "readonly": {
