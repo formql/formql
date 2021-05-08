@@ -59,7 +59,7 @@
     "jest": "^24.9.0",
     "jest-preset-angular": "^7.1.1",
     "lerna": "^3.20.2",
-    "ng-packagr": "~5.0.1",
+    "ng-packagr": "~10.1.1",
     "protractor": "^5.4.3",
     "semantic-release": "^15.14.0",
     "ts-node": "~7.0.0",
