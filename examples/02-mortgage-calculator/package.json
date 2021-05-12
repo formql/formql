@@ -33,7 +33,7 @@
     "angular2-uuid": "1.1.1",
     "text-mask-addons": "3.8.0",
     "ng2-charts": "~2.2.3",
-    "chart.js": "~2.8.0",
+    "chart.js": "~2.9.4",
     "core-js": "^2.5.4",
     "rxjs": "~6.5.5",
     "tslib": "^1.10.0",
